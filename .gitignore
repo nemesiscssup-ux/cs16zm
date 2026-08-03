@@ -15,3 +15,9 @@ server/
 dist/
 build/test/*.amxx
 build/zp-test/
+
+# Рабочий каталог локального прогона и базовые файлы игры от SteamCMD
+run/
+build/hlds-base/
+build/steamcmd/
+

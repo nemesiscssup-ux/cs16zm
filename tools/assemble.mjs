@@ -5,7 +5,7 @@
 //
 // Запуск: node tools/assemble.mjs
 
-import { createHash } from 'node:crypto'
+import { createHash, randomBytes } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync, readdirSync, statSync } from 'node:fs'
 import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path'
@@ -58,7 +58,22 @@ copy(join(REAPI, 'addons', 'amxmodx', 'scripting', 'include'), join(AMXX, 'scrip
 // 4. ReUnion — поддержка нон-стим клиентов.
 copy(join(REUNION, 'bin', 'Linux', 'reunion_mm_i386.so'), join(CSTRIKE, 'addons', 'reunion', 'reunion_mm_i386.so'), 'ReUnion 0.2.0.25 (linux)')
 copy(join(REUNION, 'bin', 'Windows', 'reunion_mm.dll'), join(CSTRIKE, 'addons', 'reunion', 'reunion_mm.dll'), 'ReUnion 0.2.0.25 (windows)')
-copy(join(REUNION, 'reunion.cfg'), join(CSTRIKE, 'addons', 'reunion', 'reunion.cfg'), 'ReUnion конфигурация')
+// reunion.cfg кладётся в каталог мода, а НЕ рядом с библиотекой: по Readme ReUnion
+// ищет его в server root или gamedir. Из addons/reunion он не читается, и модуль
+// молча уходит в «fail load».
+copy(join(REUNION, 'reunion.cfg'), join(CSTRIKE, 'reunion.cfg'), 'ReUnion конфигурация')
+
+// Без соли ReUnion не запускается вовсе («SteamIdHashSalt is not set or too short»).
+// Соль своя у каждой установки: она участвует в вычислении SteamID нон-стим игроков,
+// поэтому менять её после запуска нельзя — у всех игроков сменятся идентификаторы.
+const reunionCfg = join(CSTRIKE, 'reunion.cfg')
+if (existsSync(reunionCfg)) {
+  const salt = randomBytes(24).toString('hex')
+  const text = readFileSync(reunionCfg, 'latin1')
+    .replace(/^SteamIdHashSalt\s*=.*$/m, `SteamIdHashSalt = ${salt}`)
+  writeFileSync(reunionCfg, text, 'latin1')
+  console.log('+ ReUnion: сгенерирована соль SteamIdHashSalt')
+}
 
 // 5. ReGameDLL — игровая логика.
 copy(join(REGAMEDLL, 'bin', 'linux32', 'cstrike', 'dlls', 'cs.so'), join(CSTRIKE, 'dlls', 'cs.so'), 'ReGameDLL 5.30 (linux)')
@@ -126,7 +141,8 @@ if (existsSync(modulesIni)) {
 const pluginsIni = join(AMXX, 'configs', 'plugins.ini')
 if (existsSync(pluginsIni)) {
   const cur = readFileSync(pluginsIni, 'utf8')
-  writeFileSync(pluginsIni, `${cur}\n; ── Zombie Plague ──\nzombie_plague44.amxx\nzp_zclasses44.amxx\n`)
+  // Только ASCII: файл читается движком в однобайтовой кодировке, юникод в нём бьётся.
+  writeFileSync(pluginsIni, `${cur}\n; --- Zombie Plague ---\nzombie_plague44.amxx\nzp_zclasses44.amxx\n`, 'latin1')
 }
 
 // Список администраторов пуст намеренно — ровно то, чем грешат готовые сборки.
