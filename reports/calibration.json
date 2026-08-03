@@ -1,0 +1,188 @@
+{
+  "slug": "calibration",
+  "target": "E:\\cs16zm\\build\\test",
+  "scanned": "2026-08-03T22:48:30.394Z",
+  "totals": {
+    "files": 4,
+    "bytes": 6342
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "positive_control.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "positive_control.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "positive_control.amxx"
+    },
+    {
+      "severity": "high",
+      "rule": "kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd, server_exec",
+      "file": "positive_control.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "positive_control.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "positive_control.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "positive_control.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "positive_control.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd, server_exec",
+      "file": "positive_control.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "positive_control.sma"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "negative_control.amxx",
+      "hash": "067D83376167F36DD47E7EA518EBC31CC248AAE7F9D08D861B850DD7A8F17C34",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 13,
+      "strings": 12,
+      "findings": []
+    },
+    {
+      "file": "positive_control.amxx",
+      "hash": "95932FA4646E0491788D121166E1BE2D19BC831F2C631F4B9F84DCB98D8C6C53",
+      "hasSource": true,
+      "verdict": "dirty",
+      "natives": 9,
+      "strings": 12,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd, server_exec"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "positive_control.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd, server_exec"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [],
+    "scripts": [],
+    "configs": [],
+    "plugins": 2,
+    "sources": 2,
+    "content": 0,
+    "other": 0
+  },
+  "verdict": "dirty",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 2,
+    "high": 2,
+    "critical": 6
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "slug": "allcs-zp43-bots-dm",
+  "requestedUrl": "https://disk.yandex.ru/d/18EkMeiDtomANw",
+  "referer": "https://all-cs.net.ru/load/gotovye_servera_dlja_cs_1_6/zombieplague43/42-1-0-804",
+  "fetchedAt": "2026-08-03T22:35:53.379Z",
+  "ok": false,
+  "error": "Яндекс.Диск API вернул HTTP 404"
+}

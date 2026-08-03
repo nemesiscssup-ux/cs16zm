@@ -1,0 +1,293 @@
+# Аудит сборки: sekys-cs-amxpackage-knownbad
+
+**Вердикт: ГРЯЗНАЯ — найдены закладки или их прямые признаки**
+
+Проверено 71 файлов, 1.6 МБ. Дата: 2026-08-03.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 26 | 11 | 31 | 0 | 0 |
+
+Состав: плагинов 0, исходников 58, бинарников 0, скриптов 0, конфигов 1, контента 0.
+
+## Находки
+
+### critical
+
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `get_cvar_string, get_pcvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `get_cvar_string, get_pcvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `get_cvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `rcon_password`
+- **src:net-in-plugin** — Плагин открывает сетевые соединения. Канал утечки конфигов и приёма команд извне.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `socket_open, socket_send, socket_recv`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `get_cvar_string, get_pcvar_string`
+- **src:writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `set_cvar_string, set_cvar_num`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/VIP.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/VIP.sma`
+  - улика: `get_cvar_string`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `get_cvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `get_cvar_string, get_pcvar_string, get_cvar_pointer`
+- **src:writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `set_cvar_string, set_cvar_num, set_pcvar_num`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `get_cvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+### high
+
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/antyreklama.sma`
+  - улика: `client_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `server_cmd`
+- **src:ip-literal** — IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `10.0.1.2`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `server_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `server_cmd`
+- **src:steals-admin-password** — Плагин читает клиентское поле с паролем администратора.
+  - файл: `cs-amxpackage-master/password.sma`
+  - улика: `get_user_info`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `server_cmd, client_cmd, engclient_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/VIP.sma`
+  - улика: `server_cmd, client_cmd, engclient_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `server_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `server_cmd, client_cmd, engclient_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `server_cmd`
+### medium
+
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/antyreklama.sma`
+  - улика: `quit`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/banka.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/DeathrunManager.sma`
+  - улика: `cmd_access, set_user_info + client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `cs-amxpackage-master/DeathrunManager.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/dr_banka.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/hud.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:admin-password-field** — setinfo-поле с паролем админа на клиенте.
+  - файл: `cs-amxpackage-master/password.sma`
+  - улика: `_pw`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/sls_2.sma`
+  - улика: `set_user_flags, cmd_access + server_cmd, client_cmd, engclient_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/VIP.sma`
+  - улика: `quit | exit`
+- **src:ip-literal** — IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.
+  - файл: `cs-amxpackage-master/web2_user_system.sma`
+  - улика: `10.0.1.2`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/xmas_halloween.sma`
+  - улика: `cmd_access + client_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/xmas_velkanoc.sma`
+  - улика: `cmd_access + client_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zm_bomb.sma`
+  - улика: `cmd_access + engclient_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zm_eletric_bomb.sma`
+  - улика: `cmd_access + engclient_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zm_scorpion.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zombie_plague40.sma`
+  - улика: `cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zombie_plague40_new.sma`
+  - улика: `cmd_access + server_cmd, client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `cs-amxpackage-master/zombie_plague40_new.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zombie_plague43old.sma`
+  - улика: `cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `cs-amxpackage-master/zombie_plague43old.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `quit | exit`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zp_api_functions.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zp_extra_lasermine.sma`
+  - улика: `cmd_access + server_cmd, server_exec, client_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `cs-amxpackage-master/zp_extra_lasermine.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `cs-amxpackage-master/zp_karantena.sma`
+  - улика: `cmd_access + client_cmd`
+
+## Исходники с закладками
+
+Проблема найдена прямо в тексте плагина — компилировать такое нельзя.
+
+- `cs-amxpackage-master/antyreklama.sma` — suspicious
+  - medium: quit-killswitch — `quit`
+  - high: kill-switch — `client_cmd`
+- `cs-amxpackage-master/banka.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: reads-rcon-password — `get_cvar_string, get_pcvar_string`
+  - high: kill-switch — `server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/dr_banka.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - high: ip-literal — `10.0.1.2`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: reads-rcon-password — `get_cvar_string, get_pcvar_string`
+  - high: kill-switch — `server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/hud.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: reads-rcon-password — `get_cvar_string`
+  - high: kill-switch — `server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/password.sma` — suspicious
+  - medium: admin-password-field — `_pw`
+  - high: steals-admin-password — `get_user_info`
+- `cs-amxpackage-master/sls_2.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - critical: net-in-plugin — `socket_open, socket_send, socket_recv`
+  - medium: admin-plus-exec — `set_user_flags, cmd_access + server_cmd, client_cmd, engclient_cmd`
+  - critical: reads-rcon-password — `get_cvar_string, get_pcvar_string`
+  - critical: writes-rcon-password — `set_cvar_string, set_cvar_num`
+  - high: kill-switch — `server_cmd, client_cmd, engclient_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/VIP.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - critical: reads-rcon-password — `get_cvar_string`
+  - high: kill-switch — `server_cmd, client_cmd, engclient_cmd`
+- `cs-amxpackage-master/zm_scorpion.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: reads-rcon-password — `get_cvar_string`
+  - high: kill-switch — `server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/zombie_plague40.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - medium: admin-plus-exec — `cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+  - critical: reads-rcon-password — `get_cvar_string, get_pcvar_string, get_cvar_pointer`
+  - critical: writes-rcon-password — `set_cvar_string, set_cvar_num, set_pcvar_num`
+  - high: kill-switch — `server_cmd, client_cmd, engclient_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `cs-amxpackage-master/zp_api_functions.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `quit | exit`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: reads-rcon-password — `get_cvar_string`
+  - high: kill-switch — `server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`

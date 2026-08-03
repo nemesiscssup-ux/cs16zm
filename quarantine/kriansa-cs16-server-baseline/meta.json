@@ -1,0 +1,14 @@
+{
+  "slug": "kriansa-cs16-server-baseline",
+  "requestedUrl": "https://github.com/kriansa/cs-16-server/archive/refs/heads/master.zip",
+  "referer": null,
+  "fetchedAt": "2026-08-03T22:36:12.063Z",
+  "httpStatus": 200,
+  "finalUrl": "https://codeload.github.com/kriansa/cs-16-server/zip/refs/heads/master",
+  "contentType": "application/zip",
+  "file": "cs-16-server-master.zip",
+  "size": 6777614,
+  "sha256": "BC829FD030002C56E2E271D6F08271E9ACF088032FE6FCF30682979365D909FF",
+  "looksLikeHtml": false,
+  "ok": true
+}

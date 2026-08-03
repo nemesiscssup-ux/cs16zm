@@ -1,0 +1,630 @@
+{
+  "slug": "kriansa-cs16-server-baseline",
+  "target": "E:\\cs16zm\\quarantine\\kriansa-cs16-server-baseline\\extracted",
+  "scanned": "2026-08-03T22:48:25.488Z",
+  "totals": {
+    "files": 250,
+    "bytes": 16237824
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec cfgs/hpk.cfg",
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/configs/amxx.cfg"
+    },
+    {
+      "severity": "critical",
+      "rule": "users-passwordless-admin",
+      "why": "Полные права выдаются без пароля: достаточно совпасть по «loopback». Любой, кто знает эту строку — а её знает каждый скачавший сборку, — становится администратором.",
+      "evidence": "строка 52: \"loopback\" \"\" \"abcdefghijklmnopqrstu\" \"de\"",
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "critical",
+      "rule": "users-passwordless-admin",
+      "why": "Полные права выдаются без пароля: достаточно совпасть по «STEAM_0:0:53506913». Любой, кто знает эту строку — а её знает каждый скачавший сборку, — становится администратором.",
+      "evidence": "строка 53: \"STEAM_0:0:53506913\" \"\" \"abcdefghijklmnopqrstu\" \"ce\"",
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/amx_hpk.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "rcon-in-cfg",
+      "why": "В сборке приложен готовый RCON-пароль. Он известен всем, кто её скачал.",
+      "evidence": "rcon_password \"\"",
+      "file": "cs-16-server-master/cstrike/cfgs/base.cfg"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec cfgs/base.cfg",
+      "file": "cs-16-server-master/cstrike/server.cfg"
+    },
+    {
+      "severity": "medium",
+      "rule": "no-sources",
+      "why": "Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.",
+      "evidence": "3 из 31: amx_hpk.amxx, csnadedrops.amxx, nonadesthruwalls.amxx",
+      "file": "(сводно)"
+    },
+    {
+      "severity": "medium",
+      "rule": "official-name-other-content",
+      "why": "Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.",
+      "evidence": "14 шт.: amxmod_compat.sma, core.sma, mysql.sma, vexdum.sma, pluginmenu.sma, admins_test.sma, arraytest.sma, callfunc_test.sma, fakemeta_tests.sma, fmttest.sma",
+      "file": "(сводно)"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/data/csstats.amxx",
+      "hash": "4DA66B1EF19C9B1E477F9E3FD4E4F5170F91EAE5AF2A7CF5C77C4295CCF3C61B",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/data/csstats.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/admin.amxx",
+      "hash": "FBE821D7BFAEBBC5ACF88F727D98A1E6634FEB76BF39B7B7D95FE902F48AA9E0",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admin.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/adminchat.amxx",
+      "hash": "DFF663818756D38817D2CD6249AEB7EA0A2180EEA2F2C6A3C1EC6D992C269268",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminchat.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/admincmd.amxx",
+      "hash": "74F28764A38669D3A4D6BDAC2B608B0DE111C756792E223507249827F14CC8D4",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admincmd.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/adminhelp.amxx",
+      "hash": "FA87F4A80387E3347FD55CCB3E74570102D70947176450D76BE7FB47F5929AC5",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminhelp.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/adminslots.amxx",
+      "hash": "BC1E03C2D9FCCE093C928DA1551811BCF4F732A059F3026779D8FAC3DE8ADD72",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminslots.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/adminvote.amxx",
+      "hash": "55D5E61FF0DA2DFB67BC63F9A1894231918800EEB9B83648D6B23EE6714F11BF",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminvote.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/admin_sql.amxx",
+      "hash": "A68CB7731534BD2AC59DE07845D4741AA2DFA85151E34921EF6B6411E68A8BC2",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admin_sql.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/amxmod_compat.amxx",
+      "hash": "DE23C56D5ADDA9A9791A6732F09CFD460F33260FB1B70F7A92A0F5C73E67A420",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/amxmod_compat.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/amx_hpk.amxx",
+      "hash": "7E1DD9B06B3C2261B80A6048B87D332D5CEC231C610053F4CF52024D34D5B91C",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 24,
+      "strings": 26,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "amx_hpk.amxx"
+        }
+      ]
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/antiflood.amxx",
+      "hash": "0132AAE2EDC53ABF8416ACD306C42711A32BBF7FE461FF8E6C71C3AE7D231272",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/antiflood.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hash": "81A875B5FF88D0A05FDF20B8D08127D5FBADC41F9020354F22F76F6DB8C392E0",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/csnadedrops.amxx",
+      "hash": "309E631030774CF8B853597777EE16C48E24ED2BA914857373D78B9F6552DCA6",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 35,
+      "strings": 23,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "csnadedrops.amxx"
+        }
+      ]
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/imessage.amxx",
+      "hash": "D099F9B5BCC194D01505FDE34169861D500C0CCF895DB88F755E6C25CC808777",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/imessage.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/mapchooser.amxx",
+      "hash": "D1C5BBA04DAF6314B9C58F69CE063BAE45E2B4AA6E591D8A63D7E06CEBD1453F",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/mapchooser.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hash": "F14B86C0267B5D1C6D357D6F34D08040053B0AC0AB51FDF3011FE0F3985409B9",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/menufront.amxx",
+      "hash": "CCF202C408AFAAE89DBB53424B76E7D2FC3944E7E11A63B5D8DA32AF8C7DC8A6",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/menufront.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/miscstats.amxx",
+      "hash": "2805A9C19EEE4F3ED15462E2A3F860F1BDC50D32262D4A43862E38F835550C0E",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/miscstats.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/multilingual.amxx",
+      "hash": "5B5410413D6C6E33AE6CF8E7E35BBFDE2ADF57064EE74EFD92B25FB5DB58D5BF",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/multilingual.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/nextmap.amxx",
+      "hash": "635986D3DEEF59CA9371648E59E5AB4896780F9A6626C2CF2E57D0D92AD5A8F1",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/nextmap.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/nonadesthruwalls.amxx",
+      "hash": "6F747A1F6AD1458D6F3B3C362CCD5B08C3AC3F29CBFEC8C8DA6D51A8E226350A",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 13,
+      "strings": 6,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "nonadesthruwalls.amxx"
+        }
+      ]
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/pausecfg.amxx",
+      "hash": "6420AA76E6A7EF0D87D594B4FF98C45FC6A19388873B8F2D3539B1552BC46E49",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/pausecfg.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/plmenu.amxx",
+      "hash": "A1BF99A14C4738AD27453926EDD3B146CF221225279CA23877864F97D988D023",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/plmenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hash": "98EEEC547DC83FC9FF3544C3B3C4516F3F43999200B991EC633398514F2D8659",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/restmenu.amxx",
+      "hash": "3CBC5D6AA521995FCE533E07FDE1B3165A65245855C5BF80A4BE50CF4316A307",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/restmenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hash": "F528E39C2CAB78DDB91A510B73A264D66515881D3FEBCD2FA337FB0B78A94ACB",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/statscfg.amxx",
+      "hash": "9AEA0EFEA23F76BDF512759138BB4B6243C7A51A64EF1CA7C025BE9498BE079F",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/statscfg.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/statsx.amxx",
+      "hash": "FFD330D13A5613F033CBAAA01BC967F79BB04160111C119BE30FE8554738AC52",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/statsx.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/stats_logging.amxx",
+      "hash": "397966E0C4EBD8F54D5F935CD9E9E8686A3312A1BBF766C49649CACE4821C089",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/stats_logging.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/telemenu.amxx",
+      "hash": "E8E0BB147746AFE79FF6DA2B6C946D1BDA4A1A32B2B3B39971D7EB570E1C266A",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/telemenu.amxx",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "cs-16-server-master/cstrike/addons/amxmodx/plugins/timeleft.amxx",
+      "hash": "D7CA109026ED450C0CCD9AF142028A2671ED35270AD63D1AFBA29A3A0048520F",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/timeleft.amxx",
+      "hasSource": true,
+      "findings": []
+    }
+  ],
+  "sourceFindings": [],
+  "inventory": {
+    "executables": [
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/data/WinCSX.exe",
+        "size": 122880,
+        "hash": "897C24E94F78D130171584BFC3FB29CBF3AF67DB04253CE431D340A6B665A83B",
+        "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/data/WinCSX.exe"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/dlls/amxmodx_mm.dll",
+        "size": 590336,
+        "hash": "01C93A645F75658F959FD50D029B0DAD7FB6FBFD2B3A5BA992C3112B5E837147",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/dlls/amxmodx_mm.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/dlls/amxmodx_mm_i386.so",
+        "size": 550848,
+        "hash": "0DCAF80E1D03B30A21B4504D72D2BD18F1FE8734B209BEBCEBF5FD7A8D13654D",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/dlls/amxmodx_mm_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/cstrike_amxx.dll",
+        "size": 180224,
+        "hash": "909E16DFCCD92E09FB3B7DBD5A9B85EC5E80235D889C6EF341B387A64D69D1BA",
+        "knownAs": null
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/cstrike_amxx_i386.so",
+        "size": 48608,
+        "hash": "F702204DCE382C050DFBAA2D1999DAB4AC55E6BC52DDD8C5A93B5239939B0083",
+        "knownAs": "amxmodx-1.8.2-cstrike-linux/addons/amxmodx/modules/cstrike_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/csx_amxx.dll",
+        "size": 115200,
+        "hash": "3555A509A334D88F2A460D3689320AFFCA72D0B6AA37E5B4FFF5E22B68CE7A7E",
+        "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/modules/csx_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/csx_amxx_i386.so",
+        "size": 47228,
+        "hash": "606FD1572621A9FFFCA661C79B1913A6A3FB6052803BE9B3653E2C17D1487C2B",
+        "knownAs": "amxmodx-1.8.2-cstrike-linux/addons/amxmodx/modules/csx_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/engine_amxx.dll",
+        "size": 136192,
+        "hash": "B0A31FC51F1A8F732089E06C6756CED928A2EEE5224A67871CBB3396C6441D16",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/engine_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/engine_amxx_i386.so",
+        "size": 76900,
+        "hash": "FB987BF2A5B36134C20F9CBE0086ABCD83F04C7DB8AEBFF3B960E13FDC35919F",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/engine_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/fakemeta_amxx.dll",
+        "size": 259072,
+        "hash": "FBCCFE557BB1900E00DD02C5D7A856E4F94FF44C41093A5FCF66A10CC1F66A95",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/fakemeta_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/fakemeta_amxx_i386.so",
+        "size": 298836,
+        "hash": "3CC4EB44DAD367FFCDAE6DC0FF9A9920A8FB335760DD6B05F9DAFE3B023C914D",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/fakemeta_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/fun_amxx.dll",
+        "size": 85504,
+        "hash": "285F223F36479532BADBFE7698A9E4D3722704F674C4573444A0A2C830295930",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/fun_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/fun_amxx_i386.so",
+        "size": 26700,
+        "hash": "C1F9D3430A6BDB7BEA1D00FA3EEA0B72D241311186472A7BB4E8988403CE656D",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/fun_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/geoip_amxx.dll",
+        "size": 86528,
+        "hash": "9D78975D975E1AE4F28B007AF65EA9BD56F53B5648834BF1F1C46B6E9B176DF2",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/geoip_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/geoip_amxx_i386.so",
+        "size": 40196,
+        "hash": "B1CD50F3A3C8AFE5CC5EC6C29FB84FDE50807F3D830BF4C05ACA0D84818BBD91",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/geoip_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/hamsandwich_amxx.dll",
+        "size": 165376,
+        "hash": "E92979D0ACF546CA6D4E06A70AAFFFA4180FC6FB1EAD4D68FD2AC73D9268B8C2",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/hamsandwich_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/hamsandwich_amxx_i386.so",
+        "size": 240564,
+        "hash": "C288722103BE07BFCC3B5BF73E6430AE0BFCF0C536B1EBD340620CF556B82354",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/hamsandwich_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/mysql_amxx.dll",
+        "size": 1671168,
+        "hash": "4498B29E264A6F1BBBE6091F687DE333965B67D8DB09A2637F013DD58CD87953",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/mysql_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/mysql_amxx_i386.so",
+        "size": 1986388,
+        "hash": "C240DB0AEFC0B3BF537F4B2A664ABCA39A00350B9375C3AAB96A16BAFAD3AF41",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/mysql_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/nvault_amxx.dll",
+        "size": 99840,
+        "hash": "4A22985EC580F08D9AA3C71F0222E3F013A1A14B2EA689FEC244924C47BF8E8D",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/nvault_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/nvault_amxx_i386.so",
+        "size": 43588,
+        "hash": "AEFE6C1C9A36D0A6C920ED1E5CC7FFFFCE8F052575183BC78C146C448CA4FCCC",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/nvault_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/regex_amxx.dll",
+        "size": 207872,
+        "hash": "1D3793C8849406E64AAA7B1FD2A804026582D813F1F383A80EFA6108CCFF8CFC",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/regex_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/regex_amxx_i386.so",
+        "size": 60336,
+        "hash": "D9CDD52041926477282F5ED8EDC61AB927745668B15A8DCBF722D7DDFD4B8234",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/regex_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/sockets_amxx.dll",
+        "size": 55808,
+        "hash": "4E379BE49523A56EBE3BBDC8C04C9A5E7DA0578C023A080C3C2FDBED2E87A73B",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/sockets_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/sockets_amxx_i386.so",
+        "size": 10348,
+        "hash": "F2A62DBC3A2BF7E5EF73E11F8820CD714BB94FDEE05BBACB886C58C01224E7A4",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/sockets_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/sqlite_amxx.dll",
+        "size": 363008,
+        "hash": "AFEDE3C58FEEBF447CB3F500D3A8D86E55748ED4BE74C83A49125559D6CED8FA",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/modules/sqlite_amxx.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/modules/sqlite_amxx_i386.so",
+        "size": 558056,
+        "hash": "65ABE63B97D40579891157C6DC79676554C463295B25E04C6346BA23B93D98DF",
+        "knownAs": "amxmodx-1.8.2-base-linux/addons/amxmodx/modules/sqlite_amxx_i386.so"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxxpc.exe",
+        "size": 101376,
+        "hash": "E1E31579D044F490681598772244A791BDE475F36F3D0823A9840077012A792F",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/scripting/amxxpc.exe"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxxpc32.dll",
+        "size": 261120,
+        "hash": "6B7ABD0A01C55A64E3EA0548DC213E4AF1994E9091EB4DA13F70C66E8C5CC105",
+        "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/scripting/amxxpc32.dll"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/amxmodx/scripting/compile.exe",
+        "size": 102912,
+        "hash": "69CEA50F7DD78F67534B4C8CB057A34C97F136E8A118A93AF512E08C6997DEA9",
+        "knownAs": "amxmodx-1.10.0-git5479-base-windows/addons/amxmodx/scripting/compile.exe"
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/metamod/dlls/metamod.dll",
+        "size": 738816,
+        "hash": "99973657898B949D30DD3C1EEDC5946281E3517388182B0387849E00F41E33A9",
+        "knownAs": null
+      },
+      {
+        "file": "cs-16-server-master/cstrike/addons/metamod/dlls/metamod.so",
+        "size": 1096432,
+        "hash": "6956FB8BE550189C827F14B919D998551C81B34E75BECBB705C0B085D5390A20",
+        "knownAs": null
+      }
+    ],
+    "scripts": [],
+    "configs": [
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/amxx.cfg",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/clcmds.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/cmdaccess.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/cmds.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/configs.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/core.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/custommenuitems.cfg",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/cvars.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/hamdata.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/modules.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/plugins.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/speech.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/sql.cfg",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/stats.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/configs/users.ini",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/admin.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/adminchat.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/admincmd.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/adminhelp.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/adminslots.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/adminvote.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/antiflood.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/cmdmenu.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/common.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/imessage.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/languages.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/mapchooser.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/mapsmenu.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/menufront.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/miscstats.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/multilingual.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/nextmap.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/pausecfg.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/plmenu.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/restmenu.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/scrollmsg.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/statscfg.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/statsx.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/stats_dod.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/telemenu.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/time.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/lang/timeleft.txt",
+      "cs-16-server-master/cstrike/addons/amxmodx/data/vault.ini",
+      "cs-16-server-master/cstrike/addons/metamod/plugins.ini",
+      "cs-16-server-master/cstrike/cfgs/base.cfg",
+      "cs-16-server-master/cstrike/cfgs/fun.cfg",
+      "cs-16-server-master/cstrike/cfgs/hpk.cfg",
+      "cs-16-server-master/cstrike/cfgs/normal.cfg",
+      "cs-16-server-master/cstrike/mapcycle.txt",
+      "cs-16-server-master/cstrike/maps/aim_ak-colt.txt",
+      "cs-16-server-master/cstrike/maps/fy_iceworld.txt",
+      "cs-16-server-master/cstrike/maps/fy_pool_day.txt",
+      "cs-16-server-master/cstrike/maps/he_glass.txt",
+      "cs-16-server-master/cstrike/server.cfg"
+    ],
+    "plugins": 31,
+    "sources": 44,
+    "content": 7,
+    "other": 82
+  },
+  "officialModified": [
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxmod_compat/amxmod_compat.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxmod_compat/core.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxmod_compat/mysql.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/amxmod_compat/vexdum.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/pluginmenu.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/admins_test.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/arraytest.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/callfunc_test.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/fakemeta_tests.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/fmttest.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/logtest.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/native_test.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/nvault_test.sma",
+    "cs-16-server-master/cstrike/addons/amxmodx/scripting/testsuite/sorttest.sma"
+  ],
+  "verdict": "dirty",
+  "counts": {
+    "info": 0,
+    "low": 2,
+    "medium": 4,
+    "high": 0,
+    "critical": 2
+  }
+}

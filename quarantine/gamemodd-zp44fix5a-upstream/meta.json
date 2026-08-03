@@ -1,0 +1,14 @@
+{
+  "slug": "gamemodd-zp44fix5a-upstream",
+  "requestedUrl": "https://www.gamemodd.com/engine/download.php?id=4427",
+  "referer": "https://www.gamemodd.com/cs/mods/4398-zombie-plague-mod-44-fix5a.html",
+  "fetchedAt": "2026-08-03T22:34:15.965Z",
+  "httpStatus": 200,
+  "finalUrl": "https://www.gamemodd.com/engine/download.php?id=4427",
+  "contentType": "application/zip",
+  "file": "zombie_plague_v44.zip",
+  "size": 5188630,
+  "sha256": "6E45DB5BA5C2A05D53FCBC9659272710576195CC774CA82704ADF4DDC6CACC5E",
+  "looksLikeHtml": false,
+  "ok": true
+}

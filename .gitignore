@@ -1,0 +1,17 @@
+# Карантин: скачанные сборки. Не в репозиторий — вес и происхождение чужие.
+# Доказательная база сохраняется в quarantine/*/meta.json (они ниже разрешены).
+quarantine/*/archive/
+quarantine/*/extracted/
+
+# Скачанный апстрим: восстанавливается командой node tools/fetch-upstream.mjs
+upstream/linux/
+upstream/windows/
+upstream/common/
+upstream/legacy/
+upstream/reference/
+
+# Собранный сервер и пакеты — продукт сборки
+server/
+dist/
+build/test/*.amxx
+build/zp-test/

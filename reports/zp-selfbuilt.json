@@ -1,0 +1,123 @@
+{
+  "slug": "zp-selfbuilt",
+  "target": "E:\\cs16zm\\build\\zp-test",
+  "scanned": "2026-08-03T22:48:30.467Z",
+  "totals": {
+    "files": 4,
+    "bytes": 531456
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "zombie_plague44.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague44.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "zombie_plague44.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "zombie_plague44.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague44.sma"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "zombie_plague44.amxx",
+      "hash": "E1F0CDF62BC3BFCBBD844B952530AF04920CC55F041FFCBD3592C850B226B163",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 183,
+      "strings": 1106,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "zp_zclasses44.amxx",
+      "hash": "C4454455B52544C1A0388798BDC41437158C16004D67C7AB5EE7AA73CBE59920",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 7,
+      "strings": 14,
+      "findings": []
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "zombie_plague44.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [],
+    "scripts": [],
+    "configs": [],
+    "plugins": 2,
+    "sources": 2,
+    "content": 0,
+    "other": 0
+  },
+  "verdict": "untrusted",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 5,
+    "high": 0,
+    "critical": 0
+  }
+}

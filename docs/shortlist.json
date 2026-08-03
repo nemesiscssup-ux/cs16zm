@@ -1,0 +1,162 @@
+{
+  "shortlist": [
+    {
+      "slug": "allcs-zp43-bots-dm",
+      "name": "Готовый сервер Zombie Plague Mod 4.3 для CS 1.6 (+боты, +DM)",
+      "site": "all-cs.net.ru",
+      "mod": "Zombie Plague 4.3",
+      "page_url": "https://all-cs.net.ru/load/gotovye_servera_dlja_cs_1_6/zombieplague43/42-1-0-804",
+      "direct_download_url": "https://all-cs.net.ru/load/0-0-1-804-20",
+      "access": "бесплатно, без регистрации (регистрация нужна только для комментариев); 117 МБ; uCoz-раздача",
+      "why": "Абсолютный лидер по популярности среди всех найденных: 137 789 загрузок против 3-15 тыс. у ближайших конкурентов — это и есть «самая популярная сборка ZP 4.3» в рунете. Публикация 2007 г., последнее обновление 13.09.2020 → 13 лет перезаливок неизвестными руками. Состав рекламируется как «kitchen sink»: 7 зомби-классов со своими моделями, jetpack/базука, ПАРАШЮТ, лазерные мины, вампиризм, сердцебиение, супероружие M4+M203, боты, DM. Ключевое: parachute.amx прямо назван в чёрном списке заражённых плагинов (connect 95.47.161.115:27037), а jetpack/bazooka и «лазерные мины» — типовые носители из тех же разборов. Обязателен к аудиту первым.",
+      "prior_risk": "high"
+    },
+    {
+      "slug": "zombiedev-zp43fix5a-rehlds",
+      "name": "Чистый сервер Zombie Plague 4.3Fix5a [DHUD] [RUS] [ReHLDS] [LVL]",
+      "site": "zombie-dev.org",
+      "mod": "Zombie Plague 4.3 Fix5a",
+      "page_url": "https://zombie-dev.org/cs-16/gotoviy_servera/220-cs-16-chistyy-server-zombie-plague-43fix5a-rehlds.html",
+      "direct_download_url": "https://yadi.sk/d/gYxkWEv73UXVuY",
+      "access": "бесплатно, без регистрации на первоисточнике; файл на Яндекс.Диске",
+      "why": "Самая растиражированная СОВРЕМЕННАЯ сборка: один и тот же yadi.sk-архив разошёлся минимум по четырём DLE-клонам (cs-wz.com, cs-fade.ru, beni-cs.pro и др.), 15 419 просмотров на первоисточнике. Берём именно zombie-dev.org, потому что клоны требуют регистрацию, а ссылка одна и та же. Стек современный и проверяемый по эталону: ReHLDS 3.4.0.639, Metamod-r 1.3.0.119, Reunion 0.1.92, AMXX 1.8.3 [RUS] — есть с чем побайтово сверять .so/.dll. Плагинов заявлено всего три (zombie_plague40, zp_level_system, zp_zclasses40) → быстрый аудит и хороший «условно-чистый» полюс контраста внутри форумного сегмента.",
+      "prior_risk": "medium"
+    },
+    {
+      "slug": "cshlds-zp43-ready-2010",
+      "name": "Готовый Сервер Zombie Plague 4.3",
+      "site": "cs-hlds.ru",
+      "mod": "Zombie Plague 4.3",
+      "page_url": "https://cs-hlds.ru/load/gotovyj_server_zombie_plague_4_3/57-1-0-4902",
+      "direct_download_url": "https://cs-hlds.ru/load/0-0-1-4902-20",
+      "access": "бесплатно, без регистрации; всего 6.21 МБ",
+      "why": "9 913 загрузок на одном из старейших RU-порталов, публикация 27.04.2010 — эпоха, к которой относятся все подтверждённые advisory (AMX Mod 2010.1 с mrp/cmdr/cmdc/slog, кампания Belonard). Заявлены ПОСТОРОННИЕ БИНАРНЫЕ модули помимо AMXX/Metamod: «Booster» и «ALX_LowPing» — ровно тот класс .so/.dll, который проверяется грепом по strings (/bin/sh, system, dlopen, LD_PRELOAD) и сверкой modules.ini/plugins.ini. Плюс 13 плагинов из списка риска: лазерные мины, jetpack bazooka, «понижатель пинга», «блокировка ника», antidote gun. Размер 6.21 МБ = аудит займёт минуты, а выхлоп по бинарным индикаторам потенциально максимальный.",
+      "prior_risk": "high"
+    },
+    {
+      "slug": "csrage-zp43fix5a-plus",
+      "name": "Готовая сборка — Чистый Zombie Plague 4.3Fix5a + Дополнения (by R1CHICOREJZ, 2021)",
+      "site": "cs-rage.ru",
+      "mod": "Zombie Plague 4.3 Fix5a",
+      "page_url": "https://cs-rage.ru/cs-16/zombieplague/gotoviy_servera/1251-cs-16-gotovaya-sborka-chistyy-zombie-plague-43fix5a-dopolneniya.html",
+      "direct_download_url": "http://yadi.sk/d/jwxdQkH8O7iTOg",
+      "access": "бесплатно, без регистрации; файл на Яндекс.Диске; на сайте рядом висит платный «shop»-вариант",
+      "why": "Самая свежая массовая сборка (19.01.2021, 7 892 просмотра), продублирована на форуме club-cs.ru — то есть живёт и в каталожном, и в форумном сегменте. Стек современный: AMX 1.9.0, ReAPI 5.18.0.203, ReHLDS 3.8.0.702, ReGameDLL 5.19.0.486, Metamod-R 1.3.0.128. Именно она даёт лучший материал для аудита логики, а не только бинарей: три уровня ПРИВИЛЕГИЙ с моделями (→ set_user_flags / users.ini / cmdaccess.ini), сохранение ammo packs в MySQL (→ внешние подключения, конфиги с кредами), настройка меню и префиксов «через txt-файлы» (→ конфиги, которые никто не открывает, и exec-цепочки). Сборки «с привилегиями и донат-функциями» от частных авторов — исторически главный носитель «лицензионных» привязок (get_cvar_string(\"rcon_password\") + quit) и скрытых суперадминов.",
+      "prior_risk": "high"
+    },
+    {
+      "slug": "cshlds-zp43-ktoto",
+      "name": "Чистый Zombie Plague 4.3 by kto_to",
+      "site": "cs-hlds.ru (первоисточник; зеркала — cscontrol.ru, makeserver.ru, cstex.ucoz.com, avp-cs.3dn.ru)",
+      "mod": "Zombie Plague 4.3",
+      "page_url": "http://cs-hlds.ru/load/chistyj_zombie_plague_4_3_by_kto_to/106-1-0-31431",
+      "direct_download_url": "https://cs-hlds.ru/load/0-0-0-1-31431-20",
+      "access": "бесплатно, без регистрации; 25.9 МБ",
+      "why": "3 941 загрузка на одном зеркале, но это САМАЯ мультиплицированная «чистая» сборка: один и тот же архив лежит минимум на пяти площадках (cscontrol.ru, makeserver.ru, cstex.ucoz.com, avp-cs.3dn.ru, cs-hlds.ru) — суммарный охват заведомо десятки тысяч, и де-факто это «народный эталон чистоты» ZP 4.3. Аудит именно её ценен политически: если «чистая by kto_to» окажется грязной, обесценивается весь пласт рекомендаций «ставь эту». Состав: AMXX 1.8.2 [RUS], ZP 4.3 [RUS], MMTimer, XdsOpt, DProto (протокол 47/48) — три посторонних бинарных модуля (MMTimer, XdsOpt, DProto) в metamod/plugins.ini, каждый требует сверки. Заявленные «100% рабочие боты, строящие свои waypoint'ы» — подозрительный маркетинг для 2012 года.",
+      "prior_risk": "medium"
+    },
+    {
+      "slug": "gamemodd-zp44fix5a-upstream",
+      "name": "Zombie Plague Mod 4.4 [Fix5a] — оригинальный пакет плагинов (MeRcyLeZZ, CrazY)",
+      "site": "gamemodd.com",
+      "mod": "Zombie Plague 4.3/4.4 Fix5a (upstream)",
+      "page_url": "https://www.gamemodd.com/cs/mods/4398-zombie-plague-mod-44-fix5a.html",
+      "direct_download_url": "https://www.gamemodd.com/engine/download.php?id=4427",
+      "access": "бесплатно, без регистрации; 4.95 МБ",
+      "why": "Не «сборка», а ЭТАЛОН для дифф-аудита, без которого остальные четыре пункта наполовину бессмысленны. Главное операционное правило комьюнити — не верить .amxx без .sma и пересобирать самому; чтобы это сделать, нужен чистый апстрим-набор исходников ZP от самого MeRcyLeZZ. 22 721 просмотр / 5 326 загрузок, 31.07.2017, авторство подписано. Позволяет: (а) сверить sha256 всех zombie_plague*.amxx из форумных сборок, (б) перекомпилировать .sma эталона своим компилятором и сравнить с поставленными .amxx — именно так ловится бэкдор, дописанный только в бинарник плагина. Альтернативный источник того же апстрима — moddb.com/mods/zombie-plague/downloads/zombie-plague-mod-43 (отдаёт 403 автоматике, качать браузером).",
+      "prior_risk": "low"
+    },
+    {
+      "slug": "sekys-cs-amxpackage-knownbad",
+      "name": "sekys/cs-amxpackage — пакет AMXX с ZP 4.3 (ПОДТВЕРЖДЁННЫЙ бэкдор)",
+      "site": "github.com",
+      "mod": "Zombie Plague 4.3 (zombie_plague43old.sma)",
+      "page_url": "https://github.com/sekys/cs-amxpackage",
+      "direct_download_url": "https://github.com/sekys/cs-amxpackage/archive/refs/heads/master.zip",
+      "access": "бесплатно, публичный репозиторий, git clone / zip",
+      "why": "ПОЛОЖИТЕЛЬНЫЙ КОНТРОЛЬ для всего аудита. Это готовый пакет плагинов с zombie_plague43old.sma, в котором лежит документированный бэкдор из нашего же списка индикаторов: hud.sma → register_clcmd(\"seky\",\"backdoor\",ADMIN_ALL,\"#echo\") + read_argv(1) == \"423789\" + server_cmd(\"%s\", arg2) = полноценный RCE для любого игрока, плюс «плагин-заложник» get_cvar_string(\"rcon_password\", exploit, 24) → server_cmd(\"quit\"). Если наш сканер не подсветит его красным — сканер сломан, и все вердикты «чисто» по остальным сборкам недействительны. Скачивать обязательно, ставить на боевой сервер — никогда. Заодно даёт живые образцы обфускации для калибровки правил грепа.",
+      "prior_risk": "high"
+    },
+    {
+      "slug": "kriansa-cs16-server-baseline",
+      "name": "kriansa/cs-16-server — эталонный чистый CS 1.6 сервер (Docker)",
+      "site": "github.com",
+      "mod": "без ZP (базовый CS 1.6 + Metamod 1.21.1-am + AMXX 1.8.2)",
+      "page_url": "https://github.com/kriansa/cs-16-server",
+      "direct_download_url": "https://github.com/kriansa/cs-16-server/archive/refs/heads/master.zip",
+      "access": "бесплатно, публичный репозиторий, лицензия MIT",
+      "why": "ОТРИЦАТЕЛЬНЫЙ КОНТРОЛЬ и эталон конфигов. 38 звёзд, 14 форков, MIT, полное дерево cstrike/addons/amxmodx/configs с нетронутыми users.ini, cmdaccess.ini, amxx.cfg, modules.ini, metamod/plugins.ini — именно этот репозиторий уже цитируется в наших индикаторах как источник дефолтного cmdaccess.ini. Даёт три вещи: (1) базовую линию для diff всех конфигов форумных сборок (сразу видно amx_default_access ≠ \"z\", лишние строки в plugins.ini, заниженные флаги у amx_rcon), (2) проверку, что сканер НЕ выдаёт ложных срабатываний на нормальном сервере, (3) чистую площадку, куда потом можно накатывать проверенный апстрим ZP вместо любой из скачанных сборок. Набор плагинов минимальный и осмысленный (Gore, HPK, CS Nade Drops, No Nade Through Walls), zombie plague отсутствует.",
+      "prior_risk": "low"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "cscontrol.ru — «Готовый сервер Zombie Plague Mod 4.3 (+боты, +DM)» (https://cscontrol.ru/load/19-1-0-2097)",
+      "reason": "ДУБЛЬ пункта №1 (all-cs.net.ru): идентичное название и состав, но всего 6 550 просмотров против 137 789 загрузок у первоисточника, а файл лежит на мёртвом narod.ru. Оставлен один лучший источник."
+    },
+    {
+      "name": "cs-wz.com/586, cs-fade.ru/586, beni-cs.pro/2154 — «Чистый сервер ZP 4.3Fix5a [DHUD][RUS][ReHLDS]»",
+      "reason": "ДУБЛИ пункта №2: подтверждено совпадением прямой ссылки (yadi.sk/d/gYxkWEv73UXVuY) и одинакового ID материала 586 у cs-wz.com и cs-fade.ru — это DLE-клоны одной базы. Дополнительный минус: cs-wz.com требует регистрацию («Only Registered Users can download»), первоисточник zombie-dev.org — нет."
+    },
+    {
+      "name": "club-cs.ru — «Чистый Zombie Plague 4.3Fix5a + Дополнения» (resources/826)",
+      "reason": "ДУБЛЬ пункта №4 (cs-rage.ru, тот же автор R1CHICOREJZ и тот же архив). Отдельно: домен отдаёт TLS-сертификат от постороннего сайта applelabel.ru (Hostname/IP does not match certificate's altnames) — канал загрузки непроверяем, MITM неотличим от нормы. Качать сборку оттуда нельзя в принципе."
+    },
+    {
+      "name": "zombie-dev.org — «Чистая сборка Zombie Plague 4.3 (2018-2019)» (id 210, yadi.sk/d/OGqeSxGXmduhj)",
+      "reason": "12 458 просмотров, но это второй материал того же автора и сайта, что и отобранный №2, и он слабее: не заявлен современный стек (ReHLDS/Metamod-r/Reunion), состав не расписан. В комментариях 2019 г. массовые жалобы на «Forbidden» при скачивании. Взяли более сильный id 220; при желании — резервный кандидат."
+    },
+    {
+      "name": "makeserver.ru — «Чистый Zombie Plague 4.3» (gotovye-servera/21735)",
+      "reason": "Страница отдаёт HTTP 404 — материал снят. Это же зеркало сборки kto_to, которая отобрана под №5 из живого первоисточника."
+    },
+    {
+      "name": "cstrike-fan.clan.su — «Zombie Plague 4.3. Чистый. Без лишнего.»",
+      "reason": "Всего 1 300 загрузок при весе 134 МБ — низкая популярность, худшее соотношение «объём аудита / охват аудитории». Состав (AMXX+Dproto+Metamod+MMtimer+zombie_plague40/zp_zclasses40) полностью перекрывается пунктом №5."
+    },
+    {
+      "name": "all-hlds.ucoz.net — «Готовый Zombie Plague 4.3 Сервер»",
+      "reason": "1 976 просмотров — на порядок ниже отобранных. Устаревший даже по меркам жанра стек (AMXX 1.8.1, Metamod 1.19, dproto 0.4.8), «поддержка по Skype», прямая ссылка на странице не видна. Плюс объявляет себя «сервер без рекламы» — маркер, а не гарантия."
+    },
+    {
+      "name": "vipcs.pp.ua — «Zombie Plague 4.3 Fix5a» (load/53-1-0-1197)",
+      "reason": "147 загрузок за 13 лет — нерелевантно по популярности. Критично: скачивание проходит ТОЛЬКО через рекламный блок («For download click on one of the links in the ad block») — то есть ad-gate/партнёрский редирект, файл может подменяться на стороне рекламной сети. Не источник для аудита."
+    },
+    {
+      "name": "mejorka.ru, avp-cs.3dn.ru, cstex.ucoz.com, cs-hl1.clan.su, csrulez.ru, files.csupdate.ru/load/servers/zombie/75",
+      "reason": "Мелкие зеркала и каталоги без счётчиков загрузок, раздающие те же «Чистый ZP 4.3» / «ZP 4.3 (RUS)». Ничего нового относительно отобранных №1-№5; каталог csupdate вдобавок не показывает статистику, то есть популярность подтвердить нечем."
+    },
+    {
+      "name": "Sh1ft0x0EF/Zombie-Plague-Mod (GitHub)",
+      "reason": "2 звезды, 2 форка, репозиторий заархивирован (read-only с 01.01.2018). Содержит ZP 5.0.8a, а не 4.3 — другая архитектура (модульные zp50_*), для нашей задачи «ZP 4.3 в первую очередь» нерелевантно. И это только плагины, не сборка сервера."
+    },
+    {
+      "name": "PerfectScrash/Zombie-Plague-Special (GitHub)",
+      "reason": "Архив исходников форка Zombie Plague Special (версии 2.3/3.0/3.1/4.3-Beta2), а не готовая серверная сборка: нет cstrike/-дерева, конфигов, бинарников. Аудитировать нечего — ни users.ini, ни plugins.ini, ни .so. Для эталонного диффа лучше подходит апстрим MeRcyLeZZ (пункт №6)."
+    },
+    {
+      "name": "RDR2Blackwater/counter-strike1.6-zpserver (GitHub)",
+      "reason": "1 звезда, 0 форков, 7 коммитов — популярности нет. В репозитории всего три файла (Dockerfile, LICENSE, README): игрового дерева нет, все бинарники и плагины тянутся ПО ВНЕШНИМ URL на этапе docker build — то есть аудитировать статически нечего, а содержимое может измениться в любой момент. Плюс это Zombie Plague Advance (ZPA), а не ZP 4.3, и автор сам пишет, что боты «работают плохо»."
+    },
+    {
+      "name": "archont94/counter-strike1.6 (GitHub)",
+      "reason": "Базовый Docker-образ CS 1.6 без Zombie Plague; в качестве чистого эталона проигрывает kriansa/cs-16-server (38★ против заметно меньшего охвата) и так же собирается из внешних источников. Роль «чистого контроля» уже закрыта пунктом №8."
+    },
+    {
+      "name": "i-c0112/cs16-amxx-plugins, EAX94/AMXX-Plugins (GitHub)",
+      "reason": "Одиночные .sma-файлы модифицированных ZP (zombie_plague_ic0112.sma, ZOMBIE PLAGUE v3) в мусорных сборниках плагинов. Ни популярности, ни сборки, ни воспроизводимого происхождения."
+    },
+    {
+      "name": "zombie-mod.online, dev-zombie.ru",
+      "reason": "DNS не резолвится (getaddrinfo ENOTFOUND) — площадки мертвы, скачать нечего."
+    },
+    {
+      "name": "ModDB — «Zombie Plague Mod 4.3» (moddb.com/mods/zombie-plague/downloads/zombie-plague-mod-43)",
+      "reason": "Канонический апстрим и по сути лучший эталон, НО отдаёт 403 автоматизированной загрузке (Cloudflare) — в конвейер не встраивается. Роль эталона отдана gamemodd (пункт №6, прямая ссылка работает); ModDB оставлен как ручная сверка версии 4.3 браузером."
+    },
+    {
+      "name": "Платные сборки из «shop»-разделов zombie-dev.org / cs-rage.ru и приватные сборки с привилегиями",
+      "reason": "Нарушают критерий №2 (доступность без оплаты). Отдельно отмечу для аудита бесплатных: наличие у автора платной ветки — прямой мотив зашить в бесплатную «привязку» (проверка hostname/IP/rcon_password с server_cmd(\"quit\")) и/или fg_keys.ini-подобную лицензионную проверку с хождением наружу."
+    }
+  ]
+}

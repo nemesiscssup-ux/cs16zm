@@ -1,0 +1,14 @@
+{
+  "slug": "cshlds-zp43-ready-2010",
+  "requestedUrl": "https://cs-hlds.ru/load/0-0-0-4902-20",
+  "referer": "https://cs-hlds.ru/load/gotovyj_server_zombie_plague_4_3/57-1-0-4902",
+  "fetchedAt": "2026-08-03T22:34:54.453Z",
+  "httpStatus": 200,
+  "finalUrl": "https://cs-hlds.ru/load/0-0-0-4902-20",
+  "contentType": "text/html",
+  "file": "0-0-0-4902-20",
+  "size": 6511940,
+  "sha256": "73401BD0DE607D8B884ECC3363D7DF0D76CDCC71F89F9254D7C99D5747AE214E",
+  "looksLikeHtml": false,
+  "ok": true
+}
