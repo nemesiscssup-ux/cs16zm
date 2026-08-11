@@ -1,0 +1,361 @@
+# Аудит сборки: csdead-cartoon
+
+**Вердикт: ПОДОЗРИТЕЛЬНАЯ — есть находки высокой важности**
+
+Проверено 5944 файлов, 859.8 МБ. Дата: 2026-08-04.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 0 | 2 | 108 | 3 | 0 |
+
+Состав: плагинов 85, исходников 46, бинарников 55, скриптов 1, конфигов 345, контента 5107.
+
+## Находки
+
+### high
+
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `multiki/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 49: "xman2030" "zakzak" "abcdefghijklmnopqrstu" "a"`
+- **no-sources** — Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.
+  - файл: `(сводно)`
+  - улика: `15 из 85: csstats.amxx, amxmod_compat.amxx, mapchooser.amxx, menufront.amxx, mutemenu.amxx, talrasha_camera.amxx, zp_creator_euro_add.amxx, zp_creator_euro_remove.amxx, zp_impertor_airbooster.amxx, zp_kills_score.amxx, zp_leader_starchasersr.amxx, zp_machinegun_m134moto.amxx`
+### medium
+
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/a3dapi.dll`
+  - улика: `a3dapi.dll (211456 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/core.dll`
+  - улика: `core.dll (312832 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/crashhandler.dll`
+  - улика: `crashhandler.dll (282536 байт)`
+- **users-malformed** — Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.
+  - файл: `multiki/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 46: : Àäìèíêà ïî IP "192.168.0.152" "" "abcdefghijkmnopqrstu" "de"`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/data/WinCSX.exe`
+  - улика: `WinCSX.exe (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/dlls/amxmodx_mm.dll`
+  - улика: `amxmodx_mm.dll (610304 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/cstrike_amxx.dll`
+  - улика: `cstrike_amxx.dll (118784 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/csx_amxx.dll`
+  - улика: `csx_amxx.dll (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/engine_amxx.dll`
+  - улика: `engine_amxx.dll (151552 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/fakemeta_amxx.dll`
+  - улика: `fakemeta_amxx.dll (274432 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/fun_amxx.dll`
+  - улика: `fun_amxx.dll (102400 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/geoip_amxx.dll`
+  - улика: `geoip_amxx.dll (106496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/hamsandwich_amxx.dll`
+  - улика: `hamsandwich_amxx.dll (180224 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/mysql_amxx.dll`
+  - улика: `mysql_amxx.dll (1560576 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/nvault_amxx.dll`
+  - улика: `nvault_amxx.dll (118784 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/regex_amxx.dll`
+  - улика: `regex_amxx.dll (225280 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/sockets_amxx.dll`
+  - улика: `sockets_amxx.dll (77824 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/amxmodx/modules/sqlite_amxx.dll`
+  - улика: `sqlite_amxx.dll (380928 байт)`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/talrasha_camera.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_admin_catgun.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_admin_destroyer.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_admin_ethereal.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_all_jump.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_ak47long.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_aquablaster.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_arxmoto.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_devilbaby.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_famas_pixel.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_automat_lego_crow3.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_boss_guardian.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_boss_jetpack.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_boss_trumpet.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_creator_dragonlore.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_creator_jump.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_extra_norecoil.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_imperator_thunderbolt.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_impertor_airbooster.amxx`
+  - улика: `set_user_flags + engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_impertor_airbooster.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_kills_score.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_knifes.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_leader_buffm249.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_leader_starchasersr.amxx`
+  - улика: `set_user_flags + engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_leader_starchasersr.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_leader_tornado.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_m134moto.amxx`
+  - улика: `set_user_flags + engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_m134moto.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_mg3neon.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_main_dual_berretas_gunslinger.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_main_pumpkin.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_main_stun_rifle.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_parachute.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_pistols_dbuff.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_pistol_elephant.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_respawn_h.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_rifle_falconvsk94.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_rifle_pandacrossbow.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_score.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_sniper_savery.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_vip_ak47buff.amxx`
+  - улика: `set_user_flags + engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_vip_ak47buff.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_vip_sg552buff.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_vip_speargun.amxx`
+  - улика: `set_user_flags + engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_vip_speargun.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `multiki/cstrike/addons/amxmodx/plugins/zp_watermelon_system.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `multiki/cstrike/addons/amxmodx/scripting/zombie_plague40.sma`
+  - улика: `cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `multiki/cstrike/addons/amxmodx/scripting/zombie_plague40.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/dproto/dlls/dproto.dll`
+  - улика: `dproto.dll (284160 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/metamod/dlls/metamod.dll`
+  - улика: `metamod.dll (352256 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/podbot/podbot_mm.dll`
+  - улика: `podbot_mm.dll (417792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/podbot/podbot_mm_amd64.so`
+  - улика: `podbot_mm_amd64.so (471776 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/podbot/podbot_mm_i386.so`
+  - улика: `podbot_mm_i386.so (522164 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/addons/reu/reunion_mm.dll`
+  - улика: `reunion_mm.dll (213504 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/cl_dlls/client.dll`
+  - улика: `client.dll (1093128 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/cl_dlls/client.so`
+  - улика: `client.so (9081204 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/dlls/cs.so`
+  - улика: `cs.so (11688663 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/dlls/cs_amd64.so`
+  - улика: `cs_amd64.so (2761954 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/cstrike/dlls/mp.dll`
+  - улика: `mp.dll (1322496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/demoplayer.dll`
+  - улика: `demoplayer.dll (123904 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/filesystem_stdio.dll`
+  - улика: `filesystem_stdio.dll (169472 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/hlds.exe`
+  - улика: `hlds.exe (278016 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/hlds_console.exe`
+  - улика: `hlds_console.exe (460404 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/hltv.exe`
+  - улика: `hltv.exe (289792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/Mss32.dll`
+  - улика: `Mss32.dll (446976 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/platform/admin/AdminServer.dll`
+  - улика: `AdminServer.dll (454656 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/proxy.dll`
+  - улика: `proxy.dll (351232 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/SDL2.dll`
+  - улика: `SDL2.dll (652800 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/Steam.dll`
+  - улика: `Steam.dll (2975096 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/steamclient.dll`
+  - улика: `steamclient.dll (8859328 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/steam_api.dll`
+  - улика: `steam_api.dll (103920 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/swds.dll`
+  - улика: `swds.dll (1055744 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/tier0.dll`
+  - улика: `tier0.dll (338944 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/tier0_s.dll`
+  - улика: `tier0_s.dll (284864 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/cl_dlls/client.dll`
+  - улика: `client.dll (630272 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/cl_dlls/client.so`
+  - улика: `client.so (3997515 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/dlls/director.dll`
+  - улика: `director.dll (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/dlls/director.so`
+  - улика: `director.so (208582 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/dlls/hl.dll`
+  - улика: `hl.dll (1011192 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/valve/dlls/hl.so`
+  - улика: `hl.so (6766372 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/vgui.dll`
+  - улика: `vgui.dll (400920 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/vgui2.dll`
+  - улика: `vgui2.dll (241152 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/voice_miles.dll`
+  - улика: `voice_miles.dll (53248 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/voice_speex.dll`
+  - улика: `voice_speex.dll (139264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/vstdlib.dll`
+  - улика: `vstdlib.dll (331264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `multiki/vstdlib_s.dll`
+  - улика: `vstdlib_s.dll (248512 байт)`
+- **official-name-other-content** — Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.
+  - файл: `(сводно)`
+  - улика: `4 шт.: csstats.amxx, amxmod_compat.amxx, mapchooser.amxx, menufront.amxx`
+### low
+
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `multiki/valve/autoexec.cfg`
+  - улика: `exec violence.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `multiki/valve/server.cfg`
+  - улика: `exec listip.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `multiki/valve/valve.rc`
+  - улика: `exec language.cfg`
+
+Совпало с эталоном по SHA256: 24 плагинов — они заведомо оригинальные.

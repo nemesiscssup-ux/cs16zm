@@ -1,0 +1,56 @@
+{
+  "slug": "yapb-4.4.957-windows",
+  "target": "E:\\cs16zm\\upstream\\reference\\yapb-4.4.957-windows",
+  "scanned": "2026-08-04T10:15:40.559Z",
+  "totals": {
+    "files": 63,
+    "bytes": 3106982
+  },
+  "defender": {
+    "available": true,
+    "threatFound": false,
+    "output": "Scan starting...\r\nScan finished.\r\nScanning E:\\cs16zm\\upstream\\reference\\yapb-4.4.957-windows found no threats."
+  },
+  "findings": [],
+  "plugins": [],
+  "sourceFindings": [],
+  "inventory": {
+    "executables": [
+      {
+        "file": "addons/yapb/bin/yapb.dll",
+        "size": 900536,
+        "hash": "7F4C2F661E8F177FB3AA14B54FE370482C74A00AF432C884CB928B76CDDF4504",
+        "knownAs": null
+      }
+    ],
+    "scripts": [],
+    "configs": [
+      "addons/yapb/conf/avatars.cfg",
+      "addons/yapb/conf/chatter.cfg",
+      "addons/yapb/conf/custom.cfg",
+      "addons/yapb/conf/difficulty.cfg",
+      "addons/yapb/conf/lang/de_chat.cfg",
+      "addons/yapb/conf/lang/de_lang.cfg",
+      "addons/yapb/conf/lang/en_chat.cfg",
+      "addons/yapb/conf/lang/en_names.cfg",
+      "addons/yapb/conf/lang/ru_chat.cfg",
+      "addons/yapb/conf/lang/ru_lang.cfg",
+      "addons/yapb/conf/lang/ru_names.cfg",
+      "addons/yapb/conf/logos.cfg",
+      "addons/yapb/conf/weapon.cfg",
+      "addons/yapb/conf/yapb.cfg"
+    ],
+    "plugins": 0,
+    "sources": 0,
+    "content": 0,
+    "other": 48
+  },
+  "verdict": "clean",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 0,
+    "high": 0,
+    "critical": 0
+  }
+}

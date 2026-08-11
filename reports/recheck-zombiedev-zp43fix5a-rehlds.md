@@ -1,0 +1,238 @@
+# Аудит сборки: recheck-zombiedev-zp43fix5a-rehlds
+
+**Вердикт: ПОДОЗРИТЕЛЬНАЯ — есть находки высокой важности**
+
+Проверено 6469 файлов, 766.8 МБ. Дата: 2026-08-04.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 0 | 2 | 67 | 3 | 0 |
+
+Состав: плагинов 36, исходников 7, бинарников 58, скриптов 1, конфигов 1124, контента 4782.
+
+## Находки
+
+### high
+
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 49: "xman2030" "1" "abcdefghijklmnopqrstu" "a"`
+- **no-sources** — Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.
+  - файл: `(сводно)`
+  - улика: `6 из 36: csstats.amxx, mapchooser.amxx, menufront.amxx, mutemenu.amxx, red_cannon.amxx, weaponmenu.amxx`
+### medium
+
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/a3dapi.dll`
+  - улика: `a3dapi.dll (211456 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/core.dll`
+  - улика: `core.dll (312832 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/crashhandler.dll`
+  - улика: `crashhandler.dll (282536 байт)`
+- **users-malformed** — Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 46: : Àäìèíêà ïî IP "192.168.0.152" "" "abcdefghijkmnopqrstu" "de"`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/data/WinCSX.exe`
+  - улика: `WinCSX.exe (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/dlls/amxmodx_mm.dll`
+  - улика: `amxmodx_mm.dll (1928192 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/cstrike_amxx.dll`
+  - улика: `cstrike_amxx.dll (118784 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/csx_amxx.dll`
+  - улика: `csx_amxx.dll (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/engine_amxx.dll`
+  - улика: `engine_amxx.dll (151552 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/fakemeta_amxx.dll`
+  - улика: `fakemeta_amxx.dll (274432 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/fun_amxx.dll`
+  - улика: `fun_amxx.dll (102400 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/geoip_amxx.dll`
+  - улика: `geoip_amxx.dll (106496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/hamsandwich_amxx.dll`
+  - улика: `hamsandwich_amxx.dll (180224 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/mysql_amxx.dll`
+  - улика: `mysql_amxx.dll (1560576 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/nvault_amxx.dll`
+  - улика: `nvault_amxx.dll (118784 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/regex_amxx.dll`
+  - улика: `regex_amxx.dll (225280 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/sockets_amxx.dll`
+  - улика: `sockets_amxx.dll (77824 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/modules/sqlite_amxx.dll`
+  - улика: `sqlite_amxx.dll (380928 байт)`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/plugins/red_cannon.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/plugins/zp_level_system.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/scripting/compiled/zombie_plague40.amxx`
+  - улика: `set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/scripting/compiled/zombie_plague40.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/scripting/compiled/zombie_plague40.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/scripting/zombie_plague40.sma`
+  - улика: `cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/amxmodx/scripting/zombie_plague40.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/dproto/dlls/dproto.dll`
+  - улика: `dproto.dll (284160 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/metamod/dlls/metamod.dll`
+  - улика: `metamod.dll (352256 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/podbot/podbot_mm.dll`
+  - улика: `podbot_mm.dll (417792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/podbot/podbot_mm_amd64.so`
+  - улика: `podbot_mm_amd64.so (471776 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/podbot/podbot_mm_i386.so`
+  - улика: `podbot_mm_i386.so (522164 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/addons/reu/reunion_mm.dll`
+  - улика: `reunion_mm.dll (213504 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/cl_dlls/client.dll`
+  - улика: `client.dll (1093128 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/cl_dlls/client.so`
+  - улика: `client.so (9081204 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/dlls/cs.so`
+  - улика: `cs.so (11688663 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/dlls/cs_amd64.so`
+  - улика: `cs_amd64.so (2761954 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/cstrike/dlls/mp.dll`
+  - улика: `mp.dll (1322496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/demoplayer.dll`
+  - улика: `demoplayer.dll (123904 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/filesystem_stdio.dll`
+  - улика: `filesystem_stdio.dll (169472 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/hlds.exe`
+  - улика: `hlds.exe (278016 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/hlds_console.exe`
+  - улика: `hlds_console.exe (460404 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/hltv.exe`
+  - улика: `hltv.exe (289792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/Mss32.dll`
+  - улика: `Mss32.dll (446976 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/platform/admin/AdminServer.dll`
+  - улика: `AdminServer.dll (454656 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/proxy.dll`
+  - улика: `proxy.dll (351232 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/SDL2.dll`
+  - улика: `SDL2.dll (652800 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/Steam.dll`
+  - улика: `Steam.dll (2975096 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/steamclient.dll`
+  - улика: `steamclient.dll (8859328 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/steam_api.dll`
+  - улика: `steam_api.dll (103920 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/swds.dll`
+  - улика: `swds.dll (1055744 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/tier0.dll`
+  - улика: `tier0.dll (338944 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/tier0_s.dll`
+  - улика: `tier0_s.dll (284864 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/cl_dlls/client.dll`
+  - улика: `client.dll (630272 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/cl_dlls/client.so`
+  - улика: `client.so (3997515 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/dlls/director.dll`
+  - улика: `director.dll (131072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/dlls/director.so`
+  - улика: `director.so (208582 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/dlls/hl.dll`
+  - улика: `hl.dll (1011192 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/dlls/hl.so`
+  - улика: `hl.so (6766372 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/vgui.dll`
+  - улика: `vgui.dll (400920 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/vgui2.dll`
+  - улика: `vgui2.dll (241152 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/voice_miles.dll`
+  - улика: `voice_miles.dll (53248 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/voice_speex.dll`
+  - улика: `voice_speex.dll (139264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/vstdlib.dll`
+  - улика: `vstdlib.dll (331264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `REHLDS_ZP43-ZA.RU/vstdlib_s.dll`
+  - улика: `vstdlib_s.dll (248512 байт)`
+- **official-name-other-content** — Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.
+  - файл: `(сводно)`
+  - улика: `4 шт.: csstats.amxx, amxmod_compat.amxx, mapchooser.amxx, menufront.amxx`
+### low
+
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/autoexec.cfg`
+  - улика: `exec violence.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/server.cfg`
+  - улика: `exec listip.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `REHLDS_ZP43-ZA.RU/valve/valve.rc`
+  - улика: `exec language.cfg`
+
+Совпало с эталоном по SHA256: 24 плагинов — они заведомо оригинальные.

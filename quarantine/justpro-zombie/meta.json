@@ -1,0 +1,12 @@
+{
+  "slug": "justpro-zombie",
+  "name": "JUST PRO ZOMBIE (NEW BALANCE)",
+  "source": "локальный файл владельца: f:\Downloads\JUST PRO ZOMBIE.rar",
+  "fetched": "2026-08-04",
+  "archive": "JUST PRO ZOMBIE.rar",
+  "sha256": "870AE4B3C2E9839D43FFF1EF5757C3D058FB93ACE5197DF12FA9842B4B1AC4A8",
+  "size": 401398000,
+  "files": 3929,
+  "verdict": "dirty",
+  "note": "Взяты ТОЛЬКО модели оружия (данные), после сверки со штатными и разбора заголовков. Ни одного бинарника и ни одного плагина в сервер не перенесено."
+}

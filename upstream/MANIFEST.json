@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-03T22:23:29.079Z",
+  "generated": "2026-08-04T10:15:00.479Z",
   "components": [
     {
       "name": "ReHLDS",
@@ -100,6 +100,26 @@
       "role": "модуль Counter-Strike для AMXX, Windows",
       "sha256": "2AF7C8BB62C60F3AC0641F2BCCD84F8DEE50618BEC48DC24846F7B1405BD9D1F",
       "size": 366516
+    },
+    {
+      "name": "YaPB",
+      "version": "4.4.957",
+      "platform": "linux",
+      "url": "https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz",
+      "file": "yapb-4.4.957-linux.tar.xz",
+      "role": "боты для проверки режима и «оживления» пустого сервера, Linux",
+      "sha256": "8C095AC89B9B2CCC70A66A71D608E1A570B5268C57C6083CED8C06161533A4B1",
+      "size": 1795296
+    },
+    {
+      "name": "YaPB",
+      "version": "4.4.957",
+      "platform": "windows",
+      "url": "https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-windows.zip",
+      "file": "yapb-4.4.957-windows.zip",
+      "role": "то же для локального прогона, Windows",
+      "sha256": "C32A5B4D77C08C3C59C417568C5719F9227238C6D627D478CFB1D9F7D9C113F4",
+      "size": 2050331
     }
   ]
 }

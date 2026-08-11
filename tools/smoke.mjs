@@ -73,12 +73,33 @@ function stop() {
   } catch { /* уже завершился */ }
 }
 
+// Имя сервера задаётся в боевом server.cfg. Сразу после старта сервер ещё
+// отзывается заводским «Half-Life», поэтому первый же ответ брать нельзя:
+// нужно дождаться, пока конфиг применится — это заодно и есть доказательство,
+// что он применился.
+const wantName = existsSync(join(RUN, 'cstrike', 'server.cfg'))
+  // ⚠️ utf8, а НЕ latin1: имя сервера теперь русское («Вспышка эпидемии»), и
+  // прочитанное побайтово оно превращается в «ÐÑÐ¿ÑÑÐºÐ°». Сравнение с
+  // ответом сервера тогда не сходится, хотя в игре имя показывается верно —
+  // движок отдаёт байты как есть, а клиент читает их как UTF-8.
+  ? readFileSync(join(RUN, 'cstrike', 'server.cfg'), 'utf8').match(/^hostname\s+"(.*)"/m)?.[1] ?? null
+  : null
+
+const serverName = buf => {
+  let p = 5
+  if (buf[4] === 0x49) p += 1
+  return readCString(buf, p).value
+}
+
 let answer = null
+let nameApplied = false
 const deadline = Date.now() + 90_000
 while (Date.now() < deadline) {
   await sleep(3000)
-  answer = await query()
-  if (answer) break
+  const got = await query()
+  if (!got) continue
+  answer = got
+  if (!wantName || serverName(got) === wantName) { nameApplied = true; break }
 }
 
 const checks = []
@@ -94,6 +115,24 @@ if (answer) {
   r = readCString(answer, p); const game = r.value
   add('сервер отвечает на игровой запрос', true, `${name} | карта ${map} | ${folder}/${game}`)
   add('загружена запрошенная карта', map.toLowerCase() === MAP.toLowerCase(), `ожидалась ${MAP}, получена ${map}`)
+  add('боевой server.cfg применён', nameApplied,
+    wantName ? `имя из конфига «${wantName}», сервер отдал «${name}»` : 'в server.cfg нет hostname')
+
+  // Боты подключаются не мгновенно, поэтому спрашиваем ещё раз чуть позже.
+  // За строками идут: id игры (2 байта), затем игроки, слоты и боты по байту.
+  let bots = 0, players = 0, slots = 0
+  for (let i = 0; i < 8; i++) {
+    await sleep(2500)
+    const again = await query()
+    if (!again) continue
+    let q = 5
+    if (again[4] === 0x49) q += 1
+    for (let s = 0; s < 4; s++) q = readCString(again, q).next
+    q += 2
+    players = again[q]; slots = again[q + 1]; bots = again[q + 2]
+    if (bots > 0) break
+  }
+  add('боты зашли на сервер', bots > 0, `игроков ${players} из ${slots}, из них ботов ${bots}`)
 } else {
   add('сервер отвечает на игровой запрос', false, 'ответа нет за 90 секунд')
 }
@@ -107,6 +146,7 @@ const marker = (label, re) => {
   add(label, Boolean(m), m ? m[0].trim().replace(/\s+/g, ' ').slice(0, 120) : 'в выводе не найдено')
 }
 marker('Metamod-r загружен', /Metamod-r v[\d.]+[^\n]*/i)
+marker('YaPB загружен', /Yet Another POD-?Bot[^\n]*|\bYaPB\b[^\n]*/i)
 marker('AMX Mod X загружен', /AMX Mod X version [\d.]+[^\n]*/i)
 marker('ReGameDLL загружен', /ReGameDLL version: [^\n]*/i)
 marker('Zombie Plague запущен', /Zombie Plague[^\n]*running/i)

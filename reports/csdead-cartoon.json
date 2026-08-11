@@ -1,0 +1,2665 @@
+{
+  "slug": "csdead-cartoon",
+  "target": "E:\\cs16zm\\quarantine\\csdead-cartoon\\extracted",
+  "scanned": "2026-08-04T17:02:49.707Z",
+  "totals": {
+    "files": 5944,
+    "bytes": 901548520
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "a3dapi.dll (211456 байт)",
+      "file": "multiki/a3dapi.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "core.dll (312832 байт)",
+      "file": "multiki/core.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "crashhandler.dll (282536 байт)",
+      "file": "multiki/crashhandler.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "users-malformed",
+      "why": "Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.",
+      "evidence": "строка 46: : Àäìèíêà ïî IP \"192.168.0.152\" \"\" \"abcdefghijkmnopqrstu\" \"de\"",
+      "file": "multiki/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "high",
+      "rule": "users-shipped-credentials",
+      "why": "В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.",
+      "evidence": "строка 49: \"xman2030\" \"zakzak\" \"abcdefghijklmnopqrstu\" \"a\"",
+      "file": "multiki/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "WinCSX.exe (131072 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/data/WinCSX.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxmodx_mm.dll (610304 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/dlls/amxmodx_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cstrike_amxx.dll (118784 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/cstrike_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "csx_amxx.dll (131072 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/csx_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "engine_amxx.dll (151552 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/engine_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "fakemeta_amxx.dll (274432 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/fakemeta_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "fun_amxx.dll (102400 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/fun_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "geoip_amxx.dll (106496 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/geoip_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hamsandwich_amxx.dll (180224 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/hamsandwich_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "mysql_amxx.dll (1560576 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/mysql_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "nvault_amxx.dll (118784 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/nvault_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "regex_amxx.dll (225280 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/regex_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "sockets_amxx.dll (77824 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/sockets_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "sqlite_amxx.dll (380928 байт)",
+      "file": "multiki/cstrike/addons/amxmodx/modules/sqlite_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/talrasha_camera.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_catgun.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_destroyer.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_ethereal.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_all_jump.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_ak47long.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_aquablaster.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_arxmoto.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_devilbaby.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_famas_pixel.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_lego_crow3.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_guardian.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_jetpack.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_trumpet.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_dragonlore.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_jump.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_extra_norecoil.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_imperator_thunderbolt.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_impertor_airbooster.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_impertor_airbooster.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_kills_score.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_knifes.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_buffm249.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_starchasersr.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_starchasersr.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_tornado.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_m134moto.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_m134moto.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_mg3neon.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_dual_berretas_gunslinger.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_pumpkin.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_stun_rifle.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_parachute.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_pistols_dbuff.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_pistol_elephant.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_respawn_h.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_rifle_falconvsk94.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_rifle_pandacrossbow.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_score.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_sniper_savery.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_ak47buff.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_ak47buff.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_sg552buff.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_speargun.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_speargun.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_watermelon_system.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/scripting/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "multiki/cstrike/addons/amxmodx/scripting/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "dproto.dll (284160 байт)",
+      "file": "multiki/cstrike/addons/dproto/dlls/dproto.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "metamod.dll (352256 байт)",
+      "file": "multiki/cstrike/addons/metamod/dlls/metamod.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm.dll (417792 байт)",
+      "file": "multiki/cstrike/addons/podbot/podbot_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm_amd64.so (471776 байт)",
+      "file": "multiki/cstrike/addons/podbot/podbot_mm_amd64.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm_i386.so (522164 байт)",
+      "file": "multiki/cstrike/addons/podbot/podbot_mm_i386.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "reunion_mm.dll (213504 байт)",
+      "file": "multiki/cstrike/addons/reu/reunion_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.dll (1093128 байт)",
+      "file": "multiki/cstrike/cl_dlls/client.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.so (9081204 байт)",
+      "file": "multiki/cstrike/cl_dlls/client.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cs.so (11688663 байт)",
+      "file": "multiki/cstrike/dlls/cs.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cs_amd64.so (2761954 байт)",
+      "file": "multiki/cstrike/dlls/cs_amd64.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "mp.dll (1322496 байт)",
+      "file": "multiki/cstrike/dlls/mp.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "demoplayer.dll (123904 байт)",
+      "file": "multiki/demoplayer.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "filesystem_stdio.dll (169472 байт)",
+      "file": "multiki/filesystem_stdio.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hlds.exe (278016 байт)",
+      "file": "multiki/hlds.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hlds_console.exe (460404 байт)",
+      "file": "multiki/hlds_console.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hltv.exe (289792 байт)",
+      "file": "multiki/hltv.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "Mss32.dll (446976 байт)",
+      "file": "multiki/Mss32.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "AdminServer.dll (454656 байт)",
+      "file": "multiki/platform/admin/AdminServer.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "proxy.dll (351232 байт)",
+      "file": "multiki/proxy.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "SDL2.dll (652800 байт)",
+      "file": "multiki/SDL2.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "Steam.dll (2975096 байт)",
+      "file": "multiki/Steam.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "steamclient.dll (8859328 байт)",
+      "file": "multiki/steamclient.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "steam_api.dll (103920 байт)",
+      "file": "multiki/steam_api.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "swds.dll (1055744 байт)",
+      "file": "multiki/swds.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "tier0.dll (338944 байт)",
+      "file": "multiki/tier0.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "tier0_s.dll (284864 байт)",
+      "file": "multiki/tier0_s.dll"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec violence.cfg",
+      "file": "multiki/valve/autoexec.cfg"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.dll (630272 байт)",
+      "file": "multiki/valve/cl_dlls/client.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.so (3997515 байт)",
+      "file": "multiki/valve/cl_dlls/client.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "director.dll (131072 байт)",
+      "file": "multiki/valve/dlls/director.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "director.so (208582 байт)",
+      "file": "multiki/valve/dlls/director.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hl.dll (1011192 байт)",
+      "file": "multiki/valve/dlls/hl.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hl.so (6766372 байт)",
+      "file": "multiki/valve/dlls/hl.so"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec listip.cfg",
+      "file": "multiki/valve/server.cfg"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec language.cfg",
+      "file": "multiki/valve/valve.rc"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vgui.dll (400920 байт)",
+      "file": "multiki/vgui.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vgui2.dll (241152 байт)",
+      "file": "multiki/vgui2.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "voice_miles.dll (53248 байт)",
+      "file": "multiki/voice_miles.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "voice_speex.dll (139264 байт)",
+      "file": "multiki/voice_speex.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vstdlib.dll (331264 байт)",
+      "file": "multiki/vstdlib.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vstdlib_s.dll (248512 байт)",
+      "file": "multiki/vstdlib_s.dll"
+    },
+    {
+      "severity": "high",
+      "rule": "no-sources",
+      "why": "Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.",
+      "evidence": "15 из 85: csstats.amxx, amxmod_compat.amxx, mapchooser.amxx, menufront.amxx, mutemenu.amxx, talrasha_camera.amxx, zp_creator_euro_add.amxx, zp_creator_euro_remove.amxx, zp_impertor_airbooster.amxx, zp_kills_score.amxx, zp_leader_starchasersr.amxx, zp_machinegun_m134moto.amxx",
+      "file": "(сводно)"
+    },
+    {
+      "severity": "medium",
+      "rule": "official-name-other-content",
+      "why": "Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.",
+      "evidence": "4 шт.: csstats.amxx, amxmod_compat.amxx, mapchooser.amxx, menufront.amxx",
+      "file": "(сводно)"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "multiki/cstrike/addons/amxmodx/data/csstats.amxx",
+      "hash": "0FC20B0C30F759597D062629F2CA9B358FEDB554313D7DD7CA1891BEF2417A33",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/admin.amxx",
+      "hash": "FBE821D7BFAEBBC5ACF88F727D98A1E6634FEB76BF39B7B7D95FE902F48AA9E0",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admin.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/adminchat.amxx",
+      "hash": "DFF663818756D38817D2CD6249AEB7EA0A2180EEA2F2C6A3C1EC6D992C269268",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminchat.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/admincmd.amxx",
+      "hash": "74F28764A38669D3A4D6BDAC2B608B0DE111C756792E223507249827F14CC8D4",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admincmd.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/adminhelp.amxx",
+      "hash": "FA87F4A80387E3347FD55CCB3E74570102D70947176450D76BE7FB47F5929AC5",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminhelp.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/adminslots.amxx",
+      "hash": "BC1E03C2D9FCCE093C928DA1551811BCF4F732A059F3026779D8FAC3DE8ADD72",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminslots.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/adminvote.amxx",
+      "hash": "55D5E61FF0DA2DFB67BC63F9A1894231918800EEB9B83648D6B23EE6714F11BF",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/adminvote.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/admin_sql.amxx",
+      "hash": "A68CB7731534BD2AC59DE07845D4741AA2DFA85151E34921EF6B6411E68A8BC2",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/admin_sql.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/amxmod_compat.amxx",
+      "hash": "E6A6E6B973D1CFA74DC75098254B7EB2D024F58AFA7D67F47A8AD3FB5EA1F879",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/antiflood.amxx",
+      "hash": "0132AAE2EDC53ABF8416ACD306C42711A32BBF7FE461FF8E6C71C3AE7D231272",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/antiflood.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hash": "81A875B5FF88D0A05FDF20B8D08127D5FBADC41F9020354F22F76F6DB8C392E0",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/imessage.amxx",
+      "hash": "D099F9B5BCC194D01505FDE34169861D500C0CCF895DB88F755E6C25CC808777",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/imessage.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/mapchooser.amxx",
+      "hash": "8C795EDC6400A37773B999987848AB7D4D0947F5209CFCB59D9ADF21FF538714",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hash": "F14B86C0267B5D1C6D357D6F34D08040053B0AC0AB51FDF3011FE0F3985409B9",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/menufront.amxx",
+      "hash": "6B57B8741752A45ACE7CB516931E5474173989B7A5558936DDB3AA75304A60D0",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/miscstats.amxx",
+      "hash": "2805A9C19EEE4F3ED15462E2A3F860F1BDC50D32262D4A43862E38F835550C0E",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/miscstats.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/multilingual.amxx",
+      "hash": "5B5410413D6C6E33AE6CF8E7E35BBFDE2ADF57064EE74EFD92B25FB5DB58D5BF",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/multilingual.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/mutemenu.amxx",
+      "hash": "7629E3BB68788D96E6903559298FD90A50233CE59323E843BD96F3E1B02D838F",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 19,
+      "strings": 12,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "mutemenu.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/nextmap.amxx",
+      "hash": "635986D3DEEF59CA9371648E59E5AB4896780F9A6626C2CF2E57D0D92AD5A8F1",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/nextmap.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/pausecfg.amxx",
+      "hash": "6420AA76E6A7EF0D87D594B4FF98C45FC6A19388873B8F2D3539B1552BC46E49",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/pausecfg.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/plmenu.amxx",
+      "hash": "A1BF99A14C4738AD27453926EDD3B146CF221225279CA23877864F97D988D023",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/plmenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hash": "98EEEC547DC83FC9FF3544C3B3C4516F3F43999200B991EC633398514F2D8659",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/restmenu.amxx",
+      "hash": "3CBC5D6AA521995FCE533E07FDE1B3165A65245855C5BF80A4BE50CF4316A307",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/restmenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hash": "F528E39C2CAB78DDB91A510B73A264D66515881D3FEBCD2FA337FB0B78A94ACB",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/statscfg.amxx",
+      "hash": "9AEA0EFEA23F76BDF512759138BB4B6243C7A51A64EF1CA7C025BE9498BE079F",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/statscfg.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/statsx.amxx",
+      "hash": "FFD330D13A5613F033CBAAA01BC967F79BB04160111C119BE30FE8554738AC52",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/statsx.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/stats_logging.amxx",
+      "hash": "397966E0C4EBD8F54D5F935CD9E9E8686A3312A1BBF766C49649CACE4821C089",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-cstrike-windows/addons/amxmodx/plugins/stats_logging.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/talrasha_camera.amxx",
+      "hash": "3D2C86940F8AA54941C029DE6E71B0C1C8B505F0BFEDC0A10657B00AD198B2CA",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 29,
+      "strings": 7,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "talrasha_camera.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/telemenu.amxx",
+      "hash": "E8E0BB147746AFE79FF6DA2B6C946D1BDA4A1A32B2B3B39971D7EB570E1C266A",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/telemenu.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/timeleft.amxx",
+      "hash": "D7CA109026ED450C0CCD9AF142028A2671ED35270AD63D1AFBA29A3A0048520F",
+      "verdict": "known-good",
+      "knownAs": "amxmodx-1.8.2-base-windows/addons/amxmodx/plugins/timeleft.amxx",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zombie_plague40.amxx",
+      "hash": "E3510B0F89A015F6CF23CBA2D0206F8F1475CD35BF2212A0B630E124CEC0F1FB",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 173,
+      "strings": 858,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_catgun.amxx",
+      "hash": "D4FE094A4BB367376E411DB3D3A9BBAF8DF33907322F13B260141D8BB2333205",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 184,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_destroyer.amxx",
+      "hash": "BAC01634004FB2D3DE33F0486210B6F288B2F2531AF3A55485B0A4D197D199B8",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 203,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_admin_ethereal.amxx",
+      "hash": "9A5676F760B88AB4DB8FB712AB5CA6D61F698CF78644F81B1154CB91CE82EB35",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 152,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_all_hook.amxx",
+      "hash": "C9EBA0699274ACBF4D8F85F6997FC8F26FA1D59BF1362A1527BD4039AD2D2607",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 23,
+      "strings": 0,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_all_jump.amxx",
+      "hash": "5016BE7939EDFCC0232F8B9ADCB1ACD8CDFC2640867B9542255ED437A9F8C22A",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 14,
+      "strings": 42,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_ak47long.amxx",
+      "hash": "EFBB44FD28CF6065EA5AD1A49850579C33D13430AA6670A9CDFD46F8C08EBEAE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 190,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_aquablaster.amxx",
+      "hash": "79C711406B993385ABCD27B465E8BB78A6995C4B117794FA223685B371A19C65",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 168,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_arxmoto.amxx",
+      "hash": "604D46F738E013D565C122F4152FA1B28B4D41902BA5A13F1AC103A1CDF77A02",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 197,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_devilbaby.amxx",
+      "hash": "7610FF4BAEFADE6D6C208B8BD6685C90550712093017985A793C497BD838053E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 77,
+      "strings": 144,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_famas_pixel.amxx",
+      "hash": "55DDB5DFBA3D9D0B5AD512D12704FDF5A81E6290CD412FD0371C0B1B2C86BCD7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 192,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_automat_lego_crow3.amxx",
+      "hash": "A015231445DEE6C64CDEA8298303E2FC86FB510EE82AACE7A0878F9D4545D721",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 202,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_guardian.amxx",
+      "hash": "8F33FE2EDB64FD1B3A3CEB187EE40656280EE723BE60A3A2A8071F39A782990D",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 182,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_jetpack.amxx",
+      "hash": "408709B203382F9348DC6F54AA0A2728C12DE3120FE687ED1FD30B6F2933D4BD",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 45,
+      "strings": 48,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_boss_trumpet.amxx",
+      "hash": "0E0D5A6216F29319EB3E748149F7DF0E8F13A6A29DE85B691FF0011C4AC75433",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 204,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_dragonlore.amxx",
+      "hash": "5B75C7937E83CF0374AD30E11B17C240796524FEA08FE2DD341429C947A00001",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 197,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_euro_add.amxx",
+      "hash": "09FE562F3842F8680C72671B22B66C48448E0B8936415D6216ED260EC9C97D6B",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 28,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_creator_euro_add.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_euro_remove.amxx",
+      "hash": "D9A3D6EC25F9ACBFFD8C3A9B47FD058288E3392E3F7458ABD32834094F68DD30",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 28,
+      "strings": 48,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_creator_euro_remove.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_hook.amxx",
+      "hash": "95BF3CAA55B083C21F7915F0127FC64A278550861FB30E5402290E7759FC0AA8",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 24,
+      "strings": 0,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_creator_jump.amxx",
+      "hash": "7F5906F375E9906451CAE2B05A21067B93E0F6C4B6AA78F8A1460E890719938F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 15,
+      "strings": 30,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_dead_spr.amxx",
+      "hash": "352F08A17DF1D214A0D7435EEC1B3DE304ACC784EBEC1473C67C9ACEB7BFA7E2",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 12,
+      "strings": 6,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_extra_hp_ap.amxx",
+      "hash": "A98677DA1D769B463BEF2F121B6453EB9527BCCC34F5ABB5D89A9952FAA832F7",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 7,
+      "strings": 13,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_extra_norecoil.amxx",
+      "hash": "B202B1676B76B369A58D259E7992E010D4E1224A727AB672B3DD666511689483",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 16,
+      "strings": 5,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_extra_ultimitammo.amxx",
+      "hash": "8F0471DE6BA586219DED4F529C9D5342ED5A40321660B6C2C7A068D10E17B1CE",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 12,
+      "strings": 5,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_imperator_thunderbolt.amxx",
+      "hash": "082B692734312967526CB54E6052BAA1C0E011AC398BEA666EE587871DB5B5C6",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_impertor_airbooster.amxx",
+      "hash": "376E043D3DEA30848426FC811E8D8A2C2B0F9D50594FB69EECA3C709BD9A9F71",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 52,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_impertor_airbooster.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_kills_score.amxx",
+      "hash": "D6D9599B458005A8DFC914DE9128972F614B2B9FE32E60D20808D7BB287BBB5D",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 24,
+      "strings": 70,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_kills_score.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_knifes.amxx",
+      "hash": "BB929B5AA2F38D07A62D407621CEA39616C4B07A6BA85AE29E2394F8DD67EFED",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 45,
+      "strings": 0,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_buffm249.amxx",
+      "hash": "B5A6E42F8E34AA78CDC69F60A0D3B30AA747A490556C645A6FD68D8737FA146B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 75,
+      "strings": 191,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_starchasersr.amxx",
+      "hash": "3EECAFE59E01C09AB5BCAF66A856BC8BC43FE246378D41C2F33856FCB9652F30",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 85,
+      "strings": 132,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_leader_starchasersr.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_leader_tornado.amxx",
+      "hash": "9B51AF19F6668CE3F0A508D865898C1FDBF27FFA810E0FE14B5BBEC1D1B734E1",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 77,
+      "strings": 152,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_m134moto.amxx",
+      "hash": "1639222F88779EB87CF6E434122226801D604744316BD4833CB66834F4EF72E9",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 151,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_machinegun_m134moto.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_machinegun_mg3neon.amxx",
+      "hash": "7F70B8BC51943FDA08BD232DC6C52AFED3A3A8885B138A08351D017F505BE6E8",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 152,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_dual_berretas_gunslinger.amxx",
+      "hash": "419EA6895B055A915FC4044898D6E7DB3B2CD347D2A678E08CA0B39446D7E5A4",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 86,
+      "strings": 73,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_pumpkin.amxx",
+      "hash": "E5581F1049C7BCCBF3C17107338AA60236C9ECF0FBDF4B6AE85401D7FE909C5E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 53,
+      "strings": 24,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_main_stun_rifle.amxx",
+      "hash": "B8C20E555D62A2C62739BBEAAB0968D47FCDF7BB76002C06C0E245A7B5249826",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 72,
+      "strings": 64,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_parachute.amxx",
+      "hash": "DC2149590209C333257B09B20DF8ED50E20E680A7C5D6DC40CDE3F453149277D",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 18,
+      "strings": 0,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_pistols_dbuff.amxx",
+      "hash": "1F5AF6392440A748611D89AC204D840292465BF6E8B54852E6A22B9B760AD2FE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 135,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_pistol_elephant.amxx",
+      "hash": "9A55F3F1F2A1CA126668DDF64FB8289FC2A28517DC78FF7EFBA857F750E01AA9",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 157,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_prefixes.amxx",
+      "hash": "10F72A440573485BB5BD8DBB99507EA9D6235A4095DA1389369230BD602B8D5D",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 10,
+      "strings": 0,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_privileges_menu.amxx",
+      "hash": "E545946F0F3142ED7476AE504521F8C0AF400A58FD8C219D62A3E3816AB48394",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 37,
+      "strings": 0,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_respawn_h.amxx",
+      "hash": "55709B47F299493C64AB22230FAD8464460F93329DB108F98BE9DBDA8C86AB13",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 13,
+      "strings": 26,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_rifle_falconvsk94.amxx",
+      "hash": "D1C2195F729E4C85A247455CA2FAAF729DC51CA3730AFC0E074A821359F12682",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 178,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_rifle_pandacrossbow.amxx",
+      "hash": "A2EC960D806F0D9C34D29C8986A252F2DC6E8CC124AECBB2203D355C0F0B2946",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 183,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_save_euro.amxx",
+      "hash": "3425701DCC3134CCDBFDBCB4F08D0BBE8FDA6A8C5EA9158DCF61B510082E04AC",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 21,
+      "strings": 57,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_score.amxx",
+      "hash": "6FBE5EB55FC687C052A73B840D385AD85F64ED8EF3DBCB839C0C8E2F603FAA6E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 32,
+      "strings": 67,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_show_dmg.amxx",
+      "hash": "E10EA7B452B2E760F9A60072248E9EE25D3CBB11B65A90DF25F2FC4FFDE87633",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 7,
+      "strings": 21,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_sniper_savery.amxx",
+      "hash": "A59539E3EC8B5BAFAD2F90D8B1C11139FC8A035A942FE28276361D40C637CB80",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 178,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_time_reward.amxx",
+      "hash": "CFD28D04727ADFABD5E59E2A729504A72B7822CE6D3CD4D9799FB7709D491B92",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 15,
+      "strings": 61,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_ak47buff.amxx",
+      "hash": "A903F6F3B029D3AA6B94FEB66180C0FC8DDB1ED2A3EF0ECC72BE174C5EC3120D",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 190,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_vip_ak47buff.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_sg552buff.amxx",
+      "hash": "962036C672E357B3423F66CC68844AFA967DAB591572262CC4027874E2A86512",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 70,
+      "strings": 201,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_vip_speargun.amxx",
+      "hash": "0FB1706BD4984EEE0BE450C24441C9E3B63F0E58F9B5D1403EFE80E981A56CDB",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 82,
+      "strings": 149,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_vip_speargun.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_watermelon_system.amxx",
+      "hash": "D597786864F73BCB81A4AFD44B3D3E865E44E1997523E0D4F1C79BB1F13981D6",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 23,
+      "strings": 82,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_watermelon_system.amxx"
+        }
+      ]
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_zclass_electric.amxx",
+      "hash": "D72466E85D0280C9090925B67ACA209FC810F9FC6043C8B0DBAAD577E7F346C1",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 62,
+      "findings": []
+    },
+    {
+      "file": "multiki/cstrike/addons/amxmodx/plugins/zp_zclass_student.amxx",
+      "hash": "8978AC1D295E3CCBBFF173C3465A8D0A1E52FBC4DFDC21BDBA6480F52B20836F",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 65,
+      "findings": []
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "multiki/cstrike/addons/amxmodx/scripting/zombie_plague40.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [
+      {
+        "file": "multiki/a3dapi.dll",
+        "size": 211456,
+        "hash": "F05B2EEB851B174EF2B39C4728687915648AE33780A65CDF7F0C7CE99E6A67AF",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/core.dll",
+        "size": 312832,
+        "hash": "C5881522C25F85964D305E3B181A1D6D7A5C169590E3A3EFC881C7CAAB6C906F",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/crashhandler.dll",
+        "size": 282536,
+        "hash": "D603F91251882AFE4B3FD8353564536363A228301AC2FCBA56980CA0FCAD69E1",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/data/WinCSX.exe",
+        "size": 131072,
+        "hash": "C6FA4F041136A916D8FF4D6D49977B70AAD3509E0B15811C35CDCD6665470C05",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/dlls/amxmodx_mm.dll",
+        "size": 610304,
+        "hash": "022B697FB2F3FA2938229F33302F8598BBF6DF70C4755683923D7957C6BFA464",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/cstrike_amxx.dll",
+        "size": 118784,
+        "hash": "5130CADB460AE11E20BA57BB4E2ED3EC27CD9F1DFBC5CACA8B2E28863843DEBB",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/csx_amxx.dll",
+        "size": 131072,
+        "hash": "604394CC0BC6CBB6372EB11F6D8F8EAA24ABFD9D89E5129ED82EBA3362BF7551",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/engine_amxx.dll",
+        "size": 151552,
+        "hash": "70E15B6973401308DDFCBFDEACA3EFC7509247F466F7E612D3308053E6C2E8B1",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/fakemeta_amxx.dll",
+        "size": 274432,
+        "hash": "4B36AAB15415E436CD1A7CB38D0C0B86A4E9B254A5FC3559159826A9D4EFA27D",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/fun_amxx.dll",
+        "size": 102400,
+        "hash": "DE37555B8AD7ABF06367A6EA1D4EA598E3F66FFC86771B029EF56F08D5A18EC2",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/geoip_amxx.dll",
+        "size": 106496,
+        "hash": "877A44D0DC70489CA94AB62D3C669266E9F7DC62F75F8895B097C75C627653B8",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/hamsandwich_amxx.dll",
+        "size": 180224,
+        "hash": "08A26463EE49FD9E434B534147673915279919E7B455ACC9B84C675C1AF1CB2E",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/mysql_amxx.dll",
+        "size": 1560576,
+        "hash": "9EA74E5D1B308C78610075CB0C0D48008CA5FD804AAE5B20EF6A9FE099389486",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/nvault_amxx.dll",
+        "size": 118784,
+        "hash": "47D696E78A4CAB15FC0E7266EA5FFA421E01C72E62DED6898CFD6B6B1872F521",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/regex_amxx.dll",
+        "size": 225280,
+        "hash": "37385AC1E4A8C28D25A2638D18EC427B99D3ABEA7894FB7DB4E97BC21ED53222",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/sockets_amxx.dll",
+        "size": 77824,
+        "hash": "6584E25086A9A7F0B87F2A5EEC5F67B3446739B7EE29D8834834191874F37E24",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/amxmodx/modules/sqlite_amxx.dll",
+        "size": 380928,
+        "hash": "5D8ACF1AFB0C2510A3A833579C42B0FEA9DB5813FFFC84BE3E84D41D8BD04E6E",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/dproto/dlls/dproto.dll",
+        "size": 284160,
+        "hash": "693911FD60373C5BBE9ADEAA90E6D2A8532494ED7D6E41BF6FB59E71594E4EE2",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/metamod/dlls/metamod.dll",
+        "size": 352256,
+        "hash": "A8774F44DAD36C71280072E401F1CF334687FFAA7934A7E763875511130FA2AE",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/podbot/podbot_mm.dll",
+        "size": 417792,
+        "hash": "EFD4CDDC7CDADAD6F490D97E23DE780C0DF01E49A8B3AD9D77FD89797362AEDE",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/podbot/podbot_mm_amd64.so",
+        "size": 471776,
+        "hash": "E1EB0823B982A87E9313914B2AA363D8C8281FC79C376F4F7800DE0064EBF275",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/podbot/podbot_mm_i386.so",
+        "size": 522164,
+        "hash": "97D5FB11350CBD44ED18744C50E5D15D836E3DFDEFFB8BD89D1E5E43E5F1781D",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/addons/reu/reunion_mm.dll",
+        "size": 213504,
+        "hash": "20C030B5C3709831950EB89F81B36879D4076287A937181657FDD449DF803A2A",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/cl_dlls/client.dll",
+        "size": 1093128,
+        "hash": "221F4C8F8EB6348F90C72C11C252FCF0024D3B3032E503CFAB80B3F4C5BEE841",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/cl_dlls/client.so",
+        "size": 9081204,
+        "hash": "0D379680B7545ED352A696539A8049432651EDB7056EFBF2CE8354347D0FEDED",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/dlls/cs.so",
+        "size": 11688663,
+        "hash": "FCBBF24F0E31D2E9018A20D5B3F306DAFC207D6B63454A13181D0758BC8A6F1E",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/dlls/cs_amd64.so",
+        "size": 2761954,
+        "hash": "0C81C570362F055E26FA1244671BFBB031B70B8733F1EE4A94CB8CF92D5DA987",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/cstrike/dlls/mp.dll",
+        "size": 1322496,
+        "hash": "0BFD875BB8EB3E1C3AD714BEAEEDF6310D48DFB16AF4C640FA1E6B3814FD0A45",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/demoplayer.dll",
+        "size": 123904,
+        "hash": "3952B48F092417278C2D136F73B212C8FE296825C69014D4C87180A126C35426",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/filesystem_stdio.dll",
+        "size": 169472,
+        "hash": "376E6CA9EEC6EFFF003BF78BD453882D88DE4615934915CF465FDC8314733507",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/hlds.exe",
+        "size": 278016,
+        "hash": "F127D7756EC1B52C01C228BAEFE314D12A3D9989EF9773B7A70028D73E50B629",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/hlds_console.exe",
+        "size": 460404,
+        "hash": "5D5387599FF0112A20032BC88555932E3F54609F91B11D5E5C109A5B3101BF1C",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/hltv.exe",
+        "size": 289792,
+        "hash": "7C307118E554D1690894EA11BDA171D3F358DBA199306573C4064AE39B777DAC",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/Mss32.dll",
+        "size": 446976,
+        "hash": "3231D251C8AA4003B3B23196FE849B97C5EA3AC2D3549980E83BCEB9078B4CF7",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/platform/admin/AdminServer.dll",
+        "size": 454656,
+        "hash": "CC4BEF3BC834FD0B1F69377B0717C2C501D320162375F1EBA578F33FA1D29AE3",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/proxy.dll",
+        "size": 351232,
+        "hash": "08097A6E493DF7106CB84A0499C89120549AC1DC9857017E5041B3A033956C5F",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/SDL2.dll",
+        "size": 652800,
+        "hash": "F1BE4B46AC46BC9A26AE017C95711E5AEDC11ED602908B62EFACE4E8D2B28ABA",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/Steam.dll",
+        "size": 2975096,
+        "hash": "85015899CDA2C01FDD75592705B0E2BE61C2163677797BCB87E5C16E26007B7A",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/steamclient.dll",
+        "size": 8859328,
+        "hash": "9532B9B4928B95DDA8BE82546081932E7989BC2C06692F22697254110B174F57",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/steam_api.dll",
+        "size": 103920,
+        "hash": "8C073E0D2CA39D1E986BEC348F988303357BE5C495CCF6E0415802B86EAE3534",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/swds.dll",
+        "size": 1055744,
+        "hash": "FD9DFE4B9574AE9CB10B9A27E4AC489AEDDD7BDE7BB5873351FCA1EDEC397E0C",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/tier0.dll",
+        "size": 338944,
+        "hash": "55E64559BA6ACC4C0EFC3BEF92382714A6B9B8A4BD4696E8C920E709C803B250",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/tier0_s.dll",
+        "size": 284864,
+        "hash": "A12409725D85979846D30A25C4E3AC1545920ECAB2574393413623C8925347CA",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/cl_dlls/client.dll",
+        "size": 630272,
+        "hash": "85DF3C3D4656E541CC7454899F290A5977398AAFFE91017B9BD5DE4BC7F70560",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/cl_dlls/client.so",
+        "size": 3997515,
+        "hash": "47DA43943A031E51196EB862D16868F93E037C505460B4EB7F3565F7C84F7CC9",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/dlls/director.dll",
+        "size": 131072,
+        "hash": "675AFCBFA133A110D3737F89813F8719FD0DA654E104535F4C68BD48828A6774",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/dlls/director.so",
+        "size": 208582,
+        "hash": "2E392BA85B974397B242A10E8B5C32D4D33DBBC30E31C2C4C98D1A5D1EA834B9",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/dlls/hl.dll",
+        "size": 1011192,
+        "hash": "7DD65A2AE3B5FE08ED41A9349164F70B23E461D03F57808583EE940F6E3C5B33",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/valve/dlls/hl.so",
+        "size": 6766372,
+        "hash": "5E2689737988486403012FDF7C140C7A330E1201874D39B45AFDFA3AEE22323F",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/vgui.dll",
+        "size": 400920,
+        "hash": "122F47D5105A28DC5F8605B69886B73BA363C2465E88EBD55C8D5A02C50E3B56",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/vgui2.dll",
+        "size": 241152,
+        "hash": "CC776CD71B9B34E8B464084129FFCCCECE11373060D4F6D1655C1E022E6D0179",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/voice_miles.dll",
+        "size": 53248,
+        "hash": "0F21EC2075BA4A75E7A44C0CADC1247FAED88067C93AA2A58A950E2CB0DB295A",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/voice_speex.dll",
+        "size": 139264,
+        "hash": "4E0D124C2CC55F8B5A29465F037A6363E122399D0753E9E099C85C382040E867",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/vstdlib.dll",
+        "size": 331264,
+        "hash": "F8CE56BA4D4A0A8C1192D31736B4420EFE0B8EFCDB39805203E0344F290B3B04",
+        "knownAs": null
+      },
+      {
+        "file": "multiki/vstdlib_s.dll",
+        "size": 248512,
+        "hash": "123448ED556BF6EBA1FD03142CA3F10E7DC45E443C786D8699E299FD7B48BDF8",
+        "knownAs": null
+      }
+    ],
+    "scripts": [
+      "multiki/CTAPT_CEPBEP.bat"
+    ],
+    "configs": [
+      "multiki/cstrike/addons/amxmodx/configs/amxx.cfg",
+      "multiki/cstrike/addons/amxmodx/configs/clcmds.ini",
+      "multiki/cstrike/addons/amxmodx/configs/cmdaccess.ini",
+      "multiki/cstrike/addons/amxmodx/configs/cmds.ini",
+      "multiki/cstrike/addons/amxmodx/configs/configs.ini",
+      "multiki/cstrike/addons/amxmodx/configs/core.ini",
+      "multiki/cstrike/addons/amxmodx/configs/custommenuitems.cfg",
+      "multiki/cstrike/addons/amxmodx/configs/cvars.ini",
+      "multiki/cstrike/addons/amxmodx/configs/hamdata.ini",
+      "multiki/cstrike/addons/amxmodx/configs/maps.ini",
+      "multiki/cstrike/addons/amxmodx/configs/modules.ini",
+      "multiki/cstrike/addons/amxmodx/configs/plugins-zplague.ini",
+      "multiki/cstrike/addons/amxmodx/configs/plugins.ini",
+      "multiki/cstrike/addons/amxmodx/configs/speech.ini",
+      "multiki/cstrike/addons/amxmodx/configs/sql.cfg",
+      "multiki/cstrike/addons/amxmodx/configs/stats.ini",
+      "multiki/cstrike/addons/amxmodx/configs/users.ini",
+      "multiki/cstrike/addons/amxmodx/configs/zombieplague.cfg",
+      "multiki/cstrike/addons/amxmodx/configs/zombieplague.ini",
+      "multiki/cstrike/addons/amxmodx/configs/zp_extraitems.ini",
+      "multiki/cstrike/addons/amxmodx/configs/zp_zombieclasses.ini",
+      "multiki/cstrike/addons/amxmodx/data/lang/admin.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/adminchat.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/admincmd.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/adminhelp.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/adminslots.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/adminvote.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/antiflood.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/cmdmenu.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/common.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/imessage.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/languages.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/mapchooser.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/mapsmenu.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/menufront.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/miscstats.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/multilingual.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/nextmap.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/pausecfg.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/plmenu.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/restmenu.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/scrollmsg.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/statscfg.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/statsx.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/statsxmotd.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/stats_dod.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/telemenu.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/time.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/timeleft.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/zombie_plague.txt",
+      "multiki/cstrike/addons/amxmodx/data/lang/zp_score.txt",
+      "multiki/cstrike/addons/amxmodx/data/vault.ini",
+      "multiki/cstrike/addons/metamod/config.ini",
+      "multiki/cstrike/addons/metamod/plugins.ini",
+      "multiki/cstrike/addons/podbot/botchat.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatBulgarian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatCroatian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatCzech.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatDanish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatDutch.txt",
+      "multiki/cstrike/addons/podbot/botchats/botchatEnglish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatFinnish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatFrench.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatGerman.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatHungarian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatIceland.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotchatIndonesian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatItalian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatNorwegian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatPolish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatPortuguese.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatRomanian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatRussian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatSerbian.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatSpanish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatSwedish.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatTagalog.txt",
+      "multiki/cstrike/addons/podbot/botchats/BotChatTurkish.txt",
+      "multiki/cstrike/addons/podbot/botchats/README!.txt",
+      "multiki/cstrike/addons/podbot/botlogos.cfg",
+      "multiki/cstrike/addons/podbot/botnames.txt",
+      "multiki/cstrike/addons/podbot/botskill.cfg",
+      "multiki/cstrike/addons/podbot/botweapons.cfg",
+      "multiki/cstrike/addons/podbot/podbot.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/botchat.txt",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/botlogos.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/botnames.txt",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/botskill.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/botweapons.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/configs/podbot.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/scripts/other/252mapcm/commandmenu.txt",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/scripts/other/pbdefaultcm/Kwo commandmenu.txt",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/scripts/other/pbdefaultcm/Ss commandmenu.txt",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/scripts/waypoint/PodBot MM/sfwp.cfg",
+      "multiki/cstrike/addons/podbot/pod_v3 docs/files/scripts/waypoint/PodBot MM/w.cfg",
+      "multiki/cstrike/addons/podbot/wptdefault/aim_map.txt",
+      "multiki/cstrike/autobuy.txt",
+      "multiki/cstrike/banned.cfg",
+      "multiki/cstrike/commandmenu.txt",
+      "multiki/cstrike/config.cfg",
+      "multiki/cstrike/config_hlds_console1.cfg",
+      "multiki/cstrike/listenserver.cfg",
+      "multiki/cstrike/listip.cfg",
+      "multiki/cstrike/mapcycle.txt",
+      "multiki/cstrike/maps/as_oilrig.txt",
+      "multiki/cstrike/maps/cs_747.txt",
+      "multiki/cstrike/maps/cs_assault.txt",
+      "multiki/cstrike/maps/cs_backalley.txt",
+      "multiki/cstrike/maps/cs_estate.txt",
+      "multiki/cstrike/maps/cs_havana.txt",
+      "multiki/cstrike/maps/cs_italy.txt",
+      "multiki/cstrike/maps/cs_militia.txt",
+      "multiki/cstrike/maps/cs_office.txt",
+      "multiki/cstrike/maps/cs_siege.txt",
+      "multiki/cstrike/maps/de_airstrip.txt",
+      "multiki/cstrike/maps/de_aztec.txt",
+      "multiki/cstrike/maps/de_cbble.txt",
+      "multiki/cstrike/maps/de_cbble_detail.txt",
+      "multiki/cstrike/maps/de_chateau.txt",
+      "multiki/cstrike/maps/de_dust.txt",
+      "multiki/cstrike/maps/de_dust2.txt",
+      "multiki/cstrike/maps/de_inferno.txt",
+      "multiki/cstrike/maps/de_nuke.txt",
+      "multiki/cstrike/maps/de_piranesi.txt",
+      "multiki/cstrike/maps/de_prodigy.txt",
+      "multiki/cstrike/maps/de_storm.txt",
+      "multiki/cstrike/maps/de_survivor.txt",
+      "multiki/cstrike/maps/de_torn.txt",
+      "multiki/cstrike/maps/de_train.txt",
+      "multiki/cstrike/maps/de_vertigo.txt",
+      "multiki/cstrike/maps/zm_dust2_final.txt",
+      "multiki/cstrike/motd.txt",
+      "multiki/cstrike/overviews/as_oilrig.txt",
+      "multiki/cstrike/overviews/cs_747.txt",
+      "multiki/cstrike/overviews/cs_assault.txt",
+      "multiki/cstrike/overviews/cs_backalley.txt",
+      "multiki/cstrike/overviews/cs_estate.txt",
+      "multiki/cstrike/overviews/cs_havana.txt",
+      "multiki/cstrike/overviews/cs_italy.txt",
+      "multiki/cstrike/overviews/cs_militia.txt",
+      "multiki/cstrike/overviews/cs_office.txt",
+      "multiki/cstrike/overviews/cs_siege.txt",
+      "multiki/cstrike/overviews/de_airstrip.txt",
+      "multiki/cstrike/overviews/de_aztec.txt",
+      "multiki/cstrike/overviews/de_cbble.txt",
+      "multiki/cstrike/overviews/de_chateau.txt",
+      "multiki/cstrike/overviews/de_dust.txt",
+      "multiki/cstrike/overviews/de_dust2.txt",
+      "multiki/cstrike/overviews/de_inferno.txt",
+      "multiki/cstrike/overviews/de_nuke.txt",
+      "multiki/cstrike/overviews/de_piranesi.txt",
+      "multiki/cstrike/overviews/de_prodigy.txt",
+      "multiki/cstrike/overviews/de_storm.txt",
+      "multiki/cstrike/overviews/de_survivor.txt",
+      "multiki/cstrike/overviews/de_torn.txt",
+      "multiki/cstrike/overviews/de_train.txt",
+      "multiki/cstrike/overviews/de_vertigo.txt",
+      "multiki/cstrike/overviews/zm_dust2_final.txt",
+      "multiki/cstrike/readme.txt",
+      "multiki/cstrike/rebuy.txt",
+      "multiki/cstrike/resource/cstrike_english.txt",
+      "multiki/cstrike/reunion.cfg",
+      "multiki/cstrike/server.cfg",
+      "multiki/cstrike/sound/materials.txt",
+      "multiki/cstrike/sound/sentences.txt",
+      "multiki/cstrike/spectatormenu.txt",
+      "multiki/cstrike/spectcammenu.txt",
+      "multiki/cstrike/sprites/csdead1_airbooster.txt",
+      "multiki/cstrike/sprites/csdead1_buffm249.txt",
+      "multiki/cstrike/sprites/csdead1_catgun.txt",
+      "multiki/cstrike/sprites/csdead1_dbg.txt",
+      "multiki/cstrike/sprites/csdead1_deagle.txt",
+      "multiki/cstrike/sprites/csdead1_devilbaby.txt",
+      "multiki/cstrike/sprites/csdead1_ethereal.txt",
+      "multiki/cstrike/sprites/csdead1_guardian.txt",
+      "multiki/cstrike/sprites/csdead1_savery.txt",
+      "multiki/cstrike/sprites/csdead1_sflaser.txt",
+      "multiki/cstrike/sprites/csdead1_sg550.txt",
+      "multiki/cstrike/sprites/csdead1_speargun.txt",
+      "multiki/cstrike/sprites/csdead1_star_chaser_sr.txt",
+      "multiki/cstrike/sprites/csdead1_stunrifle.txt",
+      "multiki/cstrike/sprites/hud.txt",
+      "multiki/cstrike/sprites/observer.txt",
+      "multiki/cstrike/sprites/weapon_ak47.txt",
+      "multiki/cstrike/sprites/weapon_aug.txt",
+      "multiki/cstrike/sprites/weapon_awp.txt",
+      "multiki/cstrike/sprites/weapon_c4.txt",
+      "multiki/cstrike/sprites/weapon_deagle.txt",
+      "multiki/cstrike/sprites/weapon_elite.txt",
+      "multiki/cstrike/sprites/weapon_famas.txt",
+      "multiki/cstrike/sprites/weapon_fiveseven.txt",
+      "multiki/cstrike/sprites/weapon_flashbang.txt",
+      "multiki/cstrike/sprites/weapon_g3sg1.txt",
+      "multiki/cstrike/sprites/weapon_galil.txt",
+      "multiki/cstrike/sprites/weapon_glock18.txt",
+      "multiki/cstrike/sprites/weapon_hegrenade.txt",
+      "multiki/cstrike/sprites/weapon_knife.txt",
+      "multiki/cstrike/sprites/weapon_m249.txt",
+      "multiki/cstrike/sprites/weapon_m3.txt",
+      "multiki/cstrike/sprites/weapon_m4a1.txt",
+      "multiki/cstrike/sprites/weapon_mac10.txt",
+      "multiki/cstrike/sprites/weapon_mp5navy.txt",
+      "multiki/cstrike/sprites/weapon_p228.txt",
+      "multiki/cstrike/sprites/weapon_p90.txt",
+      "multiki/cstrike/sprites/weapon_scout.txt",
+      "multiki/cstrike/sprites/weapon_sg550.txt",
+      "multiki/cstrike/sprites/weapon_sg552.txt",
+      "multiki/cstrike/sprites/weapon_shield.txt",
+      "multiki/cstrike/sprites/weapon_shieldgun.txt",
+      "multiki/cstrike/sprites/weapon_smokegrenade.txt",
+      "multiki/cstrike/sprites/weapon_tmp.txt",
+      "multiki/cstrike/sprites/weapon_ump45.txt",
+      "multiki/cstrike/sprites/weapon_usp.txt",
+      "multiki/cstrike/sprites/weapon_xm1014.txt",
+      "multiki/cstrike/steam_appid.txt",
+      "multiki/cstrike/titles.txt",
+      "multiki/dproto.cfg",
+      "multiki/HLTV-Readme.txt",
+      "multiki/hltv.cfg",
+      "multiki/logs/connection_log_27015.txt",
+      "multiki/logs/connection_log_27016.txt",
+      "multiki/logs/content_log.txt",
+      "multiki/platform/admin/admin_english.txt",
+      "multiki/platform/admin/admin_french.txt",
+      "multiki/platform/admin/admin_german.txt",
+      "multiki/platform/admin/admin_italian.txt",
+      "multiki/platform/admin/admin_japanese.txt",
+      "multiki/platform/admin/admin_korean.txt",
+      "multiki/platform/admin/admin_koreana.txt",
+      "multiki/platform/admin/admin_portuguese.txt",
+      "multiki/platform/admin/admin_russian.txt",
+      "multiki/platform/admin/admin_schinese.txt",
+      "multiki/platform/admin/admin_spanish.txt",
+      "multiki/platform/admin/admin_tchinese.txt",
+      "multiki/platform/admin/admin_thai.txt",
+      "multiki/platform/admin/server_english.txt",
+      "multiki/platform/admin/server_french.txt",
+      "multiki/platform/admin/server_german.txt",
+      "multiki/platform/admin/server_italian.txt",
+      "multiki/platform/admin/server_japanese.txt",
+      "multiki/platform/admin/server_korean.txt",
+      "multiki/platform/admin/server_koreana.txt",
+      "multiki/platform/admin/server_portuguese.txt",
+      "multiki/platform/admin/server_russian.txt",
+      "multiki/platform/admin/server_schinese.txt",
+      "multiki/platform/admin/server_spanish.txt",
+      "multiki/platform/admin/server_tchinese.txt",
+      "multiki/platform/admin/server_thai.txt",
+      "multiki/platform/resource/platform_english.txt",
+      "multiki/platform/resource/platform_french.txt",
+      "multiki/platform/resource/platform_german.txt",
+      "multiki/platform/resource/platform_italian.txt",
+      "multiki/platform/resource/platform_japanese.txt",
+      "multiki/platform/resource/platform_korean.txt",
+      "multiki/platform/resource/platform_koreana.txt",
+      "multiki/platform/resource/platform_portuguese.txt",
+      "multiki/platform/resource/platform_russian.txt",
+      "multiki/platform/resource/platform_schinese.txt",
+      "multiki/platform/resource/platform_spanish.txt",
+      "multiki/platform/resource/platform_tchinese.txt",
+      "multiki/platform/resource/platform_thai.txt",
+      "multiki/platform/resource/vgui_english.txt",
+      "multiki/platform/resource/vgui_french.txt",
+      "multiki/platform/resource/vgui_german.txt",
+      "multiki/platform/resource/vgui_italian.txt",
+      "multiki/platform/resource/vgui_japanese.txt",
+      "multiki/platform/resource/vgui_korean.txt",
+      "multiki/platform/resource/vgui_koreana.txt",
+      "multiki/platform/resource/vgui_portuguese.txt",
+      "multiki/platform/resource/vgui_russian.txt",
+      "multiki/platform/resource/vgui_schinese.txt",
+      "multiki/platform/resource/vgui_spanish.txt",
+      "multiki/platform/resource/vgui_tchinese.txt",
+      "multiki/platform/resource/vgui_thai.txt",
+      "multiki/steam_appid.txt",
+      "multiki/valve/1024_textscheme.txt",
+      "multiki/valve/1152_textscheme.txt",
+      "multiki/valve/1280_textscheme.txt",
+      "multiki/valve/1600_textscheme.txt",
+      "multiki/valve/640_textscheme.txt",
+      "multiki/valve/800_textscheme.txt",
+      "multiki/valve/autoexec.cfg",
+      "multiki/valve/config.cfg",
+      "multiki/valve/credits.txt",
+      "multiki/valve/default.cfg",
+      "multiki/valve/hw/3Dfx.cfg",
+      "multiki/valve/hw/3DfxVoodoo1.cfg",
+      "multiki/valve/hw/3DfxVoodoo2.cfg",
+      "multiki/valve/hw/3Dlabs.cfg",
+      "multiki/valve/hw/ATIRage128.cfg",
+      "multiki/valve/hw/ATIRage128d3d.cfg",
+      "multiki/valve/hw/d3d.cfg",
+      "multiki/valve/hw/geforce.cfg",
+      "multiki/valve/hw/matrox.cfg",
+      "multiki/valve/hw/nvidiad3d.cfg",
+      "multiki/valve/hw/pcx2.cfg",
+      "multiki/valve/hw/PowerVRSG.cfg",
+      "multiki/valve/hw/riva128.cfg",
+      "multiki/valve/hw/rivatnt.cfg",
+      "multiki/valve/hw/rivatntd3d.cfg",
+      "multiki/valve/language.cfg",
+      "multiki/valve/listenserver.cfg",
+      "multiki/valve/mapcycle.txt",
+      "multiki/valve/overviews/boot_camp.txt",
+      "multiki/valve/overviews/bounce.txt",
+      "multiki/valve/overviews/crossfire.txt",
+      "multiki/valve/overviews/datacore.txt",
+      "multiki/valve/overviews/frenzy.txt",
+      "multiki/valve/overviews/lambda_bunker.txt",
+      "multiki/valve/overviews/rapidcore.txt",
+      "multiki/valve/overviews/snark_pit.txt",
+      "multiki/valve/overviews/stalkyard.txt",
+      "multiki/valve/overviews/subtransit.txt",
+      "multiki/valve/overviews/undertow.txt",
+      "multiki/valve/resource/BackgroundLayout.txt",
+      "multiki/valve/resource/BackgroundLoadingLayout.txt",
+      "multiki/valve/resource/gameui_english.txt",
+      "multiki/valve/resource/valve_english.txt",
+      "multiki/valve/scripts/voicemodel.txt",
+      "multiki/valve/server.cfg",
+      "multiki/valve/skill.cfg",
+      "multiki/valve/sound/materials.txt",
+      "multiki/valve/sound/sentences.txt",
+      "multiki/valve/spectatormenu.txt",
+      "multiki/valve/spectcammenu.txt",
+      "multiki/valve/sprites/hud.txt",
+      "multiki/valve/sprites/weapon_357.txt",
+      "multiki/valve/sprites/weapon_9mmar.txt",
+      "multiki/valve/sprites/weapon_9mmhandgun.txt",
+      "multiki/valve/sprites/weapon_crossbow.txt",
+      "multiki/valve/sprites/weapon_crowbar.txt",
+      "multiki/valve/sprites/weapon_egon.txt",
+      "multiki/valve/sprites/weapon_gauss.txt",
+      "multiki/valve/sprites/weapon_handgrenade.txt",
+      "multiki/valve/sprites/weapon_hornetgun.txt",
+      "multiki/valve/sprites/weapon_question.txt",
+      "multiki/valve/sprites/weapon_rpg.txt",
+      "multiki/valve/sprites/weapon_satchel.txt",
+      "multiki/valve/sprites/weapon_shotgun.txt",
+      "multiki/valve/sprites/weapon_snark.txt",
+      "multiki/valve/sprites/weapon_tripmine.txt",
+      "multiki/valve/steam_appid.txt",
+      "multiki/valve/titles.txt",
+      "multiki/valve/valve.rc",
+      "multiki/valve/violence.cfg"
+    ],
+    "plugins": 85,
+    "sources": 46,
+    "content": 5107,
+    "other": 305
+  },
+  "officialModified": [
+    "multiki/cstrike/addons/amxmodx/data/csstats.amxx",
+    "multiki/cstrike/addons/amxmodx/plugins/amxmod_compat.amxx",
+    "multiki/cstrike/addons/amxmodx/plugins/mapchooser.amxx",
+    "multiki/cstrike/addons/amxmodx/plugins/menufront.amxx"
+  ],
+  "verdict": "suspicious",
+  "counts": {
+    "info": 0,
+    "low": 3,
+    "medium": 108,
+    "high": 2,
+    "critical": 0
+  }
+}

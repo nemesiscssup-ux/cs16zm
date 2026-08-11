@@ -20,3 +20,17 @@ build/zp-test/
 run/
 build/hlds-base/
 build/steamcmd/
+
+# Учётные записи администраторов — в них пароли, в репозиторий им нельзя.
+# Заводятся командой: node tools/add-admin.mjs --help
+custom/admins.ini
+
+# Доступ к базе данных: адрес, логин и ПАРОЛЬ. Нет файла — сборка идёт на
+# SQLite, то есть на файл рядом с сервером. Образец: custom/db.ini.example
+custom/db.ini
+
+# Мусор от неудачного перенаправления в cmd: имя nul на Windows занято
+# устройством, файл с таким именем не открывается ничем, и git на нём падает
+# с «unable to index file».
+nul
+nul.*

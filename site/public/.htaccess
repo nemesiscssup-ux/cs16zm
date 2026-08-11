@@ -1,0 +1,75 @@
+# Настройки корня сайта.
+#
+# ⚠️ ДО 12 АВГУСТА 2026 В ЭТОМ ЖЕ КАТАЛОГЕ ЖИЛ FastDL — подкаталог cstrike/ с
+# моделями и звуками, который качали игроки. Его удалили: раздача переехала на
+# игровой хостинг. Правила, написанные ради него, ниже ОСТАВЛЕНЫ — они ничего
+# не стоят, а вернуть раздачу сюда может понадобиться в любой день, и тогда
+# грабли пришлось бы собирать заново.
+
+# Список файлов каталогом не отдаём.
+Options -Indexes
+
+DirectoryIndex index.php index.html
+
+# ── только по HTTPS, но НЕ раздача файлов игрокам ───────────────────────────
+#
+# Вход в панель уходит паролем в теле запроса, и по обычному HTTP его прочитает
+# любой на пути. Плюс печенье сессии получает пометку Secure только тогда,
+# когда запрос пришёл по HTTPS, — иначе оно утекает вместе с ним.
+#
+# ⚠️ ИСКЛЮЧЕНИЕ ДЛЯ /cstrike/ ОБЯЗАТЕЛЬНО, ЕСЛИ РАЗДАЧА СЮДА ВЕРНЁТСЯ. Оттуда
+# качает файлы КЛИЕНТ ИГРЫ по адресу из sv_downloadurl, а он всегда http:// —
+# движок GoldSource не умеет ни TLS, ни переходов по редиректу. Загони раздачу
+# под общее правило — и все игроки останутся без моделей, причём молча: они
+# просто увидят чужие. Сейчас каталога нет, и правило просто ни на что не
+# срабатывает.
+#
+# Смотрим на заголовок защиты, а не на %{HTTPS}: до Apache запрос доходит уже
+# расшифрованным, REQUEST_SCHEME здесь всегда http, и проверка по нему
+# закольцевала бы перенаправление само на себя.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http [NC]
+    RewriteCond %{REQUEST_URI} !^/cstrike/ [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# Мостик к коду выше корня — не страница, снаружи его дёргать незачем.
+<Files "_boot.php">
+    Require all denied
+</Files>
+
+# Исходники и заготовки, если их случайно зальют в корень.
+<FilesMatch "\.(sql|md|sh|ini|log|bak|sample|dist|yml|yaml)$">
+    Require all denied
+</FilesMatch>
+
+# Скрытые файлы: .git, .env и прочее, что попадает сюда по недосмотру.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    # Заголовки безопасности PHP ставит сам, но статику (CSS, картинки) он не
+    # обслуживает — для неё дублируем здесь.
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "no-referrer"
+
+    # FastDL кэшируем надолго: файлы моделей не меняются, а качает их каждый
+    # новый игрок целиком.
+    <FilesMatch "\.(mdl|spr|wav|bsp|tga|txt|res)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
+
+# Страницы магазина не кэшируем: цены и остатки сроков меняются.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType text/css "access plus 7 days"
+</IfModule>
+
+# Сжатие: HTML и CSS сжимаются вчетверо, модели уже сжаты — их не трогаем.
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>

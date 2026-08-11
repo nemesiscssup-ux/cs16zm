@@ -1,0 +1,874 @@
+# Аудит сборки: justpro-zombie
+
+**Вердикт: ГРЯЗНАЯ — найдены закладки или их прямые признаки**
+
+Проверено 3930 файлов, 677.4 МБ. Дата: 2026-08-04.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 23 | 29 | 192 | 2 | 0 |
+
+Состав: плагинов 131, исходников 123, бинарников 59, скриптов 1, конфигов 1093, контента 1611.
+
+## Находки
+
+### critical
+
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma`
+  - улика: `rcon_password | rcon_password ^"%s^"`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **src:writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma`
+  - улика: `set_pcvar_string, set_pcvar_num`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_vote.sma`
+  - улика: `rcon_password`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_vote.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `rcon_password`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `get_pcvar_string`
+- **src:writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `set_pcvar_string`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx`
+  - улика: `rcon_password | rcon_password "%s"`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx`
+  - улика: `set_pcvar_string, set_pcvar_num`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_vote.amxx`
+  - улика: `rcon_password`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_vote.amxx`
+  - улика: `get_cvar_pointer`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_vote.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `rcon_password`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `set_pcvar_string`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+### high
+
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/aes_statsx_cstrike.sma`
+  - улика: `server_cmd`
+- **src:amx-addadmin** — Команда добавления админа. В теле плагина — тихая выдача прав.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `amx_addadmin`
+- **src:users-ini** — Прямое обращение к файлу админов вместо штатного API.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `<playername|auth> <accessflags> [password] [authtype] - add specified player as an admin to users.ini | %s/users.ini`
+- **src:steals-admin-password** — Плагин читает клиентское поле с паролем администратора.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `get_user_info`
+- **src:touches-secrets** — Файловые операции с конфигами, где лежат админы и пароли.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `fopen, fgets, fclose, read_file, write_file`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_cmd_menu.sma`
+  - улика: `server_cmd, client_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_menu_front.sma`
+  - улика: `server_cmd, client_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_multilingual.sma`
+  - улика: `client_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_pause_cfg.sma`
+  - улика: `server_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_player_menu.sma`
+  - улика: `server_cmd, server_exec, client_cmd, engclient_cmd`
+- **src:kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `client_cmd`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 18: "Ramirez" "bakalavrat8437" "cdefghijklmnopstu" "a"`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 19: "koweÑka" "25369844242zzz" "cdefghijklmnopstu" "a"`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 20: "Online" "123gg" "cdefghijklmnopstu" "a"`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/aes_statsx_cstrike.amxx`
+  - улика: `server_cmd`
+- **amx-addadmin** — Команда добавления админа. В теле плагина — тихая выдача прав.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx`
+  - улика: `amx_addadmin`
+- **users-ini** — Прямое обращение к файлу админов вместо штатного API.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx`
+  - улика: `<playername|auth> <accessflags> [password] [authtype] - add specified player as an admin to users.ini | %s/users.ini`
+- **touches-secrets** — Файловые операции с конфигами, где лежат админы и пароли.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx`
+  - улика: `fopen, fgets, fclose, read_file, write_file`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_cmd_menu.amxx`
+  - улика: `server_cmd, client_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_menu_front.amxx`
+  - улика: `server_cmd, client_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_multilingual.amxx`
+  - улика: `client_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_pause_cfg.amxx`
+  - улика: `server_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_player_menu.amxx`
+  - улика: `server_cmd, server_exec, client_cmd, engclient_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `client_cmd`
+- **kill-switch** — Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/sf_admin_warns.amxx`
+  - улика: `server_cmd, server_exec, client_cmd`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 18: "Ramirez" "rumbamumba" "cdefghijklmnopstu" "a"`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 19: "koweÑka" "25369842znp" "cdefghijklmnopstu" "a"`
+- **users-shipped-credentials** — В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 20: "Online" "123gg" "cdefghijklmnopstu" "a"`
+- **no-sources** — Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.
+  - файл: `(сводно)`
+  - улика: `31 из 131: admin.amxx, adminchat.amxx, admincmd.amxx, adminhelp.amxx, adminslots.amxx, adminvote.amxx, admin_sql.amxx, antiflood.amxx, cmdmenu.amxx, cs_maxspeed_api.amxx, fb_forwards.amxx, fb_web_online.amxx`
+### medium
+
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/aes_statsx_cstrike.sma`
+  - улика: `EXIT`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxxpc.exe`
+  - улика: `amxxpc.exe (171008 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxxpc32.dll`
+  - улика: `amxxpc32.dll (327680 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxxpc32.so`
+  - улика: `amxxpc32.so (219008 байт)`
+- **src:admin-password-field** — setinfo-поле с паролем админа на клиенте.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `_pw`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma`
+  - улика: `set_user_flags, remove_user_flags, admins_push, admins_flush, admins_lookup, cmd_access + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma`
+  - улика: `cmd_access, set_user_info + server_cmd, server_exec, client_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_vote.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_cmd_menu.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_cmd_menu.sma`
+  - улика: `cmd_access + server_cmd, client_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_cmd_menu.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_log_connect.sma`
+  - улика: `set_user_info + client_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_maps_menu.sma`
+  - улика: `EXIT`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_menu_front.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_menu_front.sma`
+  - улика: `cmd_access + server_cmd, client_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_menu_front.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_multilingual.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_multilingual.sma`
+  - улика: `set_user_info + client_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_pause_cfg.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_pause_cfg.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_pause_cfg.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_player_menu.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_player_menu.sma`
+  - улика: `cmd_access + server_cmd, server_exec, client_cmd, engclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_player_menu.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `cmd_access + client_cmd`
+- **src:indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma`
+  - улика: `callfunc_begin_i, callfunc_end, get_func_id`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_spectator_bots.sma`
+  - улика: `set_user_info + server_cmd, server_exec`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amxx_teleport_menu.sma`
+  - улика: `EXIT`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/amx_blockip.sma`
+  - улика: `cmd_access + server_cmd`
+- **src:indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/csstatsx_sql.sma`
+  - улика: `callfunc_begin_i, callfunc_end, get_func_id`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/zp43_donate.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/zp43_main_mode.sma`
+  - улика: `cmd_access + server_cmd, client_cmd, amxclient_cmd`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/scripting_jp/scripting_jp/zp43_main_mode.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **users-malformed** — Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 1: ï»¿; Types of privileges:`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 24: "Wolfstaspmr" "0931488327" "cdeimnoqrupts" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 25: "ÐÐ°Ð±ÑÐ½" "2379143" "cdeimnoqrupts" "a" ; VIP Ð²Ð¸Ð¿ Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 26: "ÐÐÐ¢" "qwebaronchik1488" "cdeimnoqrupts" "a" ; VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 30: "ÐÐ¸ÐºÐ½ÐµÐ¹Ð¼ÑÑ" "Ð¿Ð°ÑÐ¾Ð»Ð¸ÑÑ" "cdeimnoqru" "a" ;`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 34: "_EGO_DEVO4KA_" "Ð»ÑÐ´Ð°Ð¿ÑÐµÑÐ¿Ð¸Ð²Ð°ÑÐºÐ°ÑÐ°Ð±Ð°Ñ" "ptzs" "a" ; VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 35: "kristinka" "dimino42" "ptzs" "a" ; VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 36: "SYCHILâda" "Maria0307" "ptzs" "a" ; VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 37: "ÐÐ°Ð±ÑÐ½" "245912" "ptzs" "a" ; VIP Ð´Ð¾ 23.06.2021`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 38: "ARTIK" "12122005" "ptzs" "a" ; VIP Ð´Ð¾ 01.05.2021`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 39: "NELEGAL" "nikitosyebasher" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 40: "DeRzZoY" "123petro456dr789" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 41: "ÐÑÐ¼ÑÑ" "thedungeonmaster228" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 42: "[ZM]-=Detroid=-Kirito" "545614" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 43: "Oni4an" "112233666" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 44: "ABOBA" "26082007" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 45: "misterbin" "1234554321" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 46: "@rtyrino" "0994651165n3w" "ptzs" "a" ; VIP Ð´Ð¾ 23.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 47: "Ð¡Ð°ÑÐ°" "0953015536" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 48: "PAXAN" "07111975ru" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 49: "ÑÑÐ¾ Ñ NOOB" "123321" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 50: "kirill kot 3432" "qweasd228" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 51: "Demon" "1992" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 52: "lol kek" "bat92004" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 53: "KIGER" "23sh10d80" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 54: "g0dl1ke" "Persona99" "ptzs" "a" ; VIP Ð´Ð¾ 25.05`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 57: "ÐÐ¸ÐºÐ½ÐµÐ¹Ð¼ÑÑ" "Ð¿Ð°ÑÐ¾Ð»Ð¸ÑÑ" "pz" "a"`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/configs/users.ini`
+  - улика: `строка 61: "ÐÐ¸ÐºÐ½ÐµÐ¹Ð¼ÑÑ" "Ð¿Ð°ÑÐ¾Ð»Ð¸ÑÑ" "z" "a"`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/dlls/amxmodx_mm.dll`
+  - улика: `amxmodx_mm.dll (1913856 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/dlls/amxmodx_mm_i386.so`
+  - улика: `amxmodx_mm_i386.so (1903060 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/cstrike_amxx.dll`
+  - улика: `cstrike_amxx.dll (219136 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/cstrike_amxx_i386.so`
+  - улика: `cstrike_amxx_i386.so (132892 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/csx_amxx.dll`
+  - улика: `csx_amxx.dll (161792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/csx_amxx_i386.so`
+  - улика: `csx_amxx_i386.so (60896 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/curl_amxx_i386.so`
+  - улика: `curl_amxx_i386.so (4688780 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/engine_amxx.dll`
+  - улика: `engine_amxx.dll (185344 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/engine_amxx_i386.so`
+  - улика: `engine_amxx_i386.so (96360 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/fakemeta_amxx.dll`
+  - улика: `fakemeta_amxx.dll (335872 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/fakemeta_amxx_i386.so`
+  - улика: `fakemeta_amxx_i386.so (316956 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/fun_amxx.dll`
+  - улика: `fun_amxx.dll (133632 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/fun_amxx_i386.so`
+  - улика: `fun_amxx_i386.so (48160 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/geoip_amxx.dll`
+  - улика: `geoip_amxx.dll (197120 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/geoip_amxx_i386.so`
+  - улика: `geoip_amxx_i386.so (57276 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/grip_amxx_i386.so`
+  - улика: `grip_amxx_i386.so (19779740 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/hamsandwich_amxx.dll`
+  - улика: `hamsandwich_amxx.dll (425984 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/hamsandwich_amxx_i386.so`
+  - улика: `hamsandwich_amxx_i386.so (461456 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/json_amxx.dll`
+  - улика: `json_amxx.dll (165376 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/json_amxx_i386.so`
+  - улика: `json_amxx_i386.so (67924 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/mysql_amxx.dll`
+  - улика: `mysql_amxx.dll (3157504 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/mysql_amxx_i386.so`
+  - улика: `mysql_amxx_i386.so (3549276 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/nvault_amxx.dll`
+  - улика: `nvault_amxx.dll (146432 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/nvault_amxx_i386.so`
+  - улика: `nvault_amxx_i386.so (36560 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/PersistentDataStorage_amxx_i386.so`
+  - улика: `PersistentDataStorage_amxx_i386.so (227340 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/reapi_amxx.dll`
+  - улика: `reapi_amxx.dll (366080 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/reapi_amxx_i386.so`
+  - улика: `reapi_amxx_i386.so (597044 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/regex_amxx.dll`
+  - улика: `regex_amxx.dll (302080 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/regex_amxx_i386.so`
+  - улика: `regex_amxx_i386.so (454224 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sockets_amxx.dll`
+  - улика: `sockets_amxx.dll (101376 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sockets_amxx_i386.so`
+  - улика: `sockets_amxx_i386.so (18184 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sqlite_amxx.dll`
+  - улика: `sqlite_amxx.dll (769024 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sqlite_amxx_i386.so`
+  - улика: `sqlite_amxx_i386.so (1135112 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sxgeo_amxx.dll`
+  - улика: `sxgeo_amxx.dll (234496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/modules/sxgeo_amxx_i386.so`
+  - улика: `sxgeo_amxx_i386.so (534824 байт)`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/aes_statsx_cstrike.amxx`
+  - улика: `EXIT`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx`
+  - улика: `set_user_flags, remove_user_flags, admins_push, admins_flush, admins_lookup + server_cmd`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx`
+  - улика: `set_user_info + server_cmd, server_exec, client_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_cmd_menu.amxx`
+  - улика: `EXIT`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_cmd_menu.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_log_connect.amxx`
+  - улика: `set_user_info + client_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_maps_menu.amxx`
+  - улика: `EXIT`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_map_manager_sub.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_menu_front.amxx`
+  - улика: `EXIT`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_menu_front.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_multilingual.amxx`
+  - улика: `EXIT`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_multilingual.amxx`
+  - улика: `set_user_info + client_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_pause_cfg.amxx`
+  - улика: `EXIT`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_pause_cfg.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_player_menu.amxx`
+  - улика: `EXIT`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_player_menu.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `EXIT`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx`
+  - улика: `callfunc_begin, callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_spectator_bots.amxx`
+  - улика: `set_user_info + server_cmd, server_exec`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_teleport_menu.amxx`
+  - улика: `EXIT`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/csstatsx_sql.amxx`
+  - улика: `callfunc_begin_i, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/cs_maxspeed_api.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/fresh_bans_143_183.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/sf_admin_warns.amxx`
+  - улика: `EXIT`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/sf_admin_warns.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_buy_menu.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_countdown.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_damage_armor.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_donate.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_drop_money.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_golden.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_antidote.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_explosive.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_flare.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_frost.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_infect.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_kill.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_knockback.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_grenade_molotov.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_knife.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **ip-literal** — IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_level_system.amxx`
+  - улика: `46.174.50.9`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_main_mode.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_main_mode.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_nade_mode.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_rpg.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_sandbags.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_skill.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_ak47long.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_as50.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_balrog1.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_crossbow.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_fnp45.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_hk416.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_m1887.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_m32.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_mg36.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_mk48.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_sfgun.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_skull1.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_skull11.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_sl8.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_spas12.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_trg42.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_usas12camo.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_vsk94.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_weapon_wa2000.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp43_zombie_smoker.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `NEW BALANCE/Компелировання/addons/amxmodx/plugins/zp_lasermine_perfect.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/metamod/dlls/metamod.so`
+  - улика: `metamod.so (421484 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/metamod/metamod.dll`
+  - улика: `metamod.dll (351744 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/metamod/metamod_i386.so`
+  - улика: `metamod_i386.so (421484 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/reauthcheck/reauthcheck_mm.dll`
+  - улика: `reauthcheck_mm.dll (199168 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/reauthcheck/reauthcheck_mm_i386.so`
+  - улика: `reauthcheck_mm_i386.so (92508 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/rechecker/rechecker_mm.dll`
+  - улика: `rechecker_mm.dll (160256 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/rechecker/rechecker_mm_i386.so`
+  - улика: `rechecker_mm_i386.so (103728 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/resemiclip/resemiclip_mm.dll`
+  - улика: `resemiclip_mm.dll (129536 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/resemiclip/resemiclip_mm_i386.so`
+  - улика: `resemiclip_mm_i386.so (72500 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/resrdetector/resrdetector_mm_i386.so`
+  - улика: `resrdetector_mm_i386.so (90360 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/reunion/reunion_mm_i386.so`
+  - улика: `reunion_mm_i386.so (223056 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/whblocker/whblocker_mm.dll`
+  - улика: `whblocker_mm.dll (228352 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/addons/whblocker/whblocker_mm_i386.so`
+  - улика: `whblocker_mm_i386.so (157796 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/cl_dlls/client.dll`
+  - улика: `client.dll (1090224 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/cl_dlls/client.so`
+  - улика: `client.so (9081204 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/dlls/cs.so`
+  - улика: `cs.so (3199968 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/dlls/cs_amd64.so`
+  - улика: `cs_amd64.so (2761954 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `NEW BALANCE/Компелировання/dlls/mp.dll`
+  - улика: `mp.dll (1669632 байт)`
+- **users-malformed** — Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 1: ï»¿; Types of privileges:`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 24: "411-10-27" "Ð¿Ð°ÑÐ¾Ð»Ñ" "cdeimnoqru" "a" ; ÐÐ´Ð¼Ð¸Ð½ÐºÐ° ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 28: "Wolfstaspmr" "069693428" "cdeimnoqrupts" "a" ; ÐÐ´Ð¼+VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 32: "_EGO_DEVO4KA_" "krolik99" "ptzs" "a" ; VIP ÐÐµÐ¾Ð³ÑÐ°Ð½Ð¸ÑÐµÐ½Ð½Ð¾`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 37: "411-10-27" "Ð¿Ð°ÑÐ¾Ð»Ñ" "pz" "a"`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `NEW BALANCE/Компелировання/models/users.ini`
+  - улика: `строка 41: "411-10-27" "Ð¿Ð°ÑÐ¾Ð»Ñ" "z" "a"`
+- **downloadurl** — Адрес FastDL. Чужой домен = канал доставки файлов вашим игрокам.
+  - файл: `NEW BALANCE/Компелировання/server.cfg`
+  - улика: `sv_downloadurl "http://fastdl.myarena.ru/14-1834/"`
+- **rcon-in-cfg** — В сборке приложен готовый RCON-пароль. Он известен всем, кто её скачал.
+  - файл: `NEW BALANCE/Компелировання/server.cfg`
+  - улика: `rcon_password ""`
+- **official-name-other-content** — Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.
+  - файл: `(сводно)`
+  - улика: `26 шт.: admin.amxx, adminchat.amxx, admincmd.amxx, adminhelp.amxx, adminslots.amxx, adminvote.amxx, admin_sql.amxx, antiflood.amxx, cmdmenu.amxx, imessage.amxx`
+### low
+
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `NEW BALANCE/Компелировання/autoexec.cfg`
+  - улика: `exec games.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `NEW BALANCE/Компелировання/config.cfg`
+  - улика: `exec userconfig.cfg`
+
+## Плагины, требующие удаления или замены
+
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/aes_statsx_cstrike.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - high: kill-switch
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin.amxx` — dirty, исходник есть
+  - high: amx-addadmin
+  - high: users-ini
+  - medium: admin-plus-exec
+  - critical: argv-to-exec
+  - high: touches-secrets
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_cmd.amxx` — dirty, исходник есть
+  - critical: rcon-password
+  - medium: admin-plus-exec
+  - critical: reads-rcon-password
+  - critical: writes-rcon-password
+  - critical: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_admin_vote.amxx` — dirty, исходник есть
+  - critical: rcon-password
+  - critical: reads-rcon-password
+  - critical: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_cmd_menu.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - high: kill-switch
+  - medium: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_menu_front.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - high: kill-switch
+  - medium: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_multilingual.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - medium: admin-plus-exec
+  - high: kill-switch
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_pause_cfg.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - high: kill-switch
+  - medium: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_player_menu.amxx` — suspicious, исходник есть
+  - medium: quit-killswitch
+  - high: kill-switch
+  - medium: argv-to-exec
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/amxx_plugin_menu.amxx` — dirty, исходник есть
+  - critical: rcon-password
+  - medium: quit-killswitch
+  - critical: reads-rcon-password
+  - critical: writes-rcon-password
+  - high: kill-switch
+  - critical: argv-to-exec
+  - medium: indirect-call
+- `NEW BALANCE/Компелировання/addons/amxmodx/plugins/sf_admin_warns.amxx` — suspicious, исходник ОТСУТСТВУЕТ
+  - medium: quit-killswitch
+  - high: kill-switch
+  - medium: argv-to-exec
+  - low: no-source
+
+## Исходники с закладками
+
+Проблема найдена прямо в тексте плагина — компилировать такое нельзя.
+
+- `NEW BALANCE/scripting_jp/scripting_jp/aes_statsx_cstrike.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - high: kill-switch — `server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin.sma` — dirty
+  - high: amx-addadmin — `amx_addadmin`
+  - high: users-ini — `<playername|auth> <accessflags> [password] [authtype] - add specified player as an admin to users.ini | %s/users.ini`
+  - medium: admin-password-field — `_pw`
+  - medium: admin-plus-exec — `set_user_flags, remove_user_flags, admins_push, admins_flush, admins_lookup, cmd_access + server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+  - high: steals-admin-password — `get_user_info`
+  - high: touches-secrets — `fopen, fgets, fclose, read_file, write_file`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_cmd.sma` — dirty
+  - critical: rcon-password — `rcon_password | rcon_password ^"%s^"`
+  - medium: admin-plus-exec — `cmd_access, set_user_info + server_cmd, server_exec, client_cmd`
+  - critical: reads-rcon-password — `get_pcvar_string, get_cvar_pointer`
+  - critical: writes-rcon-password — `set_pcvar_string, set_pcvar_num`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_admin_vote.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_cmd_menu.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `cmd_access + server_cmd, client_cmd`
+  - high: kill-switch — `server_cmd, client_cmd`
+  - medium: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_menu_front.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `cmd_access + server_cmd, client_cmd`
+  - high: kill-switch — `server_cmd, client_cmd`
+  - medium: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_multilingual.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `set_user_info + client_cmd`
+  - high: kill-switch — `client_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_pause_cfg.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `cmd_access + server_cmd`
+  - high: kill-switch — `server_cmd`
+  - medium: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_player_menu.sma` — suspicious
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `cmd_access + server_cmd, server_exec, client_cmd, engclient_cmd`
+  - high: kill-switch — `server_cmd, server_exec, client_cmd, engclient_cmd`
+  - medium: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `NEW BALANCE/scripting_jp/scripting_jp/amxx_plugin_menu.sma` — dirty
+  - critical: rcon-password — `rcon_password`
+  - medium: quit-killswitch — `EXIT`
+  - medium: admin-plus-exec — `cmd_access + client_cmd`
+  - critical: reads-rcon-password — `get_pcvar_string`
+  - critical: writes-rcon-password — `set_pcvar_string`
+  - high: kill-switch — `client_cmd`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+  - medium: indirect-call — `callfunc_begin_i, callfunc_end, get_func_id`

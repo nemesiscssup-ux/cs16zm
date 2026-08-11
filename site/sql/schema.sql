@@ -1,0 +1,199 @@
+-- Схема базы для сайта привилегий.
+--
+-- Ключевая мысль всей затеи: игровой сервер НЕ ходит на сайт и ничего о нём не
+-- знает. Он поднимает admin_sql.amxx и читает ровно один запрос —
+--
+--     SELECT `auth`, `password`, `access`, `flags` FROM `zm_admins`
+--
+-- (см. adminSql() в admin.sma, AMX Mod X 1.10). Условий в запросе нет, поэтому
+-- `zm_admins` у нас не таблица, а ПРЕДСТАВЛЕНИЕ, которое само прячет
+-- просроченные записи. Срок действия привилегии обеспечивает база — не плагин,
+-- не cron и не планировщик хостинга, которого у нас всё равно нет.
+--
+-- ⚠️ ИМЯ `zm_admins` ОБЯЗАНО СОВПАДАТЬ с amx_sql_table в configs/sql.cfg.
+-- Имя не `admins` намеренно: по умолчанию плагин ищет именно `admins`, но в
+-- базе этого аккаунта такая таблица УЖЕ ЕСТЬ — от соседнего сайта. Совпади
+-- имена, представление либо не создалось бы, либо подменило чужие данные.
+-- Порядок столбцов неважен, а вот ИМЕНА важны: плагин ищет их через
+-- SQL_FieldNameToNum() по названию.
+--
+-- ⚠️ ДЛИНЫ ПОЛЕЙ. Плагин читает auth в буфер на 44 байта, password — на 44,
+-- access и flags — на 32. Движок держит имя игрока в 31 байте. Поэтому
+-- VARCHAR(31) у auth и password: длиннее в игру всё равно не поместится, а
+-- обрезанное молча — это привилегия, которая «выдана, но не работает».
+--
+-- Применяется один раз:  mysql -h ... -u ... -p <база> < schema.sql
+
+SET NAMES utf8mb4;
+
+-- ── что продаём и кому выдано ───────────────────────────────────────────────
+--
+-- Одна строка — одна действующая привилегия. Ключ (`auth`) уникален: у игрока
+-- не может быть двух записей, иначе спор о том, чья возьмёт, решает порядок
+-- строк — а это лотерея. Повторная покупка ПРОДЛЕВАЕТ существующую.
+
+CREATE TABLE IF NOT EXISTS `zm_privileges` (
+  `id`          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  -- ник как в игре либо STEAM_0:1:12345 — что именно, говорит `account`
+  `auth`        VARCHAR(31)  NOT NULL,
+  -- Тот же ключ, свёрнутый ТАК ЖЕ, КАК СВОРАЧИВАЕТ СЕРВЕР: строчными сделана
+  -- только латиница, кириллица оставлена как есть. Нужен затем, что искать
+  -- существующую запись надо ровно так же, как её найдёт сервер, — иначе
+  -- «Vasya» и «vasya» заведут ДВЕ записи, сервер возьмёт первую попавшуюся, и
+  -- оплаченное повышение достанется не тому. Именно так и вышло на проверке.
+  `auth_key`    VARCHAR(31)  NOT NULL,
+  -- пароль игрока; пустой допустим только вместе с флагом «e» в `account`
+  `password`    VARCHAR(31)  NOT NULL DEFAULT '',
+  -- накопительные буквы уровня (t/s/q/p/o) плюс, если куплена, буквы админки
+  `access`      VARCHAR(31)  NOT NULL,
+  -- флаги записи AMXX: «a» — кикать при неверном пароле, «c» — это SteamID,
+  -- «e» — пароль не проверять. Именно их плагин кладёт в четвёртое поле.
+  `account`     VARCHAR(8)   NOT NULL DEFAULT 'a',
+
+  -- служебное, игровому серверу невидимое (представление эти столбцы не отдаёт)
+  `tier`        VARCHAR(16)      NULL,     -- vip/leader/imperator/pharaoh/creator
+  `has_admin`   TINYINT(1)   NOT NULL DEFAULT 0,
+  `granted_at`  DATETIME     NOT NULL,
+  -- NULL = навсегда. Иначе момент, после которого запись исчезает из `admins`.
+  `expires_at`  DATETIME         NULL,
+  `source`      VARCHAR(16)  NOT NULL DEFAULT 'admin',  -- admin | order
+  `order_id`    INT UNSIGNED     NULL,
+  `note`        VARCHAR(190) NOT NULL DEFAULT '',
+
+  PRIMARY KEY (`id`),
+  -- Уникальность вешаем на СВЁРНУТЫЙ ключ, а не на исходный. Тогда вторая
+  -- запись на того же игрока невозможна физически, а не по договорённости с
+  -- кодом: даже прямая правка через phpMyAdmin не сможет её завести.
+  --
+  -- Свёртка нарочно неполная — только латиница. utf8mb4_unicode_ci сложил бы и
+  -- кириллицу, и тогда «Игорь» с «игорь» стали бы для базы одним игроком, а
+  -- для сервера остались бы разными. Это ошибка в другую сторону, но такая же:
+  -- запись подменилась бы у того, кто её не покупал. Отсюда и collate binary.
+  UNIQUE KEY `auth_key` (`auth_key`),
+  KEY `auth` (`auth`),
+  KEY `expires_at` (`expires_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+  COMMENT='Действующие привилегии, сервер видит их через представление zm_admins';
+
+-- ── то, что читает игровой сервер ───────────────────────────────────────────
+--
+-- Просроченное отсекается здесь, и это единственное место, где срок вообще
+-- проверяется. Сравниваем с NOW() базы — время на сайте, на игровом сервере и
+-- в базе может разойтись, а решает пусть кто-то один.
+--
+-- CREATE TABLE IF NOT EXISTS, который плагин выполняет при старте, на
+-- существующее представление не подействует: у таблиц и представлений в MySQL
+-- общее пространство имён, и «уже есть» его останавливает.
+--
+-- Прав на CREATE у игрового пользователя быть и не должно — ему хватает
+-- SELECT. Тогда эта попытка просто не удастся, и плагин пойдёт дальше: её
+-- результат он не проверяет (SQL_QueryAndIgnore — «выполнить и забыть»).
+
+-- ⚠️ Столбец называется `account`, а отдаётся как `flags`: у AMXX «flags» —
+-- это флаги ЗАПИСИ (a/c/e), а буквы доступа лежат в `access`. Названия сбивают
+-- с толку, но менять их нельзя — плагин ищет столбцы именно так.
+-- ⚠️⚠️ `auth` И `password` ОТДАЁМ ДВОИЧНЫМИ, И ЭТО НЕ ПРИДИРКА.
+-- Модуль MySQL в AMXX соединяется как latin1. Столбцы у нас utf8mb4, и база
+-- честно переводит текст в кодировку клиента — а кириллицы в latin1 нет, и
+-- «Игорь» приезжает на сервер как «?????». Привилегия, выданная на русский
+-- ник, просто не находилась бы, и понять почему было бы нечем: в phpMyAdmin
+-- запись выглядит правильной. Проверено вживую на этой базе.
+-- CAST в BINARY переводить нечего: сервер получает те же байты UTF-8, что
+-- лежат в таблице, и сравнивает их с ником игрока байт в байт — как и надо.
+CREATE OR REPLACE VIEW `zm_admins` AS
+  SELECT CAST(`auth` AS BINARY) AS `auth`, CAST(`password` AS BINARY) AS `password`,
+         `access`, `account` AS `flags`
+  FROM `zm_privileges`
+  WHERE `expires_at` IS NULL OR `expires_at` > NOW();
+
+-- ⚠️ ЕСЛИ ПРЕДСТАВЛЕНИЕ УДАЛИТЬ, АДМИНЫ ПРОПАДУТ МОЛЧА. admin_sql.amxx при
+-- каждом старте карты выполняет «CREATE TABLE IF NOT EXISTS zm_admins» и, если
+-- имя свободно, заводит ПУСТУЮ таблицу — сервер останется без единого
+-- администратора, а в консоли будет ровное «Загружено 0». Так уже вышло на
+-- первом запуске: таблицу создал плагин, и представление поверх неё не легло
+-- («is not of type VIEW»). Порядок такой: сначала DROP TABLE zm_admins,
+-- потом это представление.
+
+-- ── заказы ─────────────────────────────────────────────────────────────────
+--
+-- Заказ живёт своей жизнью: он создаётся до оплаты и остаётся в журнале после
+-- неё. Привилегия из него получается ровно один раз — за это отвечает
+-- `applied_at`, а не статус: касса умеет прислать уведомление дважды, и без
+-- отметки второй раз продлил бы срок ещё раз, бесплатно.
+
+CREATE TABLE IF NOT EXISTS `zm_orders` (
+  `id`          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `created_at`  DATETIME     NOT NULL,
+  `auth`        VARCHAR(31)  NOT NULL,
+  `is_steamid`  TINYINT(1)   NOT NULL DEFAULT 0,
+  -- Что куплено. Привилегия ложится в базу и живёт своим сроком; кредиты
+  -- уходят живому игроку одной командой и в базе не хранятся вовсе — их
+  -- хранит сам сервер в своём nvault.
+  `kind`        ENUM('tier','packs') NOT NULL DEFAULT 'tier',
+  `tier`        VARCHAR(16)      NULL,
+  `days`        SMALLINT     NOT NULL DEFAULT 0,   -- 0 = навсегда
+  `packs`       INT UNSIGNED NOT NULL DEFAULT 0,   -- сколько кредитов, с учётом добавки
+  `with_admin`  TINYINT(1)   NOT NULL DEFAULT 0,
+  `amount`      DECIMAL(10,2) NOT NULL,
+  `currency`    VARCHAR(8)   NOT NULL DEFAULT 'RUB',
+  `contact`     VARCHAR(190) NOT NULL DEFAULT '',
+  `provider`    VARCHAR(24)  NOT NULL DEFAULT 'manual',
+  `provider_id` VARCHAR(64)  NOT NULL DEFAULT '',
+  `status`      ENUM('new','paid','applied','failed','refunded') NOT NULL DEFAULT 'new',
+  `paid_at`     DATETIME         NULL,
+  `applied_at`  DATETIME         NULL,
+  `ip`          VARCHAR(45)  NOT NULL DEFAULT '',
+  `error`       VARCHAR(250) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `status` (`status`),
+  KEY `created_at` (`created_at`),
+  KEY `provider_id` (`provider_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  COMMENT='Заказы витрины: до оплаты, после оплаты и в журнале';
+
+-- ── кто пускается в панель ─────────────────────────────────────────────────
+--
+-- Пароль лежит только хэшем (password_hash, bcrypt). Это не перестраховка:
+-- рядом, в zm_privileges, лежат ИГРОВЫЕ пароли открытым текстом — иначе
+-- сервер не сможет их сверить, — и утёкшая база не должна вдобавок отдавать
+-- вход в саму панель.
+
+CREATE TABLE IF NOT EXISTS `zm_admin_users` (
+  `id`         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `login`      VARCHAR(64)  NOT NULL,
+  `pass_hash`  VARCHAR(255) NOT NULL,
+  `created_at` DATETIME     NOT NULL,
+  `last_login` DATETIME         NULL,
+  `last_ip`    VARCHAR(45)  NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Попытки входа. Считаем и по логину, и по адресу: перебор одного пароля по
+-- многим логинам с одного адреса — такой же перебор, только с другой стороны.
+CREATE TABLE IF NOT EXISTS `zm_login_attempts` (
+  `id`      INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `at`      DATETIME     NOT NULL,
+  `ip`      VARCHAR(45)  NOT NULL,
+  `login`   VARCHAR(64)  NOT NULL,
+  `ok`      TINYINT(1)   NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `ip_at` (`ip`, `at`),
+  KEY `login_at` (`login`, `at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── журнал действий ────────────────────────────────────────────────────────
+--
+-- Всё, что меняет права на сервере, обязано оставлять след: кто, когда, кому,
+-- откуда. Без этого «у меня сняли админку» — спор без доказательств.
+CREATE TABLE IF NOT EXISTS `zm_audit` (
+  `id`     INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `at`     DATETIME     NOT NULL,
+  `who`    VARCHAR(64)  NOT NULL DEFAULT '',   -- логин админа либо «касса»
+  `ip`     VARCHAR(45)  NOT NULL DEFAULT '',
+  `action` VARCHAR(32)  NOT NULL,              -- grant / revoke / extend / login…
+  `target` VARCHAR(31)  NOT NULL DEFAULT '',
+  `detail` TEXT             NULL,
+  PRIMARY KEY (`id`),
+  KEY `at` (`at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

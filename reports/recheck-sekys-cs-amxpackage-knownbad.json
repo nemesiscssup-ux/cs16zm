@@ -1,0 +1,1038 @@
+{
+  "slug": "recheck-sekys-cs-amxpackage-knownbad",
+  "target": "quarantine/sekys-cs-amxpackage-knownbad//extracted",
+  "scanned": "2026-08-04T10:17:03.797Z",
+  "totals": {
+    "files": 71,
+    "bytes": 1722806
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit",
+      "file": "cs-amxpackage-master/antyreklama.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "client_cmd",
+      "file": "cs-amxpackage-master/antyreklama.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string, get_pcvar_string",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/banka.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/DeathrunManager.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/DeathrunManager.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:ip-literal",
+      "why": "IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.",
+      "evidence": "10.0.1.2",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string, get_pcvar_string",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/dr_banka.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/hud.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-password-field",
+      "why": "setinfo-поле с паролем админа на клиенте.",
+      "evidence": "_pw",
+      "file": "cs-amxpackage-master/password.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:steals-admin-password",
+      "why": "Плагин читает клиентское поле с паролем администратора.",
+      "evidence": "get_user_info",
+      "file": "cs-amxpackage-master/password.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:net-in-plugin",
+      "why": "Плагин открывает сетевые соединения. Канал утечки конфигов и приёма команд извне.",
+      "evidence": "socket_open, socket_send, socket_recv",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags, cmd_access + server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string, get_pcvar_string",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:writes-rcon-password",
+      "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+      "evidence": "set_cvar_string, set_cvar_num",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/sls_2.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/VIP.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/VIP.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "cs-amxpackage-master/VIP.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/VIP.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:ip-literal",
+      "why": "IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.",
+      "evidence": "10.0.1.2",
+      "file": "cs-amxpackage-master/web2_user_system.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + client_cmd",
+      "file": "cs-amxpackage-master/xmas_halloween.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + client_cmd",
+      "file": "cs-amxpackage-master/xmas_velkanoc.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + engclient_cmd",
+      "file": "cs-amxpackage-master/zm_bomb.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + engclient_cmd",
+      "file": "cs-amxpackage-master/zm_eletric_bomb.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zm_scorpion.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string, get_pcvar_string, get_cvar_pointer",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:writes-rcon-password",
+      "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+      "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/zombie_plague40_new.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zombie_plague40_new.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "cs-amxpackage-master/zombie_plague43old.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zombie_plague43old.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "quit | exit",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_cvar_string",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "high",
+      "rule": "src:kill-switch",
+      "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+      "evidence": "server_cmd",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zp_api_functions.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + server_cmd, server_exec, client_cmd",
+      "file": "cs-amxpackage-master/zp_extra_lasermine.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "cs-amxpackage-master/zp_extra_lasermine.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access + client_cmd",
+      "file": "cs-amxpackage-master/zp_karantena.sma"
+    }
+  ],
+  "plugins": [],
+  "sourceFindings": [
+    {
+      "file": "cs-amxpackage-master/antyreklama.sma",
+      "verdict": "suspicious",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "client_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/banka.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string, get_pcvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/DeathrunManager.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/dr_banka.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "high",
+          "rule": "ip-literal",
+          "why": "IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.",
+          "evidence": "10.0.1.2"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string, get_pcvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/hud.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/password.sma",
+      "verdict": "suspicious",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-password-field",
+          "why": "setinfo-поле с паролем админа на клиенте.",
+          "evidence": "_pw"
+        },
+        {
+          "severity": "high",
+          "rule": "steals-admin-password",
+          "why": "Плагин читает клиентское поле с паролем администратора.",
+          "evidence": "get_user_info"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/sls_2.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "critical",
+          "rule": "net-in-plugin",
+          "why": "Плагин открывает сетевые соединения. Канал утечки конфигов и приёма команд извне.",
+          "evidence": "socket_open, socket_send, socket_recv"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags, cmd_access + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string, get_pcvar_string"
+        },
+        {
+          "severity": "critical",
+          "rule": "writes-rcon-password",
+          "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+          "evidence": "set_cvar_string, set_cvar_num"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/VIP.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd, client_cmd, engclient_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/web2_user_system.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "ip-literal",
+          "why": "IP-адрес внутри плагина. С сетью или исполнением команд — канал управления или угон.",
+          "evidence": "10.0.1.2"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/xmas_halloween.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + client_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/xmas_velkanoc.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + client_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zm_bomb.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + engclient_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zm_eletric_bomb.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + engclient_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zm_scorpion.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zombie_plague40.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string, get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "critical",
+          "rule": "writes-rcon-password",
+          "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+          "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zombie_plague40_new.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zombie_plague43old.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zp_api_functions.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password"
+        },
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "quit | exit"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_cvar_string"
+        },
+        {
+          "severity": "high",
+          "rule": "kill-switch",
+          "why": "Плагин умеет останавливать сервер. Обычно это «привязка» к паролю или хостингу.",
+          "evidence": "server_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zp_extra_lasermine.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + server_cmd, server_exec, client_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cs-amxpackage-master/zp_karantena.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access + client_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [],
+    "scripts": [],
+    "configs": [
+      "cs-amxpackage-master/include/dproto.txt"
+    ],
+    "plugins": 0,
+    "sources": 58,
+    "content": 0,
+    "other": 12
+  },
+  "verdict": "dirty",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 31,
+    "high": 11,
+    "critical": 26
+  }
+}

@@ -1,0 +1,400 @@
+# Аудит сборки: kazakh-pirog
+
+**Вердикт: ГРЯЗНАЯ — найдены закладки или их прямые признаки**
+
+Проверено 2441 файлов, 344.8 МБ. Дата: 2026-08-07.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 19 | 1 | 87 | 4 | 0 |
+
+Состав: плагинов 82, исходников 92, бинарников 34, скриптов 2, конфигов 147, контента 1847.
+
+Защитник Windows: угроз не найдено.
+
+## Находки
+
+### critical
+
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `rcon_password | rcon_password %s`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `set_cvar_string, set_cvar_num, set_pcvar_num`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx`
+  - улика: `rcon_password | rcon_password %s`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx`
+  - улика: `rcon_password | rcon_password %s`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx`
+  - улика: `rcon_password | rcon_password %s`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx`
+  - улика: `rcon_password | rcon_password %s`
+- **reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma`
+  - улика: `rcon_password | rcon_password %s`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+- **src:writes-rcon-password** — Плагин меняет rcon_password — молчаливый перехват управления сервером.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma`
+  - улика: `set_cvar_string, set_cvar_num, set_pcvar_num`
+- **src:argv-to-exec** — Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:rcon-password** — Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma`
+  - улика: `rcon_password | rcon_password %s`
+- **src:reads-rcon-password** — Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma`
+  - улика: `get_pcvar_string, get_cvar_pointer`
+### high
+
+- **no-sources** — Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.
+  - файл: `(сводно)`
+  - улика: `13 из 82: csstats.amxx, adminchat.amxx, adminhelp.amxx, AdminPrefixes.amxx, adminslots.amxx, adminvote.amxx, amxmodmenu.amxx, Health.amxx, timeleft.amxx, unprecacher.amxx, zp_hook_nemesis.amxx, zp_sub_bank.amxx`
+### medium
+
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/Core.dll`
+  - улика: `Core.dll (258106 байт)`
+- **users-malformed** — Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 1: ï»¿; ÐÑÐ¸Ð²Ð¸Ð»ÐµÐ³Ð¸Ð¸:`
+- **users-shipped-account** — В сборке приложен готовый аккаунт с паролем.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/users.ini`
+  - улика: `строка 8: "Darren" "123" "acdel" "a"	ÐÐ»Ð°Ð²Ð½ÑÐ¹ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¾Ñ`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/WinCSX.exe`
+  - улика: `WinCSX.exe (131072 байт)`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `set_user_flags, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx`
+  - улика: `set_user_flags + server_cmd, client_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_ganymede.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_heavy.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_fire.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_ice.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_poison_boss.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_shaman.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_2x_uzi_lego.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_ak47_blackstar.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_amethyst.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_apache.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_armor.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_charger7.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_crow1.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_desperado.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_jumpBombEX.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m134_laser.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_nitro.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_no_recoil.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_skull11ex.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_sterlng.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_turbulent5.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_vsk94.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_xm8_miku.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_vip.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/parachute.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_knifes.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_respawn_ammo_boss.amxx`
+  - улика: `EXIT`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_ak47_flash.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_jetpack.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_m4a1_flash.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_thunderbolt.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_cso_winhud.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_lasermine_24.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_lasermine_24.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_parachute.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_sub_bank.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ak47.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_crossbow.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_deagle.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_dual_barrel.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ksg12.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_m4a1.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_pkm.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma`
+  - улика: `set_user_flags, cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc.exe`
+  - улика: `amxxpc.exe (110592 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc32.dll`
+  - улика: `amxxpc32.dll (274432 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc64.dll`
+  - улика: `amxxpc64.dll (282624 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/sasm.exe`
+  - улика: `sasm.exe (188416 байт)`
+- **src:quit-killswitch** — Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_addon_respawn_ammo_boss.sma`
+  - улика: `EXIT`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_lasermine_24.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/cl_dlls/client.dll`
+  - улика: `client.dll (1074496 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/dlls/cs_i386.so`
+  - улика: `cs_i386.so (2564620 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/dlls/mp.dll`
+  - улика: `mp.dll (1316152 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/dbg.dll`
+  - улика: `dbg.dll (69632 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/FileSystem_Stdio.dll`
+  - улика: `FileSystem_Stdio.dll (118872 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/FileSystem_Steam.dll`
+  - улика: `FileSystem_Steam.dll (122974 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/hlds.exe`
+  - улика: `hlds.exe (389120 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/hlds_console.exe`
+  - улика: `hlds_console.exe (460404 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/hltv.exe`
+  - улика: `hltv.exe (221184 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/Mss32.dll`
+  - улика: `Mss32.dll (351744 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/platform/Admin/AdminServer.dll`
+  - улика: `AdminServer.dll (454656 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/proxy.dll`
+  - улика: `proxy.dll (254012 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/Steam.dll`
+  - улика: `Steam.dll (3032312 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/steamclient.dll`
+  - улика: `steamclient.dll (3585832 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/steam_api.dll`
+  - улика: `steam_api.dll (67072 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/steam_api_c.dll`
+  - улика: `steam_api_c.dll (70144 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/swds.dll`
+  - улика: `swds.dll (1668968 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/tier0_s.dll`
+  - улика: `tier0_s.dll (276264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/updater/HldsUpdateTool.exe`
+  - улика: `HldsUpdateTool.exe (1127776 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/valve/cl_dlls/client.dll`
+  - улика: `client.dll (503354 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/valve/dlls/hl.dll`
+  - улика: `hl.dll (966709 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/valve/dlls/hl_i386.so`
+  - улика: `hl_i386.so (1987316 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/vgui.dll`
+  - улика: `vgui.dll (352256 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/vgui2.dll`
+  - улика: `vgui2.dll (245819 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/voice_miles.dll`
+  - улика: `voice_miles.dll (53248 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/voice_speex.dll`
+  - улика: `voice_speex.dll (139264 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `[ZM] Казахский Пирог зомби/vstdlib_s.dll`
+  - улика: `vstdlib_s.dll (374568 байт)`
+- **official-name-other-content** — Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.
+  - файл: `(сводно)`
+  - улика: `27 шт.: csstats.amxx, admin.amxx, adminchat.amxx, admincmd.amxx, adminhelp.amxx, adminslots.amxx, adminvote.amxx, amxmod_compat.amxx, antiflood.amxx, cmdmenu.amxx`
+### low
+
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `[ZM] Казахский Пирог зомби/cstrike/server.cfg`
+  - улика: `exec "listip.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `[ZM] Казахский Пирог зомби/valve/autoexec.cfg`
+  - улика: `exec violence.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `[ZM] Казахский Пирог зомби/valve/server.cfg`
+  - улика: `exec listip.cfg`
+- **exec-unknown** — Цепочка exec. Проверить каждый вызываемый файл.
+  - файл: `[ZM] Казахский Пирог зомби/valve/valve.rc`
+  - улика: `exec language.cfg`
+
+## Плагины, требующие удаления или замены
+
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx` — dirty, исходник есть
+  - critical: rcon-password
+  - medium: admin-plus-exec
+  - critical: reads-rcon-password
+  - critical: writes-rcon-password
+  - critical: argv-to-exec
+  - medium: indirect-call
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx` — dirty, исходник ОТСУТСТВУЕТ
+  - critical: rcon-password
+  - critical: reads-rcon-password
+  - low: no-source
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx` — dirty, исходник ОТСУТСТВУЕТ
+  - critical: rcon-password
+  - medium: admin-plus-exec
+  - critical: reads-rcon-password
+  - critical: argv-to-exec
+  - low: no-source
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx` — dirty, исходник есть
+  - critical: rcon-password
+  - critical: reads-rcon-password
+  - medium: indirect-call
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx` — dirty, исходник ОТСУТСТВУЕТ
+  - critical: rcon-password
+  - critical: reads-rcon-password
+  - medium: indirect-call
+  - low: no-source
+
+## Исходники с закладками
+
+Проблема найдена прямо в тексте плагина — компилировать такое нельзя.
+
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma` — dirty
+  - critical: rcon-password — `rcon_password | rcon_password %s`
+  - medium: admin-plus-exec — `set_user_flags, cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd`
+  - critical: reads-rcon-password — `get_pcvar_string, get_cvar_pointer`
+  - critical: writes-rcon-password — `set_cvar_string, set_cvar_num, set_pcvar_num`
+  - critical: argv-to-exec — `register_clcmd/read_argv + server_cmd`
+- `[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma` — dirty
+  - critical: rcon-password — `rcon_password | rcon_password %s`
+  - critical: reads-rcon-password — `get_pcvar_string, get_cvar_pointer`

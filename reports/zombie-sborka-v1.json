@@ -1,0 +1,1597 @@
+{
+  "slug": "zombie-sborka-v1",
+  "target": "quarantine/zombie-sborka-v1/extracted",
+  "scanned": "2026-08-07T19:35:17.082Z",
+  "totals": {
+    "files": 1020,
+    "bytes": 201493521
+  },
+  "defender": {
+    "available": true,
+    "threatFound": false,
+    "output": "Scan starting...\r\nScan finished.\r\nScanning E:\\cs16zm\\quarantine\\zombie-sborka-v1\\extracted found no threats."
+  },
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_bizonspl.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_coilspl.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_m200spl.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_ammo_trade.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_arbalest.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_hecate.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_cam_changer.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_ak47gold.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_arbalest.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_chargersky.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_gungnir.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_heartrod.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_infdesert.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_jetpack.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m12gold.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m4a1gold.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m60desert.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mbuffsky.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mg3desert.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_norecoil.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_railgun.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_sgrenade.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_teleport.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_vsk94.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_fly_models.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_gift_box.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_knife_menu.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lasermine.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_level_system.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_drakar.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_magicsg.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_parachute.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_player_models.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + client_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_roulete_system.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_round_gift.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_score_countdown.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_scrfade_crhair.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog5.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog7.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog8.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_admin.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_boss.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_lord.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_vip.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_antiarmor.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_jbomb.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc.exe (171008 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc32.dll (327680 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc32.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- MORE/zb_ammo_trade.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + client_cmd",
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- ROULETE SYSTEM/zb_roulete_system.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cf_fix_mm.dll (87040 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cf_fix_mm_i386.so (44732 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm_i386.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "FragBufFix.so (3640 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/fragbufffix/FragBufFix.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "nbex.dll (94720 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "nbex.so (9848 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "uino.dll (89600 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "uino.so (9976 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm.dll (417792 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm_amd64.so (471776 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm_amd64.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "podbot_mm_i386.so (522164 байт)",
+      "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm_i386.so"
+    },
+    {
+      "severity": "high",
+      "rule": "no-sources",
+      "why": "Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.",
+      "evidence": "6 из 63: zb_boss_arbalest.amxx, zb_extra_arbalest.amxx, zb_extra_gungnir.amxx, zb_fly_models.amxx, zb_score_countdown.amxx, zombie_plague.amxx",
+      "file": "(сводно)"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_bizonspl.amxx",
+      "hash": "0DAB61E91AF8BECECCC6E0F12EDCC1EF6F55A660D60DCC6D750DCE2AC24B4B7F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_coilspl.amxx",
+      "hash": "48D9A4F2EB6EDEF126AC1A47B797933C51AF9BB02B3C8375B106F104DEEC89FE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 50,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_m200spl.amxx",
+      "hash": "91B36430A7E655D086D62E3B94424EB79584CFAA322A898274BA09C4E2C3D061",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 40,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_ammo_save.amxx",
+      "hash": "0BEAFB560261560B16E02C4EF19400C945DFF3BD9B5A0B93A179EA51C1E200E0",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 21,
+      "strings": 7,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_ammo_trade.amxx",
+      "hash": "1AFD0FF820518BAD8B92B4F6C23FC2B74891E42886EFB25CD7C96B2A094F63B0",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 30,
+      "strings": 37,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_block_snd.amxx",
+      "hash": "C763D50E78CCE856B5E81B0AA85D74F042AC69C0CD4CFB4AEB655740EC9A3F52",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 6,
+      "strings": 6,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_arbalest.amxx",
+      "hash": "89D36607B6A97A39F0277205220E22DB521F2C55A1C1E25C8F523DCE17FE0BBA",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 58,
+      "strings": 72,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zb_boss_arbalest.amxx"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_hecate.amxx",
+      "hash": "9B23DD5119F5980B99A085F2C7CA3EB70E5AB5A330126BAC19C125312520A23E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 52,
+      "strings": 46,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_cam_changer.amxx",
+      "hash": "99F384FE5696FB90AA40C964D76924132C29493468CB1DCCB226BBE54B049190",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 29,
+      "strings": 7,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_chat_system.amxx",
+      "hash": "F435EF7E4B4606E7E008C46313B209793ACF5B34A05DC775DDC33C91538E085D",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 41,
+      "strings": 28,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_damager.amxx",
+      "hash": "7BCE12F83A5A910D17A9022525D887039FD7B9A8F0071AF77F87C1F32BD66D66",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 21,
+      "strings": 11,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_ak47gold.amxx",
+      "hash": "32F00E5710C9F3C615C2DE54E9794EE197A85F78D0B8639F97CD62E38AC1F5D6",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 61,
+      "strings": 49,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_aphp.amxx",
+      "hash": "B4F381B07108FB91276A103087BD64AEEDFD2C7F52DAEADD617FC59F2102CF29",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 35,
+      "strings": 21,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_arbalest.amxx",
+      "hash": "63B590DF198647EB1D31AD2C73765EA8A605EDB5DB410C949091C55CB601641E",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 59,
+      "strings": 72,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zb_extra_arbalest.amxx"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_chargersky.amxx",
+      "hash": "B69E9C2001D70D40994B59E83A90F00247BB701BE75227DC00B8D701004AA206",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 55,
+      "strings": 44,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_gungnir.amxx",
+      "hash": "A2E4AE4C3B8ED4DDA5E1948788E96CCE07D5276A09D14E02BAB5724BB05D8ED7",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 72,
+      "strings": 71,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zb_extra_gungnir.amxx"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_heartrod.amxx",
+      "hash": "1CB9010A6D249898EC06B66FA2119DC3114A4234E0228B4AFC22641B1524A373",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 67,
+      "strings": 58,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_infdesert.amxx",
+      "hash": "76259D4586DE863F040484082FA29421128063DD6A90DAE41FE3C09C6433E9B9",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 42,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_jetpack.amxx",
+      "hash": "1B98FF47C37A750B841EB97FB6ACB61CB3BE2A14D8FACCEA8826B07170B54985",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 26,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m12gold.amxx",
+      "hash": "B35271B046AD1FB054AFD35336BFCDA7D05752516C1D6AF5AA419C1D7FD4C1A1",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 61,
+      "strings": 47,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m4a1gold.amxx",
+      "hash": "4E39331CA4D83BC302DED7D150A7260CD8A477EDAD81F3828C90F7CC0CC5282E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 61,
+      "strings": 45,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m60desert.amxx",
+      "hash": "3ECD7DD4D7B8A0B1B99DA76163C65C06F0C547770136C91EEB559E17C7BDF8B0",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 42,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mbuffsky.amxx",
+      "hash": "5BD8E34BCC47013E0D52A784F29F172BF4B7A48721B1709C73CCBABC86EACC64",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 54,
+      "strings": 43,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mg3desert.amxx",
+      "hash": "E8B8D05882159C5E8660B41477D4A2D80F2A1E15DD2420E747CEF6C553BF821B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 42,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_norecoil.amxx",
+      "hash": "260BCE08CCE0FD682AA4588C2118A887A5C5EC62B56E59EC178C2DB15ACB885B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 36,
+      "strings": 19,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_railgun.amxx",
+      "hash": "0C29D712CA16F5C661E2EAE2961CAF71D32A9717FF829E6F36B92D4C819B8C5F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 63,
+      "strings": 48,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_sgrenade.amxx",
+      "hash": "A0728929649071BA89C3BF6A8F437EAADA5F3E3A73A027E630F6FA62AAA4922E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 59,
+      "strings": 29,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_teleport.amxx",
+      "hash": "FB28A262955E6BD459CE55DEF5D9893E65C71C400326CCF6F58C3C64AFCAB3CE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 43,
+      "strings": 34,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_unlimammo.amxx",
+      "hash": "21FCF66561FD5C3A69BF14AB2CE2D5666CFF204848304A0C70683031B6CD7DCA",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 31,
+      "strings": 18,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_vsk94.amxx",
+      "hash": "54DC1F18AD6976B79542DB3BE731F91A87AF2078BA32E93F01B2CBDA1D53B0FC",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 59,
+      "strings": 46,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_firegr_model.amxx",
+      "hash": "F15110C450D4D7241F936F4C276FDA58DCE9861D4D040F8FE4C42944C14444A3",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 7,
+      "strings": 6,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_fly_models.amxx",
+      "hash": "C34DA93930DB1249F8C0752885CC89911B8F0847CC73F53A018F6974F2A4E04B",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 60,
+      "strings": 19,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zb_fly_models.amxx"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_frostgr_model.amxx",
+      "hash": "6FBDAEE5DCEC2865CAE4278169B6BB4FBBB6182F28E10CD83E35AA5A4841FF4E",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 7,
+      "strings": 6,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_gift_box.amxx",
+      "hash": "D888665AF7D3894A0356A67F02524794361411913F6AD2B7B21EF088D0D9A50C",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 38,
+      "strings": 15,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_infect_spr.amxx",
+      "hash": "2A236089C78D564441AC16AF920D345E401AF68A7B5DF38A2827026F8B496BFF",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 14,
+      "strings": 7,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_knife_menu.amxx",
+      "hash": "65D0620601BCD0110903269107430F021F4B18A6D30AD8EEAD6120EB8AE67D59",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 0,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lasermine.amxx",
+      "hash": "0F6CBE6499171A97CC618BF3A09CD231BEF42FD0487238AD73EF04EFB836B23B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 102,
+      "strings": 84,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_level_system.amxx",
+      "hash": "F3D5834A73FA87CA37EDA479C75EE1F46C8145D68AF0B6D4D382698673314BF9",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 53,
+      "strings": 40,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_drakar.amxx",
+      "hash": "09389E9D65D9F2A934323CD58D11FD210BF497615C53921DC01EAF3C2F47A52D",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 50,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_magicsg.amxx",
+      "hash": "7C79AA51CCA422278847FAF5EBC7880CE5219104E8CE8194305E0CA6F1FD9D18",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 51,
+      "strings": 48,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_parachute.amxx",
+      "hash": "7F8C3B24AE57638A5E6DF7677B24CA5D531181B59387DEFCC1ED0EAD48EF5B48",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 22,
+      "strings": 13,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_player_models.amxx",
+      "hash": "99288224E2928DC6D8F2EC7988CA763E8C799B49F2BB1DF5F7235A403DC67E9E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 31,
+      "strings": 56,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_privileges_system.amxx",
+      "hash": "82A4AF36B059D2177AC41A3DA117E55600232BF72B74920CE1DCDF2551F8ACFD",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 60,
+      "strings": 159,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_respawn_system.amxx",
+      "hash": "D8318373649CE4DFBBCC219B057003EC14321A2386140B1A14372BA9D0AA635E",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 19,
+      "strings": 82,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_roulete_save.amxx",
+      "hash": "1C222EFD886766370A2A54047D12401291828679219C679EC6EC234B52A39BEE",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 21,
+      "strings": 7,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_roulete_system.amxx",
+      "hash": "7AE1F4442DAA700357F2AD56F709EE106D2D204ABF404F695160DCB0BBF07B41",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 40,
+      "strings": 74,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + client_cmd"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_roulete_value.amxx",
+      "hash": "8DB9346A759CE1AB5CF0A90995B37F276078AE8682CB41E30EA2BD94BFEA7B1A",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 25,
+      "strings": 11,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_round_gift.amxx",
+      "hash": "2D864026A5DBB6B31D74C4CAF1EFE9C4ACCA69E1ECA436BB436A086C7F103F60",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 45,
+      "strings": 17,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_score_countdown.amxx",
+      "hash": "79E99769787FFD41B5A77AF44D65670B05A4E2CE2A0B49B81C0DC81D9F5D6470",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 30,
+      "strings": 24,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zb_score_countdown.amxx"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_scrfade_crhair.amxx",
+      "hash": "871E8107551ED338E14ED908EB2739B952AE5B933B140EB7A1BE3FEB2E6B7824",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 18,
+      "strings": 9,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog5.amxx",
+      "hash": "24CDC9A9828B53D5F168AAAED14F12AD223CAE198098BF442D7B49F807E0D270",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 52,
+      "strings": 45,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog7.amxx",
+      "hash": "19A52A59E922FE35E7F9C89C5DD9A99010EC7C53E2D73A8193969765A0B15017",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 52,
+      "strings": 44,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog8.amxx",
+      "hash": "E8498C56B2AF641DF49CEE24A315F4E4981118981FD5E917D6B41EB9C929802A",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 52,
+      "strings": 44,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_admin.amxx",
+      "hash": "65E5C76BE4727589A3237B6F752DC3917DDEA3F9352223A2AF5138FAE53C51AA",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 55,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_boss.amxx",
+      "hash": "4BCBCDE96D7D18A37424F3ADB8808FF831D2CB934E0E56BEC98EF4381FE8CB1E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 47,
+      "strings": 19,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_lord.amxx",
+      "hash": "600A254DC86859206CDA6B349398D57348A23D8F788A305C47E7FD7A28754158",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 58,
+      "strings": 71,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_player.amxx",
+      "hash": "251866A62253EFE60966E56888480E6A9FE34467DBA7A96AC11A07FB2DD9D9D7",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 1,
+      "strings": 10,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_player2.amxx",
+      "hash": "09A4F33E88235A5C3628A45A5208C34E667A89D5B9EC019D5406E242045C6BFA",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 13,
+      "strings": 5,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_player3.amxx",
+      "hash": "E47332326878596547E42EEB706307EF3495B4398DC32CDF7CB4935C6A9E3AE2",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 30,
+      "strings": 21,
+      "findings": []
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_vip.amxx",
+      "hash": "1669CF14B9240E8D04B46C982AA231E1F465E5B4AED4F70CFD689FC282DDCDC0",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 53,
+      "strings": 33,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_antiarmor.amxx",
+      "hash": "8FFDB14BE6FB68E1B305B2F0AC39A64AE67FDEC1C56CB3F8F99CF8CA4C0BF457",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 47,
+      "strings": 26,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_jbomb.amxx",
+      "hash": "A6C16E71CEEBADDE7459B0F5B9D80DE19BEC1FF23248E4D18A2EC276F7F7E4D6",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 50,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx",
+      "hash": "15C356C45369F41CAB538D2625D5B8D708E0ED17A62E8A563749F6D85852C85A",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 184,
+      "strings": 809,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zombie_plague.amxx"
+        }
+      ]
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- MORE/zb_ammo_trade.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- ROULETE SYSTEM/zb_roulete_system.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + client_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [
+      {
+        "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc.exe",
+        "size": 171008,
+        "hash": "1F0F28E32518F511D7554C6E688EEA9C75194ED5DB337205D0BD8A563CF49A07",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc32.dll",
+        "size": 327680,
+        "hash": "CD3516F4996E97E00D649398FF11E80E6848554E314F6A15AA3F243EF00DDD50",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/compile.exe",
+        "size": 102912,
+        "hash": "69CEA50F7DD78F67534B4C8CB057A34C97F136E8A118A93AF512E08C6997DEA9",
+        "knownAs": "amxmodx-1.10.0-git5479-base-windows/addons/amxmodx/scripting/compile.exe"
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm.dll",
+        "size": 87040,
+        "hash": "23CDE627E10751294ED3F3A0A508AF616B2BFE33156EB32FA953F9D1AEA29C8C",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm_i386.so",
+        "size": 44732,
+        "hash": "505D866DD4AABF550AB96760579470B36F73109E92102F76A7161A9A6679A5B3",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/fragbufffix/FragBufFix.so",
+        "size": 3640,
+        "hash": "C6965CA4AD60774599F23E5E33902380435E081DD63E04195C08EA93CAC56268",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.dll",
+        "size": 94720,
+        "hash": "4DB7CF0327E058036F0425C1BE813703A9AEDB2F57AB16400B7568435D768F43",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.so",
+        "size": 9848,
+        "hash": "22225D3F477A59E8DD6CA1243CCF08E7F96F3E07E163EA5AE47199996A0FC3B9",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.dll",
+        "size": 89600,
+        "hash": "B47E8C48EAB38A00296906A54BABD690F26226F6ABEB31B8501ACF1516B3D03F",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.so",
+        "size": 9976,
+        "hash": "5E9D41C9C52A21EA5BEAF1EA0CED5FA7B7590A0A257F7278EFB5C10E42BF6ED7",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm.dll",
+        "size": 417792,
+        "hash": "EFD4CDDC7CDADAD6F490D97E23DE780C0DF01E49A8B3AD9D77FD89797362AEDE",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm_amd64.so",
+        "size": 471776,
+        "hash": "E1EB0823B982A87E9313914B2AA363D8C8281FC79C376F4F7800DE0064EBF275",
+        "knownAs": null
+      },
+      {
+        "file": "Зомби сборка v1/Сборка/addons/podbot/podbot_mm_i386.so",
+        "size": 522164,
+        "hash": "97D5FB11350CBD44ED18744C50E5D15D836E3DFDEFFB8BD89D1E5E43E5F1781D",
+        "knownAs": null
+      }
+    ],
+    "scripts": [],
+    "configs": [
+      "Зомби сборка v1/Информация о плагинах.txt",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/plugins-zplague.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zbsborka_chat.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zbsborka_extraitems.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zbsborka_knifes.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zbsborka_lasermine.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zsborka_extraitems.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zsborka_lvl_main.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zsborka_main.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zsborka_zombieclasses.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/configs/zsborka_zombieplague.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/data/lang/zbsborka_extraitems.txt",
+      "Зомби сборка v1/Сборка/addons/amxmodx/data/lang/zp_lvl_admin.txt",
+      "Зомби сборка v1/Сборка/addons/amxmodx/data/lang/zsborka_menu.txt",
+      "Зомби сборка v1/Сборка/addons/amxmodx/data/lang/zsborka_zplague.txt",
+      "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/testsuite/textparse_test.cfg",
+      "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/testsuite/textparse_test.ini",
+      "Зомби сборка v1/Сборка/addons/amxmodx/scripting/- LOVUSHKA JOKERA/Новый текстовый документ.txt",
+      "Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/botchat.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatBulgarian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatCroatian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatCzech.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatDanish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatDutch.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/botchatEnglish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatFinnish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatFrench.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatGerman.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatHungarian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatIceland.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotchatIndonesian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatItalian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatNorwegian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatPolish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatPortuguese.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatRomanian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatRussian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatSerbian.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatSpanish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatSwedish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatTagalog.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/BotChatTurkish.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botchats/README!.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botlogos.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/botnames.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/botskill.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/botweapons.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/podbot.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/botchat.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/botlogos.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/botnames.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/botskill.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/botweapons.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/configs/podbot.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/scripts/other/252mapcm/commandmenu.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/scripts/other/pbdefaultcm/Kwo commandmenu.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/scripts/other/pbdefaultcm/Ss commandmenu.txt",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/scripts/waypoint/PodBot MM/sfwp.cfg",
+      "Зомби сборка v1/Сборка/addons/podbot/pod_v3 docs/files/scripts/waypoint/PodBot MM/w.cfg",
+      "Зомби сборка v1/Сборка/info_privilege.txt",
+      "Зомби сборка v1/Сборка/info_server.txt",
+      "Зомби сборка v1/Сборка/sprites/zm_sborka/extra/weapon_jbomb.txt",
+      "Зомби сборка v1/Установка + флаги + информация.txt"
+    ],
+    "plugins": 63,
+    "sources": 81,
+    "content": 414,
+    "other": 385
+  },
+  "verdict": "suspicious",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 63,
+    "high": 1,
+    "critical": 0
+  }
+}

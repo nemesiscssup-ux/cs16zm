@@ -1,0 +1,2427 @@
+{
+  "slug": "kazakh-pirog",
+  "target": "quarantine/kazakh-pirog/extracted",
+  "scanned": "2026-08-07T19:34:35.166Z",
+  "totals": {
+    "files": 2441,
+    "bytes": 361508817
+  },
+  "defender": {
+    "available": true,
+    "threatFound": false,
+    "output": "Scan starting...\r\nScan finished.\r\nScanning E:\\cs16zm\\quarantine\\kazakh-pirog\\extracted found no threats."
+  },
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "Core.dll (258106 байт)",
+      "file": "[ZM] Казахский Пирог зомби/Core.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "users-malformed",
+      "why": "Строка не начинается с кавычки: похоже на неудачную попытку комментария. AMX Mod X разберёт её позиционно, результат непредсказуем. Строку нужно убрать.",
+      "evidence": "строка 1: ï»¿; ÐÑÐ¸Ð²Ð¸Ð»ÐµÐ³Ð¸Ð¸:",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "medium",
+      "rule": "users-shipped-account",
+      "why": "В сборке приложен готовый аккаунт с паролем.",
+      "evidence": "строка 8: \"Darren\" \"123\" \"acdel\" \"a\"\tÐÐ»Ð°Ð²Ð½ÑÐ¹ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¾Ñ",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "WinCSX.exe (131072 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/WinCSX.exe"
+    },
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "writes-rcon-password",
+      "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+      "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags + server_cmd, client_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_ganymede.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_heavy.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_fire.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_ice.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_poison_boss.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_shaman.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_2x_uzi_lego.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_ak47_blackstar.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_amethyst.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_apache.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_armor.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_charger7.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_crow1.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_desperado.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_jumpBombEX.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m134_laser.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_nitro.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_no_recoil.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_skull11ex.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_sterlng.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_turbulent5.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_vsk94.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_xm8_miku.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_vip.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/parachute.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_knifes.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "EXIT",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_respawn_ammo_boss.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_ak47_flash.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_jetpack.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_m4a1_flash.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_thunderbolt.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_cso_winhud.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_lasermine_24.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_lasermine_24.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_parachute.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_sub_bank.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ak47.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_crossbow.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_deagle.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_dual_barrel.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ksg12.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_m4a1.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_pkm.amxx"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_flags, cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:writes-rcon-password",
+      "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+      "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc.exe (110592 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc32.dll (274432 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc32.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc64.dll (282624 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc64.dll"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:rcon-password",
+      "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+      "evidence": "rcon_password | rcon_password %s",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma"
+    },
+    {
+      "severity": "critical",
+      "rule": "src:reads-rcon-password",
+      "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+      "evidence": "get_pcvar_string, get_cvar_pointer",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "sasm.exe (188416 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/sasm.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:quit-killswitch",
+      "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+      "evidence": "EXIT",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_addon_respawn_ammo_boss.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_lasermine_24.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.dll (1074496 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/cl_dlls/client.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cs_i386.so (2564620 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/dlls/cs_i386.so"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "mp.dll (1316152 байт)",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/dlls/mp.dll"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec \"listip.cfg",
+      "file": "[ZM] Казахский Пирог зомби/cstrike/server.cfg"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "dbg.dll (69632 байт)",
+      "file": "[ZM] Казахский Пирог зомби/dbg.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "FileSystem_Stdio.dll (118872 байт)",
+      "file": "[ZM] Казахский Пирог зомби/FileSystem_Stdio.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "FileSystem_Steam.dll (122974 байт)",
+      "file": "[ZM] Казахский Пирог зомби/FileSystem_Steam.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hlds.exe (389120 байт)",
+      "file": "[ZM] Казахский Пирог зомби/hlds.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hlds_console.exe (460404 байт)",
+      "file": "[ZM] Казахский Пирог зомби/hlds_console.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hltv.exe (221184 байт)",
+      "file": "[ZM] Казахский Пирог зомби/hltv.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "Mss32.dll (351744 байт)",
+      "file": "[ZM] Казахский Пирог зомби/Mss32.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "AdminServer.dll (454656 байт)",
+      "file": "[ZM] Казахский Пирог зомби/platform/Admin/AdminServer.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "proxy.dll (254012 байт)",
+      "file": "[ZM] Казахский Пирог зомби/proxy.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "Steam.dll (3032312 байт)",
+      "file": "[ZM] Казахский Пирог зомби/Steam.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "steamclient.dll (3585832 байт)",
+      "file": "[ZM] Казахский Пирог зомби/steamclient.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "steam_api.dll (67072 байт)",
+      "file": "[ZM] Казахский Пирог зомби/steam_api.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "steam_api_c.dll (70144 байт)",
+      "file": "[ZM] Казахский Пирог зомби/steam_api_c.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "swds.dll (1668968 байт)",
+      "file": "[ZM] Казахский Пирог зомби/swds.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "tier0_s.dll (276264 байт)",
+      "file": "[ZM] Казахский Пирог зомби/tier0_s.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "HldsUpdateTool.exe (1127776 байт)",
+      "file": "[ZM] Казахский Пирог зомби/updater/HldsUpdateTool.exe"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec violence.cfg",
+      "file": "[ZM] Казахский Пирог зомби/valve/autoexec.cfg"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "client.dll (503354 байт)",
+      "file": "[ZM] Казахский Пирог зомби/valve/cl_dlls/client.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hl.dll (966709 байт)",
+      "file": "[ZM] Казахский Пирог зомби/valve/dlls/hl.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hl_i386.so (1987316 байт)",
+      "file": "[ZM] Казахский Пирог зомби/valve/dlls/hl_i386.so"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec listip.cfg",
+      "file": "[ZM] Казахский Пирог зомби/valve/server.cfg"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec language.cfg",
+      "file": "[ZM] Казахский Пирог зомби/valve/valve.rc"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vgui.dll (352256 байт)",
+      "file": "[ZM] Казахский Пирог зомби/vgui.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vgui2.dll (245819 байт)",
+      "file": "[ZM] Казахский Пирог зомби/vgui2.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "voice_miles.dll (53248 байт)",
+      "file": "[ZM] Казахский Пирог зомби/voice_miles.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "voice_speex.dll (139264 байт)",
+      "file": "[ZM] Казахский Пирог зомби/voice_speex.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "vstdlib_s.dll (374568 байт)",
+      "file": "[ZM] Казахский Пирог зомби/vstdlib_s.dll"
+    },
+    {
+      "severity": "high",
+      "rule": "no-sources",
+      "why": "Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.",
+      "evidence": "13 из 82: csstats.amxx, adminchat.amxx, adminhelp.amxx, AdminPrefixes.amxx, adminslots.amxx, adminvote.amxx, amxmodmenu.amxx, Health.amxx, timeleft.amxx, unprecacher.amxx, zp_hook_nemesis.amxx, zp_sub_bank.amxx",
+      "file": "(сводно)"
+    },
+    {
+      "severity": "medium",
+      "rule": "official-name-other-content",
+      "why": "Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.",
+      "evidence": "27 шт.: csstats.amxx, admin.amxx, adminchat.amxx, admincmd.amxx, adminhelp.amxx, adminslots.amxx, adminvote.amxx, amxmod_compat.amxx, antiflood.amxx, cmdmenu.amxx",
+      "file": "(сводно)"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/csstats.amxx",
+      "hash": "0FC20B0C30F759597D062629F2CA9B358FEDB554313D7DD7CA1891BEF2417A33",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/1gl_mod.amxx",
+      "hash": "B2FEFCC19D8F5E136212B74AEE02CD17B7502894EF551DB297B916FF6271B398",
+      "hasSource": true,
+      "verdict": "dirty",
+      "natives": 178,
+      "strings": 878,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "critical",
+          "rule": "writes-rcon-password",
+          "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+          "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/admin.amxx",
+      "hash": "7AE3681CC8CEAE5AB13ED140512CD2457157670663FBF79CA126F1A7D7F4788C",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminchat.amxx",
+      "hash": "18A4278FFEE217108010290A827F2A2A1E2A52895DB0B0611707AC076087034C",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/admincmd.amxx",
+      "hash": "19F2DD385F61812DB06DACC9EAA16E74817A3F4510E2966D3D94A164D0B7A989",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminhelp.amxx",
+      "hash": "C46D06A228535A7852E162AAEB2C84EC184992DBF3F3506A24B5AEEA945B18ED",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/AdminPrefixes.amxx",
+      "hash": "68F2C5C2D8D1158EF6F9BB712D7E4F6180687899D7D23E69A4AA6DEB2DB6C61A",
+      "hasSource": false,
+      "verdict": "dirty",
+      "natives": 53,
+      "strings": 75,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "AdminPrefixes.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminslots.amxx",
+      "hash": "FC447AD9D6906EC5BE7576E1B946DF56C65054D49909D79937B6F07C88146297",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminvote.amxx",
+      "hash": "FD87530F2761E57999E041BD3E2F2935F880255A7E8778240036DF15A349FDA0",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmodmenu.amxx",
+      "hash": "2094EAF9B21091B28EBC998B90B0A277872032E3828B552A0F62CA9EF7139672",
+      "hasSource": false,
+      "verdict": "dirty",
+      "natives": 34,
+      "strings": 24,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags + server_cmd, client_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "amxmodmenu.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmod_compat.amxx",
+      "hash": "E6A6E6B973D1CFA74DC75098254B7EB2D024F58AFA7D67F47A8AD3FB5EA1F879",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/antiflood.amxx",
+      "hash": "75EB85F3E62C64FE1AE243159DF0E8CA072DCC7298C68DAF52D386230C20C322",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hash": "9B1C77BC712260EB5F943EC80CD92DE344F50776D7BE8E6AB5A51D7AF731779D",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_classic.amxx",
+      "hash": "EDBF5C6B6B8F996A2C49872771D85764E8CB43E88BE679A31C86D499B77C284E",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 4,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_ganymede.amxx",
+      "hash": "F80029F9A68615476580D78D2D3ACCF0B4297575D503459F0659D095277C5A65",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 50,
+      "strings": 29,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_heavy.amxx",
+      "hash": "4AF2A87F9F296D103A09717C16CCBFED3C89D6471B972BC02A8F0EC3BBD98407",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 51,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_parazit.amxx",
+      "hash": "72B0C4C9E85E53E37DB081832EF21DC20DA70AE68320C4C9B6AC5C7D796161C3",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 4,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_fire.amxx",
+      "hash": "CCFEFCCB59D7F728618E789329B3C84FD80D131EEE771C6BC4C5C9A90DAE84F7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 56,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_ice.amxx",
+      "hash": "0CD5AED13F25796FE939C6041B9D2CFBC20E2D592DC9B8D4A5E73B637D141936",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 55,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_revenant_poison_boss.amxx",
+      "hash": "AF66753342F74DEA9592970183AFD43915888F63F028EE6D1ABA2ECFD59C44D7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 54,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_shaman.amxx",
+      "hash": "612AB07A9BD2D7B9AF2B58419AB92EC1F8FF0ABC3485465D5E24C93AA0AE4780",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 60,
+      "strings": 42,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_class_vampire.amxx",
+      "hash": "44DD096A821C797FC7CC7B3E1EA6CB462BF5675870E6E2A3001A8D15DB7B0CF9",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 4,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_2x_uzi_lego.amxx",
+      "hash": "AAF225BD030A4D8B8DECEAF8D499D0EDBF11A8C7D7E2C907216C455E6428B4B3",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 77,
+      "strings": 90,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_ak47_blackstar.amxx",
+      "hash": "91B8D602E8448E62881EB2B43FA7587B950E1EDDBEEBBCBEEBB027AB9BAB3F7F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 89,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_amethyst.amxx",
+      "hash": "F9CF857ADEED0397C8FF1C2723A6C905C4C213053C0A854987053B16BB27D9BE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 88,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_apache.amxx",
+      "hash": "0DA3C0834D7101B28DEB15D260F1BB03E18C524ED75A3F6163A15588640E5612",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 94,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_armor.amxx",
+      "hash": "5360174F86151CF6111FFE03EC511414E5B7C130B970BF96A5C305E855BDAE56",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 23,
+      "strings": 8,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_charger7.amxx",
+      "hash": "6E54ADBD6420D415A363D11A25723A6ADAEDE45891A5084F7456C85AE69363BA",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 92,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_crow1.amxx",
+      "hash": "026456ADBE166AFE7E6EF9D7DD13E42285E8B8EB5619381E6E47407437485519",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 90,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_desperado.amxx",
+      "hash": "0A1CF4E11A54589A9B33D50960C20E091981EC5ECB6732439DEDF9BBAECD38D2",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 76,
+      "strings": 93,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_jumpBombEX.amxx",
+      "hash": "F44428D9AA59E022E58F3A5326103871D1DF59B3777E7DAC678D5AD463263758",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 55,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m134_laser.amxx",
+      "hash": "44CD9602218FDD06B2CC848090A0D4F042A6B78E744CB84E21B84270576C0CC0",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 86,
+      "strings": 112,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_m950ex_bee.amxx",
+      "hash": "4CEEC4A1F6BA2A3AE328D14F03FE5BDF4D1FB6A4FEDADBDEF5A2097F7E96ECE9",
+      "hasSource": true,
+      "verdict": "dirty",
+      "natives": 91,
+      "strings": 106,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_nitro.amxx",
+      "hash": "CF8DDB488EE3D0DC00484D719461FA059F708E5288521F59D4150D7D3001380E",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 88,
+      "strings": 103,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_no_recoil.amxx",
+      "hash": "3190CAACB34CC12D05D37625A59EAEDFC85E124E027D4611480B22F4D14198F1",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 17,
+      "strings": 8,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_skull11ex.amxx",
+      "hash": "C286504F29A0580436DB8CDC7027C9E711B7A74CD3C0AA4162F0B10ADA0EE71A",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 90,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_sterlng.amxx",
+      "hash": "3EF02988F1A4C2771E8FC293504E4EA943B62D4B3C54614799F4813079AE7938",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 92,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_turbulent5.amxx",
+      "hash": "E429F4E4D3E53C1137AE172375327D233A00553D6208AC338B267C7A7D75FB44",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 93,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_unlimited_clip.amxx",
+      "hash": "0B99EDD2E81EC46AF08983E13B3BD177DC8601F73835D02A8FA99A8E220ED1F2",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 13,
+      "strings": 8,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_vsk94.amxx",
+      "hash": "AA1B3D3F55134A046034774A148AFCF44C92315BDEF18D34CB57A3B2F1D75D21",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 94,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_extra_xm8_miku.amxx",
+      "hash": "4E1DA3493A489BB4E0E29C507B506CAED411D78CA91DA3AA5D1AE8166D026586",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 74,
+      "strings": 91,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cso_vip.amxx",
+      "hash": "DFBB58F5547D87802BE5FE710AD6FF57B2CECFA25C168091B28A5EFF44E1AFCE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 33,
+      "strings": 17,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/Health.amxx",
+      "hash": "BB7A705D2C91AEC23A97E2A59E6118E9DCF69E7A3ABABF82050564662B53B64F",
+      "hasSource": false,
+      "verdict": "dirty",
+      "natives": 23,
+      "strings": 13,
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "Health.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/imessage.amxx",
+      "hash": "946C6998B64A507CFE09F87920E1AF40485B239A2EFC3B91BAA14DDED9CB930C",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/mapchooser.amxx",
+      "hash": "8C795EDC6400A37773B999987848AB7D4D0947F5209CFCB59D9ADF21FF538714",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hash": "18111FF83D8201A76FF2906B6554F4681295D093921405E7CCBEB080CD631A3D",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/menufront.amxx",
+      "hash": "34E9CD2D89CB5B6DED6B70D004FFA8A9D4D2EACA087B923669E04F75C1EE7F4E",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/miscstats.amxx",
+      "hash": "06704206C2659BC745AC60A87F4D7D52E4421E7BC4AEE3B14DDD7BB3FE3AC835",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/multilingual.amxx",
+      "hash": "44919CB053AD818B1EE45F2328133D0ACA23D8A4C6E2169175E7AFCEA66DD339",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/nextmap.amxx",
+      "hash": "4038B3162E204C9235402C69BEAD5E0BA64627815DD183B9424A0BD2F1AAA319",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/parachute.amxx",
+      "hash": "A4ADA3C850EC6BD6DDDDF18429636B1C40DCCADDF15380C3973E204285C37DC7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 18,
+      "strings": 8,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/pausecfg.amxx",
+      "hash": "09C9867F4D5607872A6718EBDE906365798DFCB4C21659593C699AF0E5445C83",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/plmenu.amxx",
+      "hash": "D297CB8522043A07DB77E145CCC7F83A13E5DAA3B278C73EC0FA4FBF328D9C42",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hash": "78DCEBCF61E285DFCFC20CE9B3B2A710B06251A0936586C9FEB0DB7EF22B618B",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/precacher.amxx",
+      "hash": "F06F6B3D0D450B5B1122CA885290C5AC399EE89ECC88E8C07F2F7C300764BF0C",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 2,
+      "strings": 9,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/restmenu.amxx",
+      "hash": "76A68B852C2E6A2D824B6B3B7019F5BB6DBD57AD9753E099147328FA6B663C66",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hash": "8CF2E13A37F68F78E5D42093874D27C87A55D5F16CD495A10FAA6DB3AB261A2E",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/timeleft.amxx",
+      "hash": "68A07BBB3D91D9FDF657E909A39A515742D2585479711DC69DA84368A0CDAB3A",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/unprecacher.amxx",
+      "hash": "2559368AC4653C1BB1634A3F80FE6692AC5EC0C04AE0DA97DE08673635B23736",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 4,
+      "strings": 246,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "unprecacher.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_infec_sounds.amxx",
+      "hash": "EDAFFF284101D5CA4003E44AAC5611B049A80A90305095620961FF14F3619208",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 6,
+      "strings": 8,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_knifes.amxx",
+      "hash": "72BB3E9509D06B669ED0788DF2AE3A17FCCB01E8ECA0E49977C68680A1FA414D",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 68,
+      "strings": 128,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_addon_respawn_ammo_boss.amxx",
+      "hash": "01152F3462B96555A83F907712392B2D083192AA5FC3E8664B814C092F4CB6F8",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 36,
+      "strings": 22,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "EXIT"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_ak47_flash.amxx",
+      "hash": "4C23AB94733B87CCB9DB30E307182E1FDD3753D7D89025FC4A04C9036477FF85",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 40,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_jetpack.amxx",
+      "hash": "8754B0C52915AFD305D03DDB678BB7BAD5698C2778ED5C46202D17903982D458",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 53,
+      "strings": 56,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_m4a1_flash.amxx",
+      "hash": "DD5463915DC33B76E182DD54E4D92431D68CBAAD1E93DBF4E99CF2E7D531B6AE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 89,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_admin_thunderbolt.amxx",
+      "hash": "27B671AD73E4A10A079C746E0FF9B235352FF1FBFFB80743B5F5D215B78FDFD3",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 41,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_ammochange.amxx",
+      "hash": "D0AEA870A8C7D90B3A2C19BCD0222CA11D22E7FDB6C1F446066EF183C2AAB782",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 14,
+      "strings": 13,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_ammo_ex_boss.amxx",
+      "hash": "6B64ECD70747DACC2EA107E49C430C12F68DC37D9C216622BFE0FE1D43E2E9B0",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 45,
+      "strings": 23,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_cso_winhud.amxx",
+      "hash": "EECDBD66EC03F28F6F7F6144BC07ABCF239224923AD081960FB3059BD0EE8B86",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 38,
+      "strings": 27,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_hook_nemesis.amxx",
+      "hash": "ED2EC4A133594C547A4EE98F8A63F8B06E846CE6230A13B1BDDEC33D2E608059",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 73,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_hook_nemesis.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_lasermine_24.amxx",
+      "hash": "D05598ECE2D830493AF43C8EEF4657DBA39CCA4DD97430BAA1E1D98DBA3748FE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 77,
+      "strings": 112,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_parachute.amxx",
+      "hash": "C980812446840156D7191499E51ABE03B280507C79076F3C3B37F2D97A211811",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 18,
+      "strings": 8,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_sub_bank.amxx",
+      "hash": "D9BA7AE3F53A0D94CEC7C0C1F07D829927CCA805BDF106E624B75342DFAC5319",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 52,
+      "strings": 70,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_sub_bank.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_time_ammo.amxx",
+      "hash": "9E4FEECD6DDFABA22044C821FDF17F252E34A64556BBC2E85A9C48D128703399",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 17,
+      "strings": 10,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_time_ammo.amxx"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_admin_menu.amxx",
+      "hash": "073C04062082EA8853F5EEC1DB7E1E4CE07076988B5B53940DA16793C6EA15CF",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 53,
+      "strings": 58,
+      "findings": []
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ak47.amxx",
+      "hash": "84A4831C7A4804E436789256DDDF8D185BEB69125E72F2043252212803AB534F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 45,
+      "strings": 26,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_crossbow.amxx",
+      "hash": "E851F724C37727DA4D4DE808BC02943A77F95CB30D65F8ADD627984D64A05E8B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 95,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_deagle.amxx",
+      "hash": "C5E75EDED3F30B7460149F551AA0B454906BA2E5E91C18DFA0B3A62C932E76F6",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 78,
+      "strings": 87,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_dual_barrel.amxx",
+      "hash": "D02E34DBD8D3F0B24632D408D56C29AEB4C2B52E4D2594A136175FD4333971EA",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 96,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_ksg12.amxx",
+      "hash": "81269BDB0D1073FE6CB3FD911B3921233840E3994E76BD06F1DA7F0F65A91396",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 91,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_m4a1.amxx",
+      "hash": "0C76A0ACD7DC1F79F5425E58BA1556E2E359E2EDA131BFFF0D0192213725861C",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 79,
+      "strings": 87,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/zp_vip_pkm.amxx",
+      "hash": "8CC49B5B045627F4BC3AE1CC8BB8A1E55E2E5BAC9B8CD600C5EC8CB3A99EE2EF",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 73,
+      "strings": 90,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/1gl_mod.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_flags, cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        },
+        {
+          "severity": "critical",
+          "rule": "writes-rcon-password",
+          "why": "Плагин меняет rcon_password — молчаливый перехват управления сервером.",
+          "evidence": "set_cvar_string, set_cvar_num, set_pcvar_num"
+        },
+        {
+          "severity": "critical",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды доходит до исполнения серверной команды, и в плагине есть строки захвата прав.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cso_extra_m950ex_bee.sma",
+      "verdict": "dirty",
+      "findings": [
+        {
+          "severity": "critical",
+          "rule": "rcon-password",
+          "why": "Плагин обращается к RCON-паролю. Внутри плагина get_cvar_string возвращает его открытым текстом.",
+          "evidence": "rcon_password | rcon_password %s"
+        },
+        {
+          "severity": "critical",
+          "rule": "reads-rcon-password",
+          "why": "Плагин читает значение rcon_password. Легитимной причины у игрового плагина нет.",
+          "evidence": "get_pcvar_string, get_cvar_pointer"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_addon_respawn_ammo_boss.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "quit-killswitch",
+          "why": "Команда остановки сервера. В связке с проверкой пароля/имени — «плагин-заложник».",
+          "evidence": "EXIT"
+        }
+      ]
+    },
+    {
+      "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/zp_lasermine_24.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [
+      {
+        "file": "[ZM] Казахский Пирог зомби/Core.dll",
+        "size": 258106,
+        "hash": "43012DB3ADAAB15164895FB2AFA45476D724A79218E3F5EC2C9619CE89759CAB",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/WinCSX.exe",
+        "size": 131072,
+        "hash": "C6FA4F041136A916D8FF4D6D49977B70AAD3509E0B15811C35CDCD6665470C05",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc.exe",
+        "size": 110592,
+        "hash": "A53A892E6A0BAE6261B6799F20E8F9897E7D75FDC1277EC82F5FEEF0E6E6B826",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc32.dll",
+        "size": 274432,
+        "hash": "5F40BA2DD0AB8BE7D6A801DB26A0D0F45A865FDE8B578FF282AAD1875A061D07",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/amxxpc64.dll",
+        "size": 282624,
+        "hash": "3767B119293854EC9218D77CFEA9C561CC2C1F699964182716B2CCE2CEF235EE",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/compile.exe",
+        "size": 102912,
+        "hash": "69CEA50F7DD78F67534B4C8CB057A34C97F136E8A118A93AF512E08C6997DEA9",
+        "knownAs": "amxmodx-1.10.0-git5479-base-windows/addons/amxmodx/scripting/compile.exe"
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/sasm.exe",
+        "size": 188416,
+        "hash": "4C5251DCF2C84080E2109647B10930E216F7D5574552F9F3DEF4D288C1D54461",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/cl_dlls/client.dll",
+        "size": 1074496,
+        "hash": "733D4B48A64991D2CD2A60C20D99F72B6533CC401C47F97CC0E6073BD482B6DC",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/dlls/cs_i386.so",
+        "size": 2564620,
+        "hash": "A31623D6429B34C20F9A403083B1CDD612B087FFCC711C7A1010B86FF49023AD",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/cstrike/dlls/mp.dll",
+        "size": 1316152,
+        "hash": "367BE9B3A5FDB9843B3DD715415E9B23E7B362D421DF15009E9F6FDD5E8BC5E1",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/dbg.dll",
+        "size": 69632,
+        "hash": "8564B2F4C76AAC5EB645514BD8FB82A1F57009557C506C0FCEF3CE5B2EE078CF",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/FileSystem_Stdio.dll",
+        "size": 118872,
+        "hash": "4F7DCA9537CDF20B65DA599FFC33EA69E8A132239CFB6A3D0B1B623359DCDA85",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/FileSystem_Steam.dll",
+        "size": 122974,
+        "hash": "DC9BFD575A29ABBE1D542CE41143F388CD56B2280F25AF64C1699B43A04C1125",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/hlds.exe",
+        "size": 389120,
+        "hash": "EDCA6C4725146C4940C6D3747F123CE10D6656D5880E5C503A90BC0CD8D73BFC",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/hlds_console.exe",
+        "size": 460404,
+        "hash": "5D5387599FF0112A20032BC88555932E3F54609F91B11D5E5C109A5B3101BF1C",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/hltv.exe",
+        "size": 221184,
+        "hash": "AC776FFF7078CD4D8E68AB1DA54CB033B16568F790FF645490EA8EDA159A4CB6",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/Mss32.dll",
+        "size": 351744,
+        "hash": "FE62F1EB6BA407DF77619D16927ABBEFAD3C726014F6BD1F8C37A7C3D6B781CC",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/platform/Admin/AdminServer.dll",
+        "size": 454656,
+        "hash": "CC4BEF3BC834FD0B1F69377B0717C2C501D320162375F1EBA578F33FA1D29AE3",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/proxy.dll",
+        "size": 254012,
+        "hash": "30F21BCCA11B75737BF35330A0BC6F7D36DED792494B2015B2D5F36A77067901",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/Steam.dll",
+        "size": 3032312,
+        "hash": "B0F8433482E65B5E987CE8AE996F7D8B6067D7292E0FFFB158A412754C8B4777",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/steamclient.dll",
+        "size": 3585832,
+        "hash": "4F8CF4AB2ABE3A50CE0FBBA7F789E15675FAE702B420FCBBFD3F9DA81F972035",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/steam_api.dll",
+        "size": 67072,
+        "hash": "A903B462678281EC5A796FAB528F7258B18455DC5E42B87389BA96D2359E4777",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/steam_api_c.dll",
+        "size": 70144,
+        "hash": "02FE1504D1FF75A0ED34E4CD8000639711D0481B9AD888DC96CCF8EADDDC4753",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/swds.dll",
+        "size": 1668968,
+        "hash": "72F008C9CD7241C19037878F49C6ED1285AE14120C7B8B6E4184F6F725769316",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/tier0_s.dll",
+        "size": 276264,
+        "hash": "AA48BDEE6B7EB0AAFEC4EF8E1B1E21602E18A3205F57398D0336328FCDE11277",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/updater/HldsUpdateTool.exe",
+        "size": 1127776,
+        "hash": "F42DE7AE8BFDDDACBF3D9C0339C1A45DB3AF3FF7460D6B1D35E663E19D32FC7E",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/valve/cl_dlls/client.dll",
+        "size": 503354,
+        "hash": "AA30426673F4B5B0227FA2B6B65F7AA91ABB3F8D3AD1CC81F95DBB8FCBEE1C40",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/valve/dlls/hl.dll",
+        "size": 966709,
+        "hash": "5586466C2B8E12AA39581317C2047ED868D928FE7B4E541171C9967B21EEDAA4",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/valve/dlls/hl_i386.so",
+        "size": 1987316,
+        "hash": "8D48DC6CC2B70FD963F506542B4F2561C4C8E5CF75C4A5F3D5B5C0B7DF977C8B",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/vgui.dll",
+        "size": 352256,
+        "hash": "0D4472D21443DE839080860A300CCA6B9436508F329D33D712E5C9BC07D4D998",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/vgui2.dll",
+        "size": 245819,
+        "hash": "4D024FDE69B923F67A30C8269E59269D14E56BB68C3DD3BA74FE56C64598CE87",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/voice_miles.dll",
+        "size": 53248,
+        "hash": "0F21EC2075BA4A75E7A44C0CADC1247FAED88067C93AA2A58A950E2CB0DB295A",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/voice_speex.dll",
+        "size": 139264,
+        "hash": "4E0D124C2CC55F8B5A29465F037A6363E122399D0753E9E099C85C382040E867",
+        "knownAs": null
+      },
+      {
+        "file": "[ZM] Казахский Пирог зомби/vstdlib_s.dll",
+        "size": 374568,
+        "hash": "98E236786759B9E078E8087C0C5068F9ADEEF16334B630BE76989651683B8D13",
+        "knownAs": null
+      }
+    ],
+    "scripts": [
+      "[ZM] Казахский Пирог зомби/start.bat",
+      "[ZM] Казахский Пирог зомби/updater/start.bat"
+    ],
+    "configs": [
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/amxx.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/ap_bad_prefixes.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/ap_prefixes.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/clcmds.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/cmdaccess.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/cmds.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/configs.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/core.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/custommenuitems.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/cvars.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/hamdata.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/maps.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/modules.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/plugins-zplague.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/plugins.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/speech.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/sql.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/users.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zombieplague.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zombieplague.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zp_bank.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zp_extraitems.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zp_ltm_cvars_ap.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/configs/zp_zombieclasses.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/admin.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/adminchat.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/admincmd.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/adminhelp.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/adminslots.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/adminvote.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/admin_prefixes.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/antiflood.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/cmdmenu.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/common.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/cso_classes.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/imessage.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/languages.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/LaserMines.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/mapchooser.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/mapsmenu.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/menufront.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/miscstats.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/multilingual.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/mute.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/nextmap.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/pausecfg.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/plmenu.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/respawn_ammo.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/restmenu.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/scrollmsg.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/time.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/timeleft.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/zombie_plague.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/zp_ammo_ex.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/lang/zp_bank.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/vault.ini",
+      "[ZM] Казахский Пирог зомби/cstrike/autobuy.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/mapcycle.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/motd.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/readme.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/rebuy.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/server.cfg",
+      "[ZM] Казахский Пирог зомби/cstrike/sound/materials.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sound/sentences.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/spectcammenu.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_ak47flash_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_charger7_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_crossbow_zm7up.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_crow1_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_crv47_long_reega.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_dbarrel_lars.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_deagleg_lars.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_desperado_reega.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_dualuzi_block.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_helicopter_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_ksg12.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_m134laser.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_m3_boom.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_m4a1flash_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_m4a1gold_lars.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_m950skull.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_nitro_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_pkm_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_skull11ex_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_sterling1_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_turbulent5_z7p.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_vsk94_lars.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/sprites/weapon_xm8miku_reega.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/steam_appid.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/titles.txt",
+      "[ZM] Казахский Пирог зомби/cstrike/vip.txt",
+      "[ZM] Казахский Пирог зомби/HLTV-Readme.txt",
+      "[ZM] Казахский Пирог зомби/hltv.cfg",
+      "[ZM] Казахский Пирог зомби/logs/connection_log_27015.txt",
+      "[ZM] Казахский Пирог зомби/logs/connection_log_27016.txt",
+      "[ZM] Казахский Пирог зомби/logs/service_log.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_english.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_french.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_german.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_italian.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_korean.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_schinese.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_spanish.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/admin_tchinese.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_english.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_french.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_german.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_italian.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_korean.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_schinese.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_spanish.txt",
+      "[ZM] Казахский Пирог зомби/platform/Admin/server_tchinese.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_english.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_french.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_german.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_italian.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_korean.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_schinese.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_spanish.txt",
+      "[ZM] Казахский Пирог зомби/platform/resource/vgui_tchinese.txt",
+      "[ZM] Казахский Пирог зомби/steam_appid.txt",
+      "[ZM] Казахский Пирог зомби/valve/autoexec.cfg",
+      "[ZM] Казахский Пирог зомби/valve/mapcycle.txt",
+      "[ZM] Казахский Пирог зомби/valve/scripts/voicemodel.txt",
+      "[ZM] Казахский Пирог зомби/valve/server.cfg",
+      "[ZM] Казахский Пирог зомби/valve/skill.cfg",
+      "[ZM] Казахский Пирог зомби/valve/sound/materials.txt",
+      "[ZM] Казахский Пирог зомби/valve/sound/sentences.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/hud.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_357.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_9mmar.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_9mmhandgun.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_crossbow.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_crowbar.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_egon.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_gauss.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_handgrenade.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_hornetgun.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_question.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_rpg.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_satchel.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_shotgun.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_snark.txt",
+      "[ZM] Казахский Пирог зомби/valve/sprites/weapon_tripmine.txt",
+      "[ZM] Казахский Пирог зомби/valve/steam_appid.txt",
+      "[ZM] Казахский Пирог зомби/valve/valve.rc",
+      "[ZM] Казахский Пирог зомби/valve/violence.cfg"
+    ],
+    "plugins": 82,
+    "sources": 92,
+    "content": 1847,
+    "other": 237
+  },
+  "officialModified": [
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/data/csstats.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/admin.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminchat.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/admincmd.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminhelp.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminslots.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/adminvote.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/amxmod_compat.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/antiflood.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/cmdmenu.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/imessage.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/mapchooser.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/mapsmenu.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/menufront.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/miscstats.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/multilingual.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/nextmap.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/pausecfg.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/plmenu.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/pluginmenu.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/restmenu.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/scrollmsg.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/plugins/timeleft.amxx",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/admincmd.sma",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/cmdmenu.sma",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/mapchooser.sma",
+    "[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting/mapsmenu.sma"
+  ],
+  "verdict": "dirty",
+  "counts": {
+    "info": 0,
+    "low": 4,
+    "medium": 87,
+    "high": 1,
+    "critical": 19
+  }
+}

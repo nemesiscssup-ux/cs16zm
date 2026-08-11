@@ -1,0 +1,212 @@
+# Аудит сборки: zombie-sborka-v1
+
+**Вердикт: ПОДОЗРИТЕЛЬНАЯ — есть находки высокой важности**
+
+Проверено 1020 файлов, 192.2 МБ. Дата: 2026-08-07.
+
+| важность | critical | high | medium | low | info |
+|---|---|---|---|---|---|
+| находок | 0 | 1 | 63 | 0 | 0 |
+
+Состав: плагинов 63, исходников 81, бинарников 13, скриптов 0, конфигов 64, контента 414.
+
+Защитник Windows: угроз не найдено.
+
+## Находки
+
+### high
+
+- **no-sources** — Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.
+  - файл: `(сводно)`
+  - улика: `6 из 63: zb_boss_arbalest.amxx, zb_extra_arbalest.amxx, zb_extra_gungnir.amxx, zb_fly_models.amxx, zb_score_countdown.amxx, zombie_plague.amxx`
+### medium
+
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_bizonspl.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_coilspl.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_admin_m200spl.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_ammo_trade.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_arbalest.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_boss_hecate.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_cam_changer.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_ak47gold.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_arbalest.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_chargersky.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_gungnir.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_heartrod.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_infdesert.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_jetpack.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m12gold.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m4a1gold.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_m60desert.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mbuffsky.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_mg3desert.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_norecoil.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_railgun.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_sgrenade.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_teleport.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_extra_vsk94.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_fly_models.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_gift_box.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_knife_menu.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lasermine.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_level_system.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_drakar.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_lord_magicsg.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_parachute.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_player_models.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_roulete_system.amxx`
+  - улика: `set_user_flags + client_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_round_gift.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_score_countdown.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_scrfade_crhair.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog5.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog7.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_vip_balrog8.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_admin.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_boss.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_lord.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zclass_vip.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_antiarmor.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zb_zextra_jbomb.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx`
+  - улика: `set_user_info + server_cmd, client_cmd, engclient_cmd`
+- **argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **indirect-call** — Вызов функций по имени-строке скрывает цель вызова от статического анализа.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/plugins/zombie_plague.amxx`
+  - улика: `callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc.exe`
+  - улика: `amxxpc.exe (171008 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/scripting/- COMPILER 1.9.0/amxxpc32.dll`
+  - улика: `amxxpc32.dll (327680 байт)`
+- **src:argv-to-exec** — Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/scripting/- MORE/zb_ammo_trade.sma`
+  - улика: `register_clcmd/read_argv + server_cmd`
+- **src:admin-plus-exec** — Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.
+  - файл: `Зомби сборка v1/Сборка/addons/amxmodx/scripting/- ROULETE SYSTEM/zb_roulete_system.sma`
+  - улика: `set_user_flags + client_cmd`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm.dll`
+  - улика: `cf_fix_mm.dll (87040 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/cl_fix/cf_fix_mm_i386.so`
+  - улика: `cf_fix_mm_i386.so (44732 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/fragbufffix/FragBufFix.so`
+  - улика: `FragBufFix.so (3640 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.dll`
+  - улика: `nbex.dll (94720 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/nbex/nbex.so`
+  - улика: `nbex.so (9848 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.dll`
+  - улика: `uino.dll (89600 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/overflowed_fix/uino/uino.so`
+  - улика: `uino.so (9976 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/podbot/podbot_mm.dll`
+  - улика: `podbot_mm.dll (417792 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/podbot/podbot_mm_amd64.so`
+  - улика: `podbot_mm_amd64.so (471776 байт)`
+- **unverified-executable** — Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.
+  - файл: `Зомби сборка v1/Сборка/addons/podbot/podbot_mm_i386.so`
+  - улика: `podbot_mm_i386.so (522164 байт)`

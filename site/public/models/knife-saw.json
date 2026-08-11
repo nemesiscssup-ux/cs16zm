@@ -1,0 +1,1 @@
+{"id":"knife-saw","vertexCount":2332,"indexCount":6948,"indexBytes":2,"vertexBytes":74624,"min":[6.253540176034072,-7.641453433457176,-16.292911457952332],"max":[32.946678190238046,12.703111532779642,0.6113140029369649],"parts":[{"start":0,"count":5340,"texture":"knife-saw-1.png"},{"start":5340,"count":1608,"texture":"knife-saw-2.png"}]}

@@ -1,0 +1,41 @@
+# Панель выдачи привилегий.
+#
+# Второй рубеж поверх собственного входа по логину и паролю. Он не заменяет
+# его, а прикрывает то, что происходит ДО первой строки PHP: незакрытую
+# уязвимость в самом PHP, случайно залитый сюда файл, ошибку в настройке.
+
+Options -Indexes
+
+# Ничего, кроме страниц панели, отсюда не отдаём. Файл с расширением, которого
+# нет в списке ниже, попал сюда по ошибке — и наружу ему не надо.
+<FilesMatch "\.(sql|md|sh|ini|log|bak|sample|txt|json|yml|yaml)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    # Панель не кэшируется нигде и никогда: на её страницах игровые пароли, и
+    # оставаться им в кэше браузера на общем компьютере незачем.
+    Header always set Cache-Control "no-store, no-cache, must-revalidate, private"
+    Header always set Pragma "no-cache"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "no-referrer"
+</IfModule>
+
+# ── необязательный третий рубеж ─────────────────────────────────────────────
+#
+# Если панель когда-нибудь начнут ломать всерьёз, снимите комментарии ниже и
+# создайте файл паролей. Тогда браузер спросит логин и пароль ещё до PHP —
+# перебор упрётся в Apache и до нашего кода вообще не дойдёт.
+#
+# Файл создаётся в панели хостинга (ISPmanager → «Защита каталогов») либо
+# командой htpasswd, а путь до него надо указать абсолютный.
+#
+#   AuthType Basic
+#   AuthName "Панель"
+#   AuthUserFile /var/www/pw792/data/private/htpasswd
+#   Require valid-user

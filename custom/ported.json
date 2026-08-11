@@ -1,0 +1,254 @@
+{
+  "_": "Что перенесено из проверенных сборок. Только плагины С ИСХОДНИКАМИ: правило проекта — нет .sma, нет .amxx. Обе сборки признаны непригодными целиком (чужие пароли админов, плагины без исходников), отсюда берутся лишь отдельные читаемые части. Перенос повторяется командой node tools/port-plugins.mjs Модели переносятся под своими именами zm_hot_*: у клиента модели лежат по имени, и пока имя чужое, он покажет ту, что уже скачал с другого сервера, а нашу качать не станет.",
+  "groups": [
+    {
+      "name": "CS-DEAD: оружие в магазин",
+      "_": "Регистрируются сами через zp_register_extra_item — попадают в наше меню спец-вещей без доработок.",
+      "sources": "quarantine/csdead-cartoon/extracted/multiki/cstrike/addons/amxmodx/scripting",
+      "content": "quarantine/csdead-cartoon/extracted/multiki/cstrike",
+      "plugins": [
+        "zp_automat_ak47long",
+        "zp_automat_aquablaster",
+        "zp_automat_arxmoto",
+        "zp_automat_devilbaby",
+        "zp_automat_famas_pixel",
+        "zp_automat_lego_crow3",
+        "zp_machinegun_mg3neon",
+        "zp_main_dual_berretas_gunslinger",
+        "zp_main_pumpkin",
+        "zp_main_stun_rifle",
+        "zp_pistol_elephant",
+        "zp_rifle_falconvsk94",
+        "zp_rifle_pandacrossbow",
+        "zp_sniper_savery",
+        "zp_imperator_thunderbolt"
+      ]
+    },
+    {
+      "name": "CS-DEAD: ножи и классы зомби",
+      "sources": "quarantine/csdead-cartoon/extracted/multiki/cstrike/addons/amxmodx/scripting",
+      "content": "quarantine/csdead-cartoon/extracted/multiki/cstrike",
+      "plugins": [
+        "zp_zclass_electric",
+        "zp_zclass_student"
+      ],
+      "_knives": "zp_knifes НЕ переносится: его 7 ножей слиты в наш zp_knives.sma. Два плагина ножей конфликтуют — оба вешаются на CurWeapon и ставят модель."
+    },
+    {
+      "name": "CS-DEAD: механики",
+      "_": "Крюк, дополнительный прыжок, парашют и три спец-вещи.",
+      "sources": "quarantine/csdead-cartoon/extracted/multiki/cstrike/addons/amxmodx/scripting",
+      "content": "quarantine/csdead-cartoon/extracted/multiki/cstrike",
+      "plugins": [
+        "zp_all_hook",
+        "zp_all_jump",
+        "zp_parachute",
+        "zp_extra_hp_ap",
+        "zp_extra_norecoil",
+        "zp_extra_ultimitammo"
+      ]
+    },
+    {
+      "name": "CS-DEAD: скины под привилегии и модели гранат",
+      "_": "В той сборке они раздавались строками ADMIN1..ADMIN4 HUMAN в zombieplague.ini. У ZP 4.4 набор админских моделей ОДИН на всех, поэтому уровни разводит наш zp_skins.sma, а сюда переносятся только сами модели.",
+      "_thanos": "v_claw_thanos.mdl из списка УБРАН и удалён из сборки: сам скин Таноса владелец из сборки выкинул, лапу за ним никто не переносил, ни один плагин её не зовёт — а на ней во всю ладонь нарисовано «BY REEGA! ZM7UP.RU» плюс визитка автора. Закрашивать золотую гравировку значило оставить пятно на модели, которой всё равно никто не видит.",
+      "sources": "quarantine/csdead-cartoon/extracted/multiki/cstrike/addons/amxmodx/scripting",
+      "content": "quarantine/csdead-cartoon/extracted/multiki/cstrike",
+      "plugins": [],
+      "models": [
+        {
+          "from": "csdead1_h1",
+          "to": "zm_hot_spec"
+        },
+        {
+          "from": "csdead1_leader",
+          "to": "zm_hot_form_vip"
+        },
+        {
+          "from": "csdead1_imperator",
+          "to": "zm_hot_otpusk"
+        },
+        {
+          "from": "csdead1_creator",
+          "to": "zm_hot_creator"
+        },
+        {
+          "from": "csdead1_main",
+          "to": "zm_hot_form9"
+        }
+      ],
+      "files": [
+        "models/zm_hot/v_grenade_infect.mdl",
+        "models/zm_hot/v_grenade_frost.mdl",
+        "models/zm_hot/parachute.mdl",
+        "models/zm_hot/q_jp_starB.mdl",
+        "sound/zm_hot/fly.wav",
+        "sound/zm_hot/blow.wav",
+        "models/zm_hot/v_knife1.mdl",
+        "models/zm_hot/p_knife1.mdl",
+        "models/zm_hot/v_knife2.mdl",
+        "models/zm_hot/p_knife2.mdl",
+        "models/zm_hot/v_knife3.mdl",
+        "models/zm_hot/p_knife3.mdl",
+        "models/zm_hot/v_knife4.mdl",
+        "models/zm_hot/p_knife4.mdl",
+        "models/zm_hot/v_knife5.mdl",
+        "models/zm_hot/p_knife5.mdl",
+        "models/zm_hot/v_knife6.mdl",
+        "models/zm_hot/p_knife6.mdl",
+        "models/zm_hot/v_knife7.mdl",
+        "models/zm_hot/p_knife7.mdl",
+        "models/zombie_plague_v44/v_claw_electric.mdl",
+        "models/zombie_plague_v44/v_claw_student.mdl",
+        "models/zombie_plague_v44/v_knife_zombie.mdl",
+        "sound/zm_hot/free_hook.wav"
+      ]
+    },
+    {
+      "name": "JUST PRO: скины и модели классов зомби",
+      "_": "Там их раздавал zp43_custom_model.sma по строкам configs/custom_models.ini. Плагин не переносим: он зовёт rg_set_user_model из ReAPI в обход мода, а мод возвращает свою модель обратно. Берём только модели. Скины «Герой», «Доктор» и «Маска» ушли из привилегий в магазин за кредиты: слишком похожи на обычных бойцов. Вместо них взяты приметные — Рамзес, Мечник, Монолит, Агент. Волк (human_wolf_jp_v2) отброшен: в нём 95 анимаций вместо 111, часть поз сломалась бы.",
+      "sources": "quarantine/justpro-zombie/extracted/NEW BALANCE/scripting_jp/scripting_jp",
+      "content": "quarantine/justpro-zombie/extracted/NEW BALANCE/Компелировання",
+      "plugins": [],
+      "models": [
+        {
+          "from": "human_hero_jp",
+          "to": "zm_hot_hero"
+        },
+        {
+          "from": "human_doctor_green_jp",
+          "to": "zm_hot_doctor"
+        },
+        {
+          "from": "human_mask_jp",
+          "to": "zm_hot_mask"
+        },
+        {
+          "from": "human_rames_jp",
+          "to": "zm_hot_assassin"
+        },
+        {
+          "from": "human_kirito_jp",
+          "to": "zm_hot_mechnik"
+        },
+        {
+          "from": "human_monolit_jp",
+          "to": "zm_hot_monolit"
+        },
+        {
+          "from": "human_leon_jp_v3",
+          "to": "zm_hot_agent"
+        },
+        {
+          "from": "zombie_sprinter_jp002",
+          "to": "zm_hot_z_sprinter"
+        },
+        {
+          "_": "Ядовитому нужен свой облик: раньше он ходил в модели ЛЕКАРЯ (zm_hot_z_shaman), и владелец справедливо сказал «у ядовитого модель шамана». Курильщик из JUST PRO подходит по смыслу — тварь в наростах, которая плюётся дрянью, — и его ЛАПА у Ядовитого уже стоит (v_hand_smoker_jp.mdl): теперь руки и тело наконец от одного зомби.",
+          "from": "zombie_smoker_jp001",
+          "to": "zm_hot_z_poison"
+        },
+        {
+          "from": "zombie_jumper_jp",
+          "to": "zm_hot_z_shock"
+        },
+        {
+          "from": "zombie_hunter_jp001",
+          "to": "zm_hot_z_hunter"
+        },
+        {
+          "from": "zombie_skeleton_jp",
+          "to": "zm_hot_z_skeleton"
+        }
+      ],
+      "files": [
+        "models/zm_hot_v/view/v_knife_combat_jp.mdl",
+        "models/zm_hot_v/view/p_knife_combat_jp01.mdl",
+        "models/zm_hot_v/view/v_knife_hammer_jp.mdl",
+        "models/zm_hot_v/view/p_knife_hammer_jp.mdl",
+        "models/zm_hot_v/view/v_knife_sheeps_word_jp.mdl",
+        "models/zm_hot_v/view/p_knife_sheeps_word_jp.mdl",
+        "models/zm_hot_v/view/v_knife_katana_jp.mdl",
+        "models/zm_hot_v/view/p_knife_katana_jp.mdl",
+        "models/zombie_plague_v44/v_hand_nemesis_jp.mdl",
+        "models/zombie_plague_v44/v_hand_smoker_jp.mdl",
+        "models/zombie_plague_v44/v_hand_jumper_jp.mdl"
+      ]
+    },
+    {
+      "name": "JUST PRO: стволы, ОТСЕЯННЫЕ повторно",
+      "_": "balrog1, crossbow, m32 компилируются, но не загружаются: зовут нативы zp_get_user_madness и zp_get_user_frozen, которых ZP 4.4 наружу не отдаёт. Тянуть ради них чужие возможности мода не стали.",
+      "sources": "-",
+      "content": "-",
+      "plugins": []
+    },
+    {
+      "name": "Скачанное клиентом: модели зомби, звуки, спрайты",
+      "_": "Не сборка, а каталог автозагрузки клиента владельца — то, что он скачал, играя на чужих серверах. Плагинов там нет по определению, только ресурсы. Пять моделей зомби взяты потому, что все наши классы ходили в ОДНОЙ модели мода и выглядели одинаково.",
+      "sources": "quarantine/steam-downloads/extracted/cstrike",
+      "content": "quarantine/steam-downloads/extracted/cstrike",
+      "plugins": [],
+      "models": [
+        {
+          "from": "revenant_pak15",
+          "to": "zm_hot_z_revenant"
+        },
+        {
+          "from": "shaman_pak1",
+          "to": "zm_hot_z_shaman"
+        },
+        {
+          "from": "heavy_zombi_pak3",
+          "to": "zm_hot_z_heavy"
+        },
+        {
+          "from": "z7p_Zaraza",
+          "to": "zm_hot_z_zaraza"
+        },
+        {
+          "from": "z7p_witchPak4",
+          "to": "zm_hot_z_witch"
+        }
+      ],
+      "files": [
+        "sound/zm_hot/zombi_trapped.wav",
+        "sound/zm_hot/zombi_trapsetup.wav",
+        "sound/zm_hot/shaman-scream.wav",
+        "sprites/zm_hot/ef_leapstr_ring.spr",
+        "sprites/zm_hot/ef_leapstr_ballexp.spr",
+        "sprites/zm_hot/zbt_slow.spr",
+        "sprites/zm_hot/restore_health.spr",
+        "sprites/zm_hot/fire.spr",
+        "models/zm_hot/bat_witch_re.mdl",
+        "models/zombie_plague_v44/v_revenant_pak10.mdl",
+        "models/zombie_plague_v44/v_witch_pak3_re.mdl",
+        "models/zombie_plague_v44/v_z7_zaraza.mdl",
+        "models/zombie_plague_v44/v_rusty_pak.mdl",
+        "models/zombie_plague_v44/v_terminator.mdl",
+        "models/zm_hot/v_zbomb2.mdl",
+        "models/zm_hot/v_zbomb_virus.mdl",
+        "models/zm_hot/q_zbomb_new2.mdl"
+      ]
+    },
+    {
+      "name": "Казахский Пирог: классы зомби с настоящими способностями",
+      "_": "Владелец попросил взять классы из этой сборки: у каждого своя способность, свои эффекты и своя лапа, а клавиша написана прямо в подписи класса — именно этого не хватало нашим самодельным. Плагины написаны под ZP 4.3, собираются у нас через прослойку custom/include/zombieplague.inc. Толстяка (strong_heavy2_z7p) НЕ берём: у него текстура 512x527, а GoldSrc больше 512 не тянет — модель бы не загрузилась. Здоровье приведено к нашей шкале правкой переноса (в сборке было 7500-15000).",
+      "sources": "quarantine/kazakh-pirog/extracted/[ZM] Казахский Пирог зомби/cstrike/addons/amxmodx/scripting",
+      "content": "quarantine/kazakh-pirog/extracted/[ZM] Казахский Пирог зомби/cstrike",
+      "plugins": [
+        "cso_class_shaman",
+        "cso_class_ganymede",
+        "cso_class_revenant_fire",
+        "cso_class_revenant_ice",
+        "cso_class_revenant_poison_boss"
+      ],
+      "models": [
+        { "from": "strong_siren2_z7p", "to": "zm_hot_z_siren" },
+        { "from": "strong_deimos2_z7p", "to": "zm_hot_z_deimos" },
+        { "from": "revenant", "to": "zm_hot_z_revfire" },
+        { "from": "revenant_ice", "to": "zm_hot_z_revice" },
+        { "from": "revenant_poison", "to": "zm_hot_z_revpoison" }
+      ]
+    }
+  ]
+}

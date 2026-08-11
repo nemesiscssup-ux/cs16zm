@@ -1,0 +1,999 @@
+{
+  "slug": "recheck-cshlds-zp43-ready-2010",
+  "target": "quarantine/cshlds-zp43-ready-2010//extracted",
+  "scanned": "2026-08-04T10:16:38.555Z",
+  "totals": {
+    "files": 355,
+    "bytes": 16209743
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "ALX_LowPing.dll (709632 байт)",
+      "file": "zombie_plague_4.3/addons/alx_lowping/dlls/ALX_LowPing.dll"
+    },
+    {
+      "severity": "high",
+      "rule": "users-shipped-credentials",
+      "why": "В сборке приложен готовый администраторский аккаунт с паролем. Пароль известен всем, кто скачал сборку, и его обязательно менять до запуска.",
+      "evidence": "строка 52: \"admin\" \"admin\" \"abcdefghijklmnopqrstu\" \"a\"",
+      "file": "zombie_plague_4.3/addons/amxmodx/configs/users.ini"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxmodx_mm.dll (610304 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/dlls/amxmodx_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "cstrike_amxx.dll (118784 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/cstrike_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "csx_amxx.dll (131072 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/csx_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "engine_amxx.dll (151552 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/engine_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "fakemeta_amxx.dll (274432 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/fakemeta_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "fun_amxx.dll (102400 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/fun_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "geoip_amxx.dll (106496 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/geoip_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "hamsandwich_amxx.dll (180224 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/hamsandwich_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "mysql_amxx.dll (1560576 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/mysql_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "nvault_amxx.dll (118784 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/nvault_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "regex_amxx.dll (225280 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/regex_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "sockets_amxx.dll (77824 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/sockets_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "sqlite_amxx.dll (380928 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/modules/sqlite_amxx.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/alx_lowping.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zombie_plague40.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_antidotegun1.6.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_jetpack_bazooka32.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_lasermine.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_killbomb.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc.exe (110592 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc.exe"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc32.dll (274432 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc32.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "amxxpc64.dll (282624 байт)",
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc64.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/zombie_plague40.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "booster_686_mm.dll (28672 байт)",
+      "file": "zombie_plague_4.3/addons/booster/booster_686_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "booster_mm.dll (28672 байт)",
+      "file": "zombie_plague_4.3/addons/booster/booster_mm.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "unverified-executable",
+      "why": "Файл не совпадает ни с одним официальным релизом из базы эталонов. Либо это другая версия, либо он изменён. Использовать до сверки нельзя.",
+      "evidence": "metamod.dll (1241822 байт)",
+      "file": "zombie_plague_4.3/addons/metamod/dlls/metamod.dll"
+    },
+    {
+      "severity": "medium",
+      "rule": "rcon-in-cfg",
+      "why": "В сборке приложен готовый RCON-пароль. Он известен всем, кто её скачал.",
+      "evidence": "rcon_password \"napoJIb\"",
+      "file": "zombie_plague_4.3/server.cfg"
+    },
+    {
+      "severity": "low",
+      "rule": "exec-unknown",
+      "why": "Цепочка exec. Проверить каждый вызываемый файл.",
+      "evidence": "exec banned.cfg",
+      "file": "zombie_plague_4.3/server.cfg"
+    },
+    {
+      "severity": "high",
+      "rule": "no-sources",
+      "why": "Плагины без парного .sma нельзя пересобрать и сверить — их содержимое недоказуемо.",
+      "evidence": "10 из 37: admins.amxx, admin_sql.amxx, alx_lowping.amxx, amx_namelock.amxx, cl_cameratype.amxx, zp_extra_give_ammopaks.amxx, zp_extra_human_armor.amxx, zp_extra_lasermine.amxx, zp_extra_unlimited_clip.amxx, zp_killbomb.amxx",
+      "file": "(сводно)"
+    },
+    {
+      "severity": "medium",
+      "rule": "official-name-other-content",
+      "why": "Файлы носят имена официальных плагинов AMX Mod X, но их содержимое не совпадает ни с одной эталонной версией. Обычно это просто другая сборка AMXX, но именно так выглядит и подмена: нужна сверка с апстримом той же версии.",
+      "evidence": "47 шт.: admin.amxx, adminchat.amxx, admincmd.amxx, adminhelp.amxx, adminslots.amxx, adminvote.amxx, admin_sql.amxx, amxmod_compat.amxx, antiflood.amxx, cmdmenu.amxx",
+      "file": "(сводно)"
+    }
+  ],
+  "plugins": [
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/admin.amxx",
+      "hash": "1F36137058D3446E02B6A5D5305C03D2F859C8131554ACEDEB10DAAB68E6F57D",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/adminchat.amxx",
+      "hash": "4A4D550C9C7B2683480F77165F0CB9BE9A5F553737CDE559D420C774EB6E231D",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/admincmd.amxx",
+      "hash": "ACA8A3CEBED630EB20CAA51837B9CB15FADED0ECEADE9DA7E6EC0997150B564D",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/adminhelp.amxx",
+      "hash": "CA02638A2184F120CD0256A5F49E3308F5F23EDA43D3E0B98BC7E00D4F408AD0",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/admins.amxx",
+      "hash": "5FCD8F2591E1490415C25715F85235F16E8B2C9687521665B1D82CE45989D178",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 11,
+      "strings": 8,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "admins.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/adminslots.amxx",
+      "hash": "07D35D1A49017B6677D7074ED55145C30E498B3B0AAAE4D93406344449A186A7",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/adminvote.amxx",
+      "hash": "7F1451D5F084C2ECDDD280AD7E7BD71D9D666DFE22E3045C9DE9D4F8827BAF41",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/admin_sql.amxx",
+      "hash": "FA32C3A36CE3F1BC5AD7CC3BFFABBE9A6DE46F53A39C0032AAC34032EA0ACFC5",
+      "verdict": "official-name-other-content",
+      "hasSource": false,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/alx_lowping.amxx",
+      "hash": "BAC06BDBB1859F40268460AAC000C3E7DB871EA4935BAA817206F8FE3A8DE625",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 25,
+      "strings": 25,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "alx_lowping.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/amxmod_compat.amxx",
+      "hash": "08A57877A97C5E8315B6B7BFCC38B514ECF498D67CAEB7FEE5FE5F552EABB2D9",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/amx_namelock.amxx",
+      "hash": "1BAAE1BE87B1FC15A7F98F015DA809BD28182E844584DA8417E2D79448D71D34",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 24,
+      "strings": 34,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "amx_namelock.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/antiflood.amxx",
+      "hash": "4C4AF1BA3D9AE2A7C3B95A7725CE61794C990A83414CC161177430F3E6796175",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/chat.amxx",
+      "hash": "E26140E7BF2FFE26CE1A10300C65A4E77A0F8DF65D5AAA36FF5A2E5DB9E7FE2E",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 14,
+      "strings": 6,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/cl_cameratype.amxx",
+      "hash": "6A1D263A8C0BC19A77BD6E15AFC323175223D0F96456358FADE101EF39B361B7",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 11,
+      "strings": 10,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "cl_cameratype.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/cmdmenu.amxx",
+      "hash": "E5570C685DB606AE444B62519C5B4363118A2C6BC975BBA3E08336086A2F3621",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/imessage.amxx",
+      "hash": "578D4754C3DC3862E35EA3FB9BC0FFBB32F4E86EC73A9D34DEA57AD804BC453F",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/mapchooser.amxx",
+      "hash": "AA2EDAFFD7B95B7E9FD6FEFF56F78750C7ED8DEB63AA11CFBA4E046929AADB6A",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/mapsmenu.amxx",
+      "hash": "C6D9537A4EE838D8DC29E7569A6A15A87221E792BB488F4440AA276EE7021027",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/menufront.amxx",
+      "hash": "E4B0DA82B5A107A388241D3253E4DB9C855488D363BDFBFA9DF6F262B1B956BF",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/multilingual.amxx",
+      "hash": "600580CF2897C6478219BF74A25199F4552B183DA5475DCFE8411D6AF140E444",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/nextmap.amxx",
+      "hash": "3CDE612DBFA58613289CA636453A8619B53CBCEB1075D81D66532130703771EF",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/pausecfg.amxx",
+      "hash": "81562EE4EEEEC7C4FCEDC287353BD5865B7E17F15A06E6F5412A1E35AB300180",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/plmenu.amxx",
+      "hash": "9673F7F53A738319EF4753BD6CBBB3C22D145721B9A66E1FD636449907B806F0",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/pluginmenu.amxx",
+      "hash": "C5F4758ED52277269990A606A46B5EB2C8B1897C395F9ECF950CAC18DB77155B",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/scrollmsg.amxx",
+      "hash": "492F76599042986EEC863A7D9611F014D6147A209BFFFD6EEAA3D81C13B649CA",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/statscfg.amxx",
+      "hash": "8A50B90FCDD016BC6F7F1D6E0E95EC04501CBFC05476614157842D192DF84851",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/telemenu.amxx",
+      "hash": "83C9A0305C3F95F4913F9D5687149C96B1A611189FA0142378CF91062B5D8DC6",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/timeleft.amxx",
+      "hash": "379FA2A6B2820FE60324D0DFDCDA2784FF564D18619F2CDAD56650BDC7B26726",
+      "verdict": "official-name-other-content",
+      "hasSource": true,
+      "findings": []
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zombie_plague40.amxx",
+      "hash": "2EFB407184CA98979B32B12C1BB59EC57362A6BB711A88156090B452F16D2BDD",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 172,
+      "strings": 906,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_antidotegun1.6.amxx",
+      "hash": "2B5301375BCB1845B4B16FEC4FC15CC66A3C68869E259941DA88D67EA02503CC",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 39,
+      "strings": 21,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_give_ammopaks.amxx",
+      "hash": "04FF69D45FEC623A97A082786D51CE20029E5E179501A93CC0BADFF8F3B6A82B",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 16,
+      "strings": 17,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_extra_give_ammopaks.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_human_armor.amxx",
+      "hash": "1FEC526C9104567D29D05633273CF026BDA5E4C6F51FDF834D61C8F6E533CD65",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 8,
+      "strings": 3,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_extra_human_armor.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_jetpack_bazooka32.amxx",
+      "hash": "635DC3CE24D8E295A5A86730190671B051BA5D7C8385F3940EBCCB233E057370",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 81,
+      "strings": 89,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_lasermine.amxx",
+      "hash": "6D6C60084EECA682AA8FBADB2DE82CF6297575B74701CD24E54506F24E5E465B",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 71,
+      "strings": 116,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_extra_lasermine.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_extra_unlimited_clip.amxx",
+      "hash": "451AFA89418E6DEFA67C412D0A58460B3D82BBA5DA2C94C6DFC606518DC24ACD",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 13,
+      "strings": 7,
+      "findings": [
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_extra_unlimited_clip.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_killbomb.amxx",
+      "hash": "88AF55DE14BC75C6E7A5690F333DB554A280A54922B807BD67A8094C26291245",
+      "hasSource": false,
+      "verdict": "noted",
+      "natives": 44,
+      "strings": 31,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        },
+        {
+          "severity": "low",
+          "rule": "no-source",
+          "why": "Нет парного .sma: содержимое недоказуемо, пересобрать и сверить нельзя.",
+          "evidence": "zp_killbomb.amxx"
+        }
+      ]
+    },
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/plugins/zp_zclasses40.amxx",
+      "hash": "C0DBEC3F9E2E2EDA3E6A51365D045FC0A24490DCE641EF5575708DC007421526",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 6,
+      "strings": 14,
+      "findings": []
+    }
+  ],
+  "sourceFindings": [
+    {
+      "file": "zombie_plague_4.3/addons/amxmodx/scripting/zombie_plague40.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [
+      {
+        "file": "zombie_plague_4.3/addons/alx_lowping/dlls/ALX_LowPing.dll",
+        "size": 709632,
+        "hash": "8F2E0CEBCBAA847B4DDFA9A0024DA1BE72AECF7F5E10202A6EB76ACBABF7FB5E",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/dlls/amxmodx_mm.dll",
+        "size": 610304,
+        "hash": "A898EA7146039533B72FC11F3167618FC3195BAD9167436063170B5637846C71",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/cstrike_amxx.dll",
+        "size": 118784,
+        "hash": "33EDC9C17D2247764B70E508BE84B0542C793DE97D64413A8F449EBBD687FEF6",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/csx_amxx.dll",
+        "size": 131072,
+        "hash": "9DC9B29C141016E7D08A0570CDFD54A03144B751F1313E049A19D46B56E367AD",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/engine_amxx.dll",
+        "size": 151552,
+        "hash": "5FA91306175417D3CBCF4C2C3295D40B02C929F7780287F58F931D33504751AC",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/fakemeta_amxx.dll",
+        "size": 274432,
+        "hash": "8A28981AC3A0D7E0BF97F15D7BA07AB852F3C3C526EF4D00A3929919A88E8D46",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/fun_amxx.dll",
+        "size": 102400,
+        "hash": "C996AB2D0108178B56D55B9FB7806924F505F6B14040B6006CAF5F8EAEAFC5D7",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/geoip_amxx.dll",
+        "size": 106496,
+        "hash": "BFECCFE0A34843E0B031EE9ED4813B6D0231FE3D9F26DB3E9CA552293C9326C2",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/hamsandwich_amxx.dll",
+        "size": 180224,
+        "hash": "610007C23164E39DBDC3F1F85495102381342FD21136E8BB0F52D02A7CD2C922",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/mysql_amxx.dll",
+        "size": 1560576,
+        "hash": "F26E04C72F1790B447495018AC0B2F589536A4851616DC0F44469B9717188F69",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/nvault_amxx.dll",
+        "size": 118784,
+        "hash": "1D0AAD0EEC5CCB713D724032A5ABD6302C1D51F8BDD05A2C99B93A246D36C865",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/regex_amxx.dll",
+        "size": 225280,
+        "hash": "0B4BCE6CC69A1145BD43A3203419C1C82F4D209950375720CED8E3FEE60085DE",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/sockets_amxx.dll",
+        "size": 77824,
+        "hash": "6B4D19901B64873B0F69E72475EA026F43541956AB61E82C376F858458393404",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/modules/sqlite_amxx.dll",
+        "size": 380928,
+        "hash": "A253DE72C9AF3DB3249C93BB14ED713637609EF3BB08F37445C6EEFBEF6456CF",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc.exe",
+        "size": 110592,
+        "hash": "A53A892E6A0BAE6261B6799F20E8F9897E7D75FDC1277EC82F5FEEF0E6E6B826",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc32.dll",
+        "size": 274432,
+        "hash": "5F40BA2DD0AB8BE7D6A801DB26A0D0F45A865FDE8B578FF282AAD1875A061D07",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/scripting/amxxpc64.dll",
+        "size": 282624,
+        "hash": "3767B119293854EC9218D77CFEA9C561CC2C1F699964182716B2CCE2CEF235EE",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/amxmodx/scripting/compile.exe",
+        "size": 102912,
+        "hash": "69CEA50F7DD78F67534B4C8CB057A34C97F136E8A118A93AF512E08C6997DEA9",
+        "knownAs": "amxmodx-1.10.0-git5479-base-windows/addons/amxmodx/scripting/compile.exe"
+      },
+      {
+        "file": "zombie_plague_4.3/addons/booster/booster_686_mm.dll",
+        "size": 28672,
+        "hash": "00FEC384CB0C66A0D9EAD81932E9E9B3F29D492AB3FF38E5D41433B3138555CA",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/booster/booster_mm.dll",
+        "size": 28672,
+        "hash": "4FA5B79BA31717CB28F4ACD4D18665416909F3D9ED315A26EE9AFB511603DFD7",
+        "knownAs": null
+      },
+      {
+        "file": "zombie_plague_4.3/addons/metamod/dlls/metamod.dll",
+        "size": 1241822,
+        "hash": "9C6404243B8DF3C1312BBF4B4B96757C1FF5858FF0F25F67DCB2476390A39EA7",
+        "knownAs": null
+      }
+    ],
+    "scripts": [
+      "zombie_plague_4.3/addons/amxmodx/scripting/compile.sh"
+    ],
+    "configs": [
+      "zombie_plague_4.3/addons/alx_lowping/configs/debug.ini",
+      "zombie_plague_4.3/addons/alx_lowping/configs/lowping.cfg",
+      "zombie_plague_4.3/addons/alx_lowping/configs/lowping.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/amxx.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/clcmds.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/cmds.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/configs.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/core.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/awp_map.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_747.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_assault.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_backalley.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_bbicotka.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_downed_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_estate.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_havana.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_havana_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_intercept.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_italy.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_italy_32_slots.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_italy_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_militia.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_militia_32.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_mopo3.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_nnd.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_office.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_office_32_slots.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_siege.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/cs_thunder.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_2minaret.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_airstrip.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_airstrip_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_aztec.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_aztec2.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_aztec3.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_aztec_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_cbble.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_cbble_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_chateau.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_clan1_mill.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_clan2_fire.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_clan3_heat.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_clan4_stone.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_cpl_fire.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_damaged.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dam_final.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust-forever.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust2.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust2_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust4.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust4ever.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dustmix4.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dustybleek.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust_castle.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_dust_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_indust.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_inetcafe.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_inferno.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_inferno_cz.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_nuke.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_piranesi.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_plaka.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_prodigy.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_quarry.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_raoni.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_rusty.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_slap.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_storm.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_survivor.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_torn.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_train.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/de_vertigo.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/fy_iceworld.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/ka_legoland.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/nth_lets_take_mothers_tank.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/scoutzknivez.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/csdm/zm_toxic_house.spawns.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/custommenuitems.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/cvars.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/hamdata.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/maps.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/modules.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/plugins-zplague.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/plugins.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/speech.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/sql.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/users.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/zombieplague.cfg",
+      "zombie_plague_4.3/addons/amxmodx/configs/zombieplague.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/zp_extraitems.ini",
+      "zombie_plague_4.3/addons/amxmodx/configs/zp_zombieclasses.ini",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/admin.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/adminchat.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/admincmd.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/adminhelp.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/adminslots.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/adminvote.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/antiflood.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/cmdmenu.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/common.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/imessage.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/languages.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/mapchooser.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/mapsmenu.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/menufront.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/miscstats.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/multilingual.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/nextmap.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/pausecfg.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/plmenu.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/restmenu.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/scrollmsg.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/statscfg.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/statsx.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/stats_dod.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/telemenu.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/time.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/timeleft.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/lang/zombie_plague.txt",
+      "zombie_plague_4.3/addons/amxmodx/data/vault.ini",
+      "zombie_plague_4.3/addons/metamod/plugins.ini",
+      "zombie_plague_4.3/server.cfg"
+    ],
+    "plugins": 37,
+    "sources": 46,
+    "content": 44,
+    "other": 83
+  },
+  "officialModified": [
+    "zombie_plague_4.3/addons/amxmodx/plugins/admin.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/adminchat.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/admincmd.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/adminhelp.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/adminslots.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/adminvote.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/admin_sql.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/amxmod_compat.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/antiflood.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/cmdmenu.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/imessage.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/mapchooser.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/mapsmenu.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/menufront.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/multilingual.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/nextmap.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/pausecfg.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/plmenu.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/pluginmenu.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/scrollmsg.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/statscfg.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/telemenu.amxx",
+    "zombie_plague_4.3/addons/amxmodx/plugins/timeleft.amxx",
+    "zombie_plague_4.3/addons/amxmodx/scripting/admin.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/adminchat.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/admincmd.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/adminhelp.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/adminslots.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/adminvote.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/antiflood.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/cmdmenu.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/imessage.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/mapchooser.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/mapsmenu.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/menufront.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/multilingual.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/nextmap.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/pausecfg.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/plmenu.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/scrollmsg.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/statscfg.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/telemenu.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/testsuite/fwdtest1.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/testsuite/fwdtest2.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/testsuite/menutest.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/testsuite/sqlxtest.sma",
+    "zombie_plague_4.3/addons/amxmodx/scripting/timeleft.sma"
+  ],
+  "verdict": "suspicious",
+  "counts": {
+    "info": 0,
+    "low": 1,
+    "medium": 32,
+    "high": 2,
+    "critical": 0
+  }
+}

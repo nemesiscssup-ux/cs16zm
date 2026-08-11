@@ -184,15 +184,17 @@ for (const f of files) {
     const good = knownGood[hash]
     report.inventory.executables.push({ file: rel(f.path), size: f.size, hash, knownAs: good ?? null })
     if (good) continue
-    // hlds.exe, hltv.exe, amxxpc.exe — штатные части серверной поставки под Windows.
-    // Тревожно не само их наличие, а то, что они не совпадают ни с одним официальным
-    // релизом: именно так выглядит пропатченный движок.
-    if (ext === '.exe' || ext === '.msi' || ext === '.scr') {
-      push('medium', 'unverified-executable',
-        'Исполняемый файл не совпадает ни с одним официальным релизом из базы эталонов. '
-        + 'Либо это другая версия, либо он изменён. Запускать до сверки нельзя.',
-        `${name} (${f.size} байт)`, f.path)
-    }
+    // hlds.exe, mp.dll, metamod.so — штатные части серверной поставки. Тревожно не
+    // само их наличие, а то, что они не совпадают ни с одним официальным релизом:
+    // именно так выглядит пропатченный движок или подменённый модуль.
+    //
+    // Библиотеки проверять тут ОБЯЗАТЕЛЬНО наравне с .exe. Раньше правило
+    // смотрело только на исполняемые файлы, и подмена в .dll/.so проходила мимо —
+    // а прятаться удобнее как раз в них: их никто не запускает руками.
+    push('medium', 'unverified-executable',
+      'Файл не совпадает ни с одним официальным релизом из базы эталонов. '
+      + 'Либо это другая версия, либо он изменён. Использовать до сверки нельзя.',
+      `${name} (${f.size} байт)`, f.path)
     const strs = asciiStrings(buf, 5)
     for (const fi of evaluateBinaryStrings(name, strs)) push(fi.severity, fi.rule, fi.why, fi.evidence, f.path)
     continue

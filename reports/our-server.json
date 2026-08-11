@@ -1,17 +1,20 @@
 {
   "slug": "our-server",
-  "target": "E:\\cs16zm\\server",
-  "scanned": "2026-08-03T22:50:04.586Z",
+  "target": "server",
+  "scanned": "2026-08-04T15:44:41.568Z",
   "totals": {
-    "files": 1214,
-    "bytes": 48338587
+    "files": 1421,
+    "bytes": 72340024
   },
-  "defender": {
-    "available": true,
-    "threatFound": false,
-    "output": "Scan starting...\r\nScan finished.\r\nScanning E:\\cs16zm\\server found no threats."
-  },
+  "defender": null,
   "findings": [
+    {
+      "severity": "critical",
+      "rule": "users-passwordless-admin",
+      "why": "Полные права выдаются без пароля: достаточно совпасть по «sadking». Любой, кто знает эту строку — а её знает каждый скачавший сборку, — становится администратором.",
+      "evidence": "строка 13: \"sadking\" \"\" \"abcdefghijklmnopqrstu\" \"e\"",
+      "file": "cstrike/addons/amxmodx/configs/users.ini"
+    },
     {
       "severity": "medium",
       "rule": "admin-plus-exec",
@@ -35,6 +38,153 @@
     },
     {
       "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_ak47long.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_as50.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_fnp45.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_hk416.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_m1887.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_mg36.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_mk48.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_sfgun.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_skull1.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_skull11.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_sl8.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_spas12.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_trg42.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_usas12camo.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_vsk94.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_wa2000.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp_class_abilities.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp_damage_hud.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp_knives.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp_shop_weapons.amxx"
+    },
+    {
+      "severity": "medium",
+      "rule": "indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id",
+      "file": "cstrike/addons/amxmodx/plugins/zp_zombie_nades.amxx"
+    },
+    {
+      "severity": "medium",
       "rule": "src:admin-plus-exec",
       "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
       "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
@@ -46,6 +196,13 @@
       "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
       "evidence": "register_clcmd/read_argv + server_cmd",
       "file": "cstrike/addons/amxmodx/scripting/zombie_plague44.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:indirect-call",
+      "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+      "evidence": "get_func_id",
+      "file": "cstrike/addons/amxmodx/scripting/zp_shop_weapons.sma"
     }
   ],
   "plugins": [
@@ -267,11 +424,11 @@
     },
     {
       "file": "cstrike/addons/amxmodx/plugins/zombie_plague44.amxx",
-      "hash": "6487A58AB21E0FAF6953EE4CB6F65C6C54EF8740BBAB179FA5B4FFDFD47302A5",
+      "hash": "B8C6B832C82F718C2CC372CE459BDA7CC5B0FA6CE7357CF49C878D75B3853E45",
       "hasSource": true,
       "verdict": "noted",
-      "natives": 183,
-      "strings": 1106,
+      "natives": 185,
+      "strings": 1103,
       "findings": [
         {
           "severity": "medium",
@@ -294,13 +451,367 @@
       ]
     },
     {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_ak47long.amxx",
+      "hash": "9AE7B4D1AE99613E430978AFDB1788E3C381B22C3FF2545955184280C8D765DE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_as50.amxx",
+      "hash": "A16EAA4884CBAF4EA5C004926A4BAB1A9993249374EEB11C1869C79DF07D0440",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 34,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_drop_strip.amxx",
+      "hash": "3386BBAFB1C6B4892929ADCEC18DFA5F266551D82166467877F2A8269917EFCF",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 12,
+      "strings": 8,
+      "findings": []
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_fnp45.amxx",
+      "hash": "DCDD55BABA7BF080744E79E9D0FD0CA44BBD90F0437C5EBDB302D73F86A33B6F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 72,
+      "strings": 36,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_hk416.amxx",
+      "hash": "F89090B66669445888172B0D6DF8F454C9716722AEF10CC668DC6EE1E58D8EDF",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 33,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_m1887.amxx",
+      "hash": "038248E42AA7335EC20D0EB50CA5F334CC6536929652430D1CFE2C40BCF9BF80",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_mg36.amxx",
+      "hash": "42A061FABF2AB580577C33401A95EFEA6741B4D83D21B16577AEAEF859CA50AE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_mk48.amxx",
+      "hash": "F5649AFA6FCFAD5599A7B9AB4095B1019BAD9D1688498DD87ED6AF5D98ED923C",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 65,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_sfgun.amxx",
+      "hash": "D96734FC29457E56EE20D4407C39B57884DC9E0EEBCD52ECF7B4C4400FDB525C",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 71,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_skull1.amxx",
+      "hash": "49C24D3642EEE1502097F5110C6DCA659D313BC0F4B26C92E75522D13A0910A5",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 71,
+      "strings": 36,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_skull11.amxx",
+      "hash": "299ABF919C46811748284FA3DCA15318F578162D76BEEE5B7AECD088199FD281",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 58,
+      "strings": 40,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_sl8.amxx",
+      "hash": "384ECAEF7213BD66EC4E2A260E49A768866B2159CB7342951483076047EF77B5",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_spas12.amxx",
+      "hash": "06420B1C0C81E1EA6C2BDA6128372563D14583B83DCD31D5AEFF45CB8BEAB8CE",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_trg42.amxx",
+      "hash": "852D200A775B8BEDA97685038D48109DD098DD80DBEBE36E275787FF27918307",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 56,
+      "strings": 34,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_usas12camo.amxx",
+      "hash": "94EE3570148B16D19069310F2B581DA08A1A051FC51777A735FF63B00F957785",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 58,
+      "strings": 37,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_vsk94.amxx",
+      "hash": "77FAC44EBAE6BB60CF03E57E52EF50FF4D106F1427E50AE540ED3631336431E5",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 36,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp43_weapon_wa2000.amxx",
+      "hash": "738BB2D2A417CB966F07A9439796E776A4E795CBF3C48E83F3A7D820316C6DF5",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 57,
+      "strings": 35,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_class_abilities.amxx",
+      "hash": "0385ABC54384A6404EDCC4CB59C54D508AE4F2FE3227F368D72612380289B48B",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 50,
+      "strings": 29,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_damage_hud.amxx",
+      "hash": "A1ACBE6C98F1BAF6142955E347C3674006FAF5CB5E470A5ADEC8F2C057904DE4",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 23,
+      "strings": 11,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_knives.amxx",
+      "hash": "F1FC434109ECD84998AEA0228359D9D8259397FD3ACC2E1FDED71DFC7617788F",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 49,
+      "strings": 40,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_progress.amxx",
+      "hash": "F5EB9C0E5645EA2A82035754AA795A223BFFAB1956230F06CCA04EDC1C372053",
+      "hasSource": true,
+      "verdict": "ok",
+      "natives": 36,
+      "strings": 27,
+      "findings": []
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_shop_weapons.amxx",
+      "hash": "9C29AB0A96B29EC164AA6717C8D9899AF8C7A873E5523CA347F15266632E30B7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 69,
+      "strings": 86,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
+    },
+    {
       "file": "cstrike/addons/amxmodx/plugins/zp_zclasses44.amxx",
-      "hash": "CB87E250B0B9FB55C898D2E57734019B3FE250B3C5D3C7A2F7961E58A4DF028F",
+      "hash": "563E31FDC20D5BB31DC1DC5E41A270D8339E21945A7695F9968A5D98A5A8569A",
       "hasSource": true,
       "verdict": "ok",
       "natives": 7,
-      "strings": 14,
+      "strings": 7,
       "findings": []
+    },
+    {
+      "file": "cstrike/addons/amxmodx/plugins/zp_zombie_nades.amxx",
+      "hash": "03FE3F602F9A48AAF47267801167D6ADA6C799770D3352650D400914D6CF26B7",
+      "hasSource": true,
+      "verdict": "noted",
+      "natives": 39,
+      "strings": 21,
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "callfunc_begin_i, callfunc_push_str, callfunc_end, get_func_id"
+        }
+      ]
     }
   ],
   "sourceFindings": [
@@ -319,6 +830,18 @@
           "rule": "argv-to-exec",
           "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
           "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    },
+    {
+      "file": "cstrike/addons/amxmodx/scripting/zp_shop_weapons.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "indirect-call",
+          "why": "Вызов функций по имени-строке скрывает цель вызова от статического анализа.",
+          "evidence": "get_func_id"
         }
       ]
     }
@@ -558,6 +1081,18 @@
         "size": 104688,
         "hash": "F0AEE2AD7ADEBAEF4D3AD61AA86B80853BAE8D4758CA0AB6BE152622388350A1",
         "knownAs": "reunion-0.2.0.25/bin/Linux/reunion_mm_i386.so"
+      },
+      {
+        "file": "cstrike/addons/yapb/bin/yapb.dll",
+        "size": 900536,
+        "hash": "7F4C2F661E8F177FB3AA14B54FE370482C74A00AF432C884CB928B76CDDF4504",
+        "knownAs": "yapb-4.4.957-windows/addons/yapb/bin/yapb.dll"
+      },
+      {
+        "file": "cstrike/addons/yapb/bin/yapb.so",
+        "size": 1208172,
+        "hash": "624519512B30BDE6CE1D2C9937AE39195FCBDB24458614AF21E91AC862DDA275",
+        "knownAs": "yapb-4.4.957-linux/addons/yapb/bin/yapb.so"
       },
       {
         "file": "cstrike/dlls/cs.so",
@@ -1589,23 +2124,53 @@
       "cstrike/addons/amxmodx/scripting/testsuite/textparse_test.ini",
       "cstrike/addons/metamod/config.ini",
       "cstrike/addons/metamod/plugins.ini",
-      "cstrike/addons/reunion/reunion.cfg",
+      "cstrike/addons/yapb/conf/avatars.cfg",
+      "cstrike/addons/yapb/conf/chatter.cfg",
+      "cstrike/addons/yapb/conf/custom.cfg",
+      "cstrike/addons/yapb/conf/difficulty.cfg",
+      "cstrike/addons/yapb/conf/lang/de_chat.cfg",
+      "cstrike/addons/yapb/conf/lang/de_lang.cfg",
+      "cstrike/addons/yapb/conf/lang/en_chat.cfg",
+      "cstrike/addons/yapb/conf/lang/en_names.cfg",
+      "cstrike/addons/yapb/conf/lang/ru_chat.cfg",
+      "cstrike/addons/yapb/conf/lang/ru_lang.cfg",
+      "cstrike/addons/yapb/conf/lang/ru_names.cfg",
+      "cstrike/addons/yapb/conf/logos.cfg",
+      "cstrike/addons/yapb/conf/weapon.cfg",
+      "cstrike/addons/yapb/conf/yapb.cfg",
       "cstrike/game.cfg",
       "cstrike/game_init.cfg",
       "cstrike/motd.txt",
-      "cstrike/server.cfg"
+      "cstrike/reunion.cfg",
+      "cstrike/server.cfg",
+      "cstrike/sprites/jp_weapon_ak47long.txt",
+      "cstrike/sprites/jp_weapon_as50.txt",
+      "cstrike/sprites/jp_weapon_fnp45.txt",
+      "cstrike/sprites/jp_weapon_hk416.txt",
+      "cstrike/sprites/jp_weapon_m1887.txt",
+      "cstrike/sprites/jp_weapon_mg36.txt",
+      "cstrike/sprites/jp_weapon_mk48.txt",
+      "cstrike/sprites/jp_weapon_sfgun.txt",
+      "cstrike/sprites/jp_weapon_skull1.txt",
+      "cstrike/sprites/jp_weapon_skull11_hud.txt",
+      "cstrike/sprites/jp_weapon_sl8.txt",
+      "cstrike/sprites/jp_weapon_spas12.txt",
+      "cstrike/sprites/jp_weapon_trg42.txt",
+      "cstrike/sprites/jp_weapon_usas12camo.txt",
+      "cstrike/sprites/jp_weapon_vsk94.txt",
+      "cstrike/sprites/jp_weapon_wa2000.txt"
     ],
-    "plugins": 29,
-    "sources": 54,
-    "content": 56,
-    "other": 85
+    "plugins": 52,
+    "sources": 77,
+    "content": 137,
+    "other": 133
   },
-  "verdict": "untrusted",
+  "verdict": "dirty",
   "counts": {
     "info": 0,
     "low": 0,
-    "medium": 5,
+    "medium": 27,
     "high": 0,
-    "critical": 0
+    "critical": 1
   }
 }

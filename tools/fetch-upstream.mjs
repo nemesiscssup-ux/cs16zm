@@ -75,6 +75,20 @@ export const COMPONENTS = [
     file: 'amxmodx-1.10.0-git5479-cstrike-windows.zip',
     role: 'модуль Counter-Strike для AMXX, Windows',
   },
+  // В HLDS ботов нет вообще: боты Condition Zero в поставку выделенного сервера
+  // не входят. YaPB — открытый плагин Metamod, наследник POD-Bot.
+  {
+    name: 'YaPB', version: '4.4.957', platform: 'linux',
+    url: 'https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz',
+    file: 'yapb-4.4.957-linux.tar.xz',
+    role: 'боты для проверки режима и «оживления» пустого сервера, Linux',
+  },
+  {
+    name: 'YaPB', version: '4.4.957', platform: 'windows',
+    url: 'https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-windows.zip',
+    file: 'yapb-4.4.957-windows.zip',
+    role: 'то же для локального прогона, Windows',
+  },
 ]
 
 const dirFor = platform => join(ROOT, 'upstream', platform === 'windows' ? 'windows' : platform === 'linux' ? 'linux' : 'common')

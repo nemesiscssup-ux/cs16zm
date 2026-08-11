@@ -1,0 +1,142 @@
+{
+  "slug": "recheck-gamemodd-zp44fix5a-upstream",
+  "target": "quarantine/gamemodd-zp44fix5a-upstream//extracted",
+  "scanned": "2026-08-04T10:17:01.282Z",
+  "totals": {
+    "files": 138,
+    "bytes": 9776437
+  },
+  "defender": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "rule": "src:admin-plus-exec",
+      "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+      "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd",
+      "file": "zp_plugin_44/addons/amxmodx/scripting/zombie_plague44.sma"
+    },
+    {
+      "severity": "medium",
+      "rule": "src:argv-to-exec",
+      "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+      "evidence": "register_clcmd/read_argv + server_cmd",
+      "file": "zp_plugin_44/addons/amxmodx/scripting/zombie_plague44.sma"
+    }
+  ],
+  "plugins": [],
+  "sourceFindings": [
+    {
+      "file": "zp_plugin_44/addons/amxmodx/scripting/zombie_plague44.sma",
+      "verdict": "noted",
+      "findings": [
+        {
+          "severity": "medium",
+          "rule": "admin-plus-exec",
+          "why": "Плагин и раздаёт права, и выполняет серверные команды. Для админ-панели это норма, для игрового плагина — нет.",
+          "evidence": "cmd_access, set_user_info + server_cmd, client_cmd, engclient_cmd"
+        },
+        {
+          "severity": "medium",
+          "rule": "argv-to-exec",
+          "why": "Аргумент пользовательской команды может дойти до исполнения серверной команды. Проверить обработчик глазами.",
+          "evidence": "register_clcmd/read_argv + server_cmd"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "executables": [],
+    "scripts": [],
+    "configs": [
+      "zp_plugin_44/addons/amxmodx/configs/csdm/awp_map.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_747.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_assault.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_backalley.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_bbicotka.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_downed_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_estate.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_havana.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_havana_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_intercept.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_italy.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_italy_32_slots.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_italy_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_militia.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_militia_32.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_mopo3.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_nnd.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_office.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_office_32_slots.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_siege.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/cs_thunder.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_2minaret.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_airstrip.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_airstrip_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_aztec.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_aztec2.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_aztec3.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_aztec_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_cbble.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_cbble_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_chateau.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_clan1_mill.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_clan2_fire.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_clan3_heat.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_clan4_stone.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_cpl_fire.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_damaged.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dam_final.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust-forever.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust2.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust2_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust4.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust4ever.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dustmix4.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dustybleek.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust_castle.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_dust_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_indust.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_inetcafe.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_inferno.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_inferno_cz.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_nuke.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_piranesi.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_plaka.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_prodigy.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_quarry.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_raoni.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_rusty.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_slap.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_storm.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_survivor.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_torn.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_train.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/de_vertigo.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/fy_iceworld.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/ka_legoland.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/nth_lets_take_mothers_tank.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/scoutzknivez.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/csdm/zm_toxic_house.spawns.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/plugins-zplague.ini",
+      "zp_plugin_44/addons/amxmodx/configs/zombie_plague_v44.cfg",
+      "zp_plugin_44/addons/amxmodx/configs/zombie_plague_v44.ini",
+      "zp_plugin_44/addons/amxmodx/configs/zp_extra_items_v44.ini",
+      "zp_plugin_44/addons/amxmodx/configs/zp_zombie_classes_v44.ini",
+      "zp_plugin_44/addons/amxmodx/data/lang/zombie_plague_v44.txt",
+      "zp_plugin_44/patch_changelog.txt"
+    ],
+    "plugins": 0,
+    "sources": 4,
+    "content": 56,
+    "other": 1
+  },
+  "verdict": "untrusted",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "medium": 2,
+    "high": 0,
+    "critical": 0
+  }
+}
