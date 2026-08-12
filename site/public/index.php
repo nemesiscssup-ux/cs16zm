@@ -1,23 +1,24 @@
 <?php
 /**
- * Главная: что за сервер, живой ли он сейчас и куда идти дальше.
+ * Главная: витрина привилегий и новости, а адрес сервера — рядом.
  *
- * Задача страницы одна — за десять секунд объяснить незнакомому человеку, куда
- * он попал, и дать ему подключиться. Всё остальное (привилегии, кредиты) —
- * соседние страницы, и тащить их содержимое сюда значит утопить и то и другое.
+ * Задача страницы — показать, что продаётся и что нового, и тут же дать
+ * подключиться, никуда не уходя. Всё остальное (разбор уровней, кредиты) —
+ * соседние страницы, и тащить их содержимое сюда значит утопить и то и другое:
+ * на главной остаются вывеска и повод вернуться, подробности — по ссылке.
  */
 
 require __DIR__ . '/_boot.php';
 require_once ZM_APP . '/view.php';
 require_once ZM_APP . '/a2s.php';
+require_once ZM_APP . '/news.php';
 
 send_security_headers();
 
 $site = cfg('site');
 $info = a2s_info();
 $tiers = array_values(array_filter(tiers(), function ($t) { return $t['sold']; }));
-$knives = catalog_knives();
-$skins = catalog_shop_skins();
+$news = news_latest(5);
 
 page_head('Сервер', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASSET_V) . '" defer></script>');
 ?>
@@ -26,16 +27,6 @@ page_head('Сервер', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASS
   <div class="hero-text">
     <h1 class="hero-title"><?= h($site['title']) ?></h1>
     <p class="hero-sub">Зомби-мод для Counter-Strike 1.6</p>
-    <p class="lead-text">
-      Люди против заражённых: выжившие держат оборону и отстреливаются, зомби ломятся
-      врукопашную. За убитых дают кредиты, на кредиты берут оружие, облики и ножи —
-      и к концу вечера уже понятно, кто на сервере кто.
-    </p>
-
-    <div class="cta">
-      <a class="btn" href="privileges.php">Купить привилегию</a>
-      <a class="btn ghost-btn" href="shop.php">Пополнить кредиты</a>
-    </div>
 
     <div class="status">
       <?php if ($info === null): ?>
@@ -75,32 +66,6 @@ page_head('Сервер', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASS
 </section>
 
 <section class="section">
-  <h2>Что на сервере</h2>
-  <div class="facts">
-    <article class="fact">
-      <div class="fact-num"><?= count($knives) ?></div>
-      <div class="fact-name">ножей</div>
-      <p>Каждый работает по-своему: один поджигает, другой замораживает, третий пьёт здоровье за удар.</p>
-    </article>
-    <article class="fact">
-      <div class="fact-num">16</div>
-      <div class="fact-name">стволов в магазине</div>
-      <p>Покупаются за кредиты прямо в раунде: от пистолетов до крупнокалиберных снайперских.</p>
-    </article>
-    <article class="fact">
-      <div class="fact-num">13</div>
-      <div class="fact-name">классов зомби</div>
-      <p>У каждого своя способность — от прыжка через полкарты до заморозки и огня.</p>
-    </article>
-    <article class="fact">
-      <div class="fact-num"><?= count($skins) + count($tiers) + 1 ?></div>
-      <div class="fact-name">обликов</div>
-      <p>Часть открывается уровнем привилегии, остальные покупаются за кредиты навсегда.</p>
-    </article>
-  </div>
-</section>
-
-<section class="section">
   <h2>Привилегии</h2>
   <p class="lead-text">
     Четыре покупаемых уровня. Каждый даёт кредиты и здоровье на каждом возрождении,
@@ -121,15 +86,32 @@ page_head('Сервер', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASS
   <p style="margin-top:22px"><a class="btn" href="privileges.php">Смотреть подробно</a></p>
 </section>
 
-<section class="section">
-  <h2>Как начать</h2>
-  <ol class="steps big-steps">
-    <li><b>Зайдите на сервер</b><?= !empty($site['connect']) ? ' по адресу выше' : '' ?>. Ничего скачивать заранее не нужно — контент подтянется сам.</li>
-    <li><b>Играйте.</b> Кредиты капают за убитых зомби и за выигранные раунды.</li>
-    <li><b>Тратьте.</b> Меню магазина — команда <code>/магазин</code> в чате, выбор ножа и облика — там же.</li>
-    <li><b>Хотите больше</b> — возьмите привилегию или пополните кредиты на этом сайте.</li>
-  </ol>
-</section>
+<?php
+/*
+ * Новостей нет вовсе — секции нет тоже.
+ *
+ * Пустая рубрика хуже её отсутствия: заголовок «Новости» над пустым местом
+ * говорит посетителю, что сервер заброшен, — а это ровно противоположно тому,
+ * зачем лента здесь заведена. Сразу после установки, пока владелец не написал
+ * ни строчки, главная должна выглядеть законченной.
+ */
+if ($news): ?>
+  <section class="section">
+    <h2>Новости</h2>
+    <div class="news">
+      <?php foreach ($news as $n): ?>
+        <article class="news-item">
+          <?php /* published_at у видимой новости всегда заполнен — так её и отбирает news_latest(). */ ?>
+          <div class="news-date"><?= h(date('d.m.Y', strtotime($n['published_at']))) ?></div>
+          <h3 class="news-title"><?= h($n['title']) ?></h3>
+          <?php /* Тело хранится обычным текстом; разметку из него собирает news_html(), она же и экранирует. */ ?>
+          <div class="news-body"><?= news_html($n['body']) ?></div>
+        </article>
+      <?php endforeach; ?>
+    </div>
+    <p style="margin-top:22px"><a href="news.php">Все новости →</a></p>
+  </section>
+<?php endif; ?>
 
 <script>
 "use strict";

@@ -33,32 +33,43 @@ SET NAMES utf8mb4;
 -- строк — а это лотерея. Повторная покупка ПРОДЛЕВАЕТ существующую.
 
 CREATE TABLE IF NOT EXISTS `zm_privileges` (
-  `id`          INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id`           INT UNSIGNED NOT NULL AUTO_INCREMENT,
   -- ник как в игре либо STEAM_0:1:12345 — что именно, говорит `account`
-  `auth`        VARCHAR(31)  NOT NULL,
+  `auth`         VARCHAR(31)  NOT NULL,
   -- Тот же ключ, свёрнутый ТАК ЖЕ, КАК СВОРАЧИВАЕТ СЕРВЕР: строчными сделана
   -- только латиница, кириллица оставлена как есть. Нужен затем, что искать
   -- существующую запись надо ровно так же, как её найдёт сервер, — иначе
   -- «Vasya» и «vasya» заведут ДВЕ записи, сервер возьмёт первую попавшуюся, и
   -- оплаченное повышение достанется не тому. Именно так и вышло на проверке.
-  `auth_key`    VARCHAR(31)  NOT NULL,
+  `auth_key`     VARCHAR(31)  NOT NULL,
   -- пароль игрока; пустой допустим только вместе с флагом «e» в `account`
-  `password`    VARCHAR(31)  NOT NULL DEFAULT '',
-  -- накопительные буквы уровня (t/s/q/p/o) плюс, если куплена, буквы админки
-  `access`      VARCHAR(31)  NOT NULL,
+  `password`     VARCHAR(31)  NOT NULL DEFAULT '',
+  -- Только накопительные буквы УРОВНЯ (t/s/q/p/o) либо свои флаги, выданные из
+  -- панели. Букв админки здесь больше нет: у админки свой срок, и лежи её
+  -- буквы в этом же столбце — истёкший срок уровня уносил бы с собой и
+  -- оплаченную отдельно админку. Склейкой занято представление `zm_admins`.
+  `access`       VARCHAR(31)  NOT NULL,
   -- флаги записи AMXX: «a» — кикать при неверном пароле, «c» — это SteamID,
   -- «e» — пароль не проверять. Именно их плагин кладёт в четвёртое поле.
-  `account`     VARCHAR(8)   NOT NULL DEFAULT 'a',
+  `account`      VARCHAR(8)   NOT NULL DEFAULT 'a',
 
   -- служебное, игровому серверу невидимое (представление эти столбцы не отдаёт)
-  `tier`        VARCHAR(16)      NULL,     -- vip/leader/imperator/pharaoh/creator
-  `has_admin`   TINYINT(1)   NOT NULL DEFAULT 0,
-  `granted_at`  DATETIME     NOT NULL,
-  -- NULL = навсегда. Иначе момент, после которого запись исчезает из `admins`.
-  `expires_at`  DATETIME         NULL,
-  `source`      VARCHAR(16)  NOT NULL DEFAULT 'admin',  -- admin | order
-  `order_id`    INT UNSIGNED     NULL,
-  `note`        VARCHAR(190) NOT NULL DEFAULT '',
+  `tier`         VARCHAR(16)      NULL,     -- vip/leader/imperator/pharaoh/creator
+  -- Буквы админки либо пусто. Пусто — админки нет вовсе, и `admin_until` тогда
+  -- не смотрим вообще: это не «админка, истёкшая давно», это её отсутствие.
+  `admin_access` VARCHAR(31)  NOT NULL DEFAULT '',
+  `granted_at`   DATETIME     NOT NULL,
+  -- NULL = навсегда. Срок УРОВНЯ, а не всей записи: строка с протухшим
+  -- `expires_at`, но живой админкой из представления не пропадает — пропадают
+  -- только её буквы уровня.
+  `expires_at`   DATETIME         NULL,
+  -- Срок админки, свой собственный; NULL при непустом `admin_access` —
+  -- навсегда. Сроки раздельны затем, что доплата за уровень не должна двигать
+  -- админку, а покупка админки — уровень. Одним столбцом это не выражается.
+  `admin_until`  DATETIME         NULL,
+  `source`       VARCHAR(16)  NOT NULL DEFAULT 'admin',  -- admin | order
+  `order_id`     INT UNSIGNED     NULL,
+  `note`         VARCHAR(190) NOT NULL DEFAULT '',
 
   PRIMARY KEY (`id`),
   -- Уникальность вешаем на СВЁРНУТЫЙ ключ, а не на исходный. Тогда вторая
@@ -77,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `zm_privileges` (
 
 -- ── то, что читает игровой сервер ───────────────────────────────────────────
 --
--- Просроченное отсекается здесь, и это единственное место, где срок вообще
--- проверяется. Сравниваем с NOW() базы — время на сайте, на игровом сервере и
+-- Просроченное отсекается здесь, и это единственное место, где сроки вообще
+-- проверяются. Сравниваем с NOW() базы — время на сайте, на игровом сервере и
 -- в базе может разойтись, а решает пусть кто-то один.
 --
 -- CREATE TABLE IF NOT EXISTS, который плагин выполняет при старте, на
@@ -100,11 +111,31 @@ CREATE TABLE IF NOT EXISTS `zm_privileges` (
 -- запись выглядит правильной. Проверено вживую на этой базе.
 -- CAST в BINARY переводить нечего: сервер получает те же байты UTF-8, что
 -- лежат в таблице, и сравнивает их с ником игрока байт в байт — как и надо.
+--
+-- Буквы склеиваются ЗДЕСЬ, на лету, а не хранятся готовой строкой, потому что
+-- сроков теперь два и они независимы: уровень может протухнуть при живой
+-- админке и наоборот. Хранимая склейка означала бы, что кто-то обязан прийти в
+-- нужную минуту и её переписать, — а приходить некому: ни cron, ни планировщика
+-- у нас нет, и всё, что знает про время, — это NOW() базы. Строка попадает
+-- серверу, пока жив хотя бы один из двух сроков; мёртвая половина просто не
+-- добавляет своих букв.
+--
+-- ⚠️ Склейка не даёт повторов ровно потому, что наборы не пересекаются: буквы
+-- уровня — t s q p o, буквы админки — b c d e i j u. Повторись буква, сервер
+-- получил бы «tt» вместо «t» и лишний байт в буфере ни за что. Худшая длина:
+-- 21 буква своих флагов из панели плюс 7 админки = 28, а плагин читает
+-- `access` в буфер на 32 байта. Запас есть, но он не бесконечен — добавляя
+-- буквы куда бы то ни было, пересчитайте эту сумму.
 CREATE OR REPLACE VIEW `zm_admins` AS
   SELECT CAST(`auth` AS BINARY) AS `auth`, CAST(`password` AS BINARY) AS `password`,
-         `access`, `account` AS `flags`
+         CONCAT(
+           IF(`access` <> ''       AND (`expires_at`  IS NULL OR `expires_at`  > NOW()), `access`,       ''),
+           IF(`admin_access` <> '' AND (`admin_until` IS NULL OR `admin_until` > NOW()), `admin_access`, '')
+         ) AS `access`,
+         `account` AS `flags`
   FROM `zm_privileges`
-  WHERE `expires_at` IS NULL OR `expires_at` > NOW();
+  WHERE (`access` <> ''       AND (`expires_at`  IS NULL OR `expires_at`  > NOW()))
+     OR (`admin_access` <> '' AND (`admin_until` IS NULL OR `admin_until` > NOW()));
 
 -- ⚠️ ЕСЛИ ПРЕДСТАВЛЕНИЕ УДАЛИТЬ, АДМИНЫ ПРОПАДУТ МОЛЧА. admin_sql.amxx при
 -- каждом старте карты выполняет «CREATE TABLE IF NOT EXISTS zm_admins» и, если
@@ -128,11 +159,15 @@ CREATE TABLE IF NOT EXISTS `zm_orders` (
   `is_steamid`  TINYINT(1)   NOT NULL DEFAULT 0,
   -- Что куплено. Привилегия ложится в базу и живёт своим сроком; кредиты
   -- уходят живому игроку одной командой и в базе не хранятся вовсе — их
-  -- хранит сам сервер в своём nvault.
-  `kind`        ENUM('tier','packs') NOT NULL DEFAULT 'tier',
-  `tier`        VARCHAR(16)      NULL,
+  -- хранит сам сервер в своём nvault. Админка — отдельный товар: у неё свой
+  -- срок, и в одном заказе двум разным срокам места нет. Заказ — один товар.
+  `kind`        ENUM('tier','packs','admin') NOT NULL DEFAULT 'tier',
+  `tier`        VARCHAR(16)      NULL,             -- у kind='admin' здесь NULL
   `days`        SMALLINT     NOT NULL DEFAULT 0,   -- 0 = навсегда
   `packs`       INT UNSIGNED NOT NULL DEFAULT 0,   -- сколько кредитов, с учётом добавки
+  -- Наследство: так админку добавляли к уровню одним заказом. Новые заказы
+  -- пишут сюда 0 и никогда не читают, но столбец остаётся — в нём история
+  -- проданного, и стереть её значит соврать в журнале задним числом.
   `with_admin`  TINYINT(1)   NOT NULL DEFAULT 0,
   `amount`      DECIMAL(10,2) NOT NULL,
   `currency`    VARCHAR(8)   NOT NULL DEFAULT 'RUB',
@@ -197,3 +232,29 @@ CREATE TABLE IF NOT EXISTS `zm_audit` (
   PRIMARY KEY (`id`),
   KEY `at` (`at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── новости ────────────────────────────────────────────────────────────────
+--
+-- Игрового сервера эта таблица не касается вовсе: её читают только страницы
+-- сайта. Живёт она здесь потому, что база у нас одна на всё.
+
+CREATE TABLE IF NOT EXISTS `zm_news` (
+  `id`           INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title`        VARCHAR(120) NOT NULL,
+  -- ОБЫЧНЫЙ ТЕКСТ, никакого HTML. Разметку собирает news_html(), и собирает
+  -- она её из уже экранированного текста — потому в базе и лежит то, что автор
+  -- набрал, буква в букву. Пусти сюда HTML — и редактор новостей станет
+  -- дырой, через которую в чужой браузер попадает чужой скрипт.
+  `body`         TEXT         NOT NULL,
+  `author`       VARCHAR(64)  NOT NULL DEFAULT '',
+  `created_at`   DATETIME     NOT NULL,
+  `updated_at`   DATETIME         NULL,
+  -- Одно поле на два дела: NULL — черновик, дата — новость видна, и по ней же
+  -- порядок в ленте. Отдельного «опубликовано: да/нет» нет НАМЕРЕННО: два
+  -- поля, отвечающих за одно состояние, рано или поздно разойдутся, и тогда
+  -- черновик всплывёт на главной либо готовая новость не покажется никому.
+  `published_at` DATETIME         NULL,
+  PRIMARY KEY (`id`),
+  KEY `published_at` (`published_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  COMMENT='Новости сайта: лента на главной и архив';

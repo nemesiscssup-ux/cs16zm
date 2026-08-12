@@ -14,38 +14,106 @@
 require_once ZM_APP . '/rcon.php';
 require_once ZM_APP . '/audit.php';
 
+// ── два срока, считаемые порознь ────────────────────────────────────────────
+//
+// У записи их теперь два: expires_at — срок УРОВНЯ, admin_until — срок
+// АДМИНКИ. Считать их надо раздельно, иначе покупка одного двигала бы срок
+// другого, а это и есть «доплатил и потерял».
+
 /**
- * Что станет с записью при покупке уровня поверх имеющегося.
+ * Прибавить купленный срок к тому, что уже оплачено.
+ *
+ * $hasLetters — есть ли у этой стороны буквы вообще; без этого вопроса не
+ * обойтись.
+ *
+ * ⚠️ NULL в сроке читается как «навсегда» — но только рядом с непустыми
+ * буквами. У записи, где куплена одна админка, expires_at лежит NULL просто
+ * потому, что уровня нет. Не спроси мы про буквы, покупка уровня поверх такой
+ * записи выдала бы вечный уровень по цене месяца. То же самое зеркально:
+ * admin_until у записи без админки.
+ */
+function extend_term($until, $hasLetters, $days, $dbNow)
+{
+    if ($hasLetters && $until === null) {
+        return null;                       // уже вечное — вечным и остаётся
+    }
+    if ((int)$days === 0) {
+        return null;                       // купили «навсегда»
+    }
+    // Прибавляем к ОСТАТКУ, а не начинаем отсчёт заново: иначе доплата в
+    // середине срока молча укоротила бы оплаченное.
+    $from = ($hasLetters && $until !== null && $until > $dbNow) ? $until : $dbNow;
+
+    return date('Y-m-d H:i:s', strtotime($from . ' +' . (int)$days . ' day'));
+}
+
+/**
+ * Что станет с записью при покупке поверх имеющегося.
  *
  * Правила выбраны так, чтобы покупка НИКОГДА не ухудшала положение игрока —
  * иначе «доплатил и потерял» станет главной темой в чате:
- *   * уровень берётся наивысший из старого и нового;
- *   * админка, если она была, остаётся;
- *   * срок ПРИБАВЛЯЕТСЯ к остатку, а не заменяет его;
- *   * «навсегда» с любой стороны делает запись вечной.
+ *   * уровень берётся наивысший из ЖИВОГО старого и нового — просроченный в
+ *     сравнении не участвует, иначе его можно воскресить дешёвой покупкой;
+ *   * $tierIndex === null — «уровень не трогать»: старые буквы и срок уровня
+ *     переносятся как есть, поэтому покупка админки не сдвигает срок уровня;
+ *   * $wantAdmin === false оставляет уже купленную админку нетронутой, поэтому
+ *     доплата за уровень её не отбирает и не укорачивает;
+ *   * каждый срок ПРИБАВЛЯЕТСЯ к своему остатку, а не заменяет его;
+ *   * «навсегда» с любой стороны делает соответствующий срок вечным.
  */
-function merge_grant($existing, $tierIndex, $withAdmin, $days, $dbNow)
+function merge_grant($existing, $tierIndex, $days, $wantAdmin, $adminDays, $dbNow)
 {
-    $oldTier  = $existing ? tier_of($existing['access']) : -1;
-    $oldAdmin = $existing ? (bool)$existing['has_admin'] : false;
+    // Пустые буквы — это «стороны нет вовсе», и её срок ничего не значит.
+    $hasTier        = $existing && $existing['access'] !== '';
+    $hasAdmin       = $existing && $existing['admin_access'] !== '';
+    $oldTier        = $hasTier ? tier_of($existing['access']) : -1;
+    $oldExpires     = $hasTier ? $existing['expires_at'] : null;
+    $oldAdminUntil  = $hasAdmin ? $existing['admin_until'] : null;
 
-    $tier  = max($oldTier, $tierIndex === null ? -1 : $tierIndex);
-    $admin = $oldAdmin || $withAdmin;
+    /*
+     * ⚠️ ЖИВ ЛИ СТАРЫЙ УРОВЕНЬ — ОТДЕЛЬНЫЙ ВОПРОС, И НЕ ЗАДАТЬ ЕГО СТОИТ ДЕНЕГ.
+     * Буквы из `access` при окончании срока НЕ СТИРАЮТСЯ: просроченную запись
+     * прячет представление zm_admins, а в таблице она лежит как лежала. Значит
+     * tier_of() честно вернёт «Фараон» и через год после того, как Фараон
+     * кончился. Засчитай мы такой уровень в max() ниже — и человек с истёкшим
+     * вчера Фараоном покупал бы VIP за 79 ₽ и получал полного Фараона на
+     * тридцать дней. Купить больше оплаченного можно было бы бесконечно, раз
+     * за разом, самым дешёвым уровнем.
+     *
+     * Поэтому в сравнение уровней идёт только ЖИВОЙ уровень. Мёртвый при этом
+     * не стирается: если человек пришёл за одной админкой, его протухшие буквы
+     * остаются лежать нетронутыми — серверу их всё равно не покажут.
+     */
+    $tierLive = $hasTier && ($oldExpires === null || $oldExpires > $dbNow);
+    $liveTier = $tierLive ? $oldTier : -1;
 
-    // Срок
-    if ($existing && $existing['expires_at'] === null) {
-        $expires = null;                       // уже вечная — вечной и остаётся
-    } elseif ((int)$days === 0) {
-        $expires = null;                       // купили «навсегда»
+    if ($tierIndex === null) {
+        // Уровня не касаемся ни буквой, ни днём: пришли за админкой.
+        $tier    = $oldTier;
+        $access  = $hasTier ? $existing['access'] : '';
+        $expires = $oldExpires;
     } else {
-        $from = $dbNow;
-        if ($existing && $existing['expires_at'] !== null && $existing['expires_at'] > $dbNow) {
-            $from = $existing['expires_at'];   // прибавляем к остатку
-        }
-        $expires = date('Y-m-d H:i:s', strtotime($from . ' +' . (int)$days . ' day'));
+        $tier    = max($liveTier, (int)$tierIndex);
+        $access  = $tier >= 0 ? tier_flags($tier) : '';
+        $expires = extend_term($oldExpires, $tierLive, $days, $dbNow);
     }
 
-    return array('tier' => $tier, 'admin' => $admin, 'expires' => $expires);
+    if ($wantAdmin) {
+        $adminAccess = ADMIN_FLAGS;
+        $adminUntil  = extend_term($oldAdminUntil, $hasAdmin, $adminDays, $dbNow);
+    } else {
+        // Куплена — значит куплена: доплата за уровень её не отбирает.
+        $adminAccess = $hasAdmin ? $existing['admin_access'] : '';
+        $adminUntil  = $oldAdminUntil;
+    }
+
+    return array(
+        'tier'         => $tier,
+        'access'       => $access,
+        'expires'      => $expires,
+        'admin_access' => $adminAccess,
+        'admin_until'  => $adminUntil,
+    );
 }
 
 /** Текущее время ГЛАЗАМИ БАЗЫ: срок сверяется с ним же в представлении admins. */
@@ -60,9 +128,10 @@ function db_now()
  * $opts:
  *   who           ключ: ник либо STEAM_0:1:12345
  *   is_steamid    ключ — это SteamID
- *   tier_index    номер уровня в tiers() либо null
- *   with_admin    добавить купленную админку
- *   days          срок; 0 — навсегда
+ *   tier_index    номер уровня в tiers(); null — уровень не трогать вовсе
+ *   with_admin    добавить или продлить купленную админку
+ *   days          срок УРОВНЯ; 0 — навсегда
+ *   admin_days    срок АДМИНКИ; 0 — навсегда
  *   password      пароль игрока; '' вместе с no_password — вход без пароля
  *   no_password   не проверять пароль (флаг «e»)
  *   custom_flags  свои буквы вместо уровня (только из панели)
@@ -78,6 +147,10 @@ function grant_privilege($opts)
     $isSteam    = !empty($opts['is_steamid']);
     $withAdmin  = !empty($opts['with_admin']);
     $days       = isset($opts['days']) ? (int)$opts['days'] : 0;
+    // ⚠️ Забытый admin_days — это НЕ ноль: ноль означает «навсегда», и вечная
+    // админка раздавалась бы по недосмотру вызывающего. Пока ключа нет, срок
+    // админки равен сроку уровня — ровно так вело себя старое общее поле.
+    $adminDays  = isset($opts['admin_days']) ? (int)$opts['admin_days'] : $days;
     $noPassword = !empty($opts['no_password']);
     $custom     = isset($opts['custom_flags']) ? strtolower(preg_replace('/\s+/', '', (string)$opts['custom_flags'])) : '';
     $tierIndex  = array_key_exists('tier_index', $opts) && $opts['tier_index'] !== null ? (int)$opts['tier_index'] : null;
@@ -107,22 +180,32 @@ function grant_privilege($opts)
         // панели: касса такого прислать не может.
         $access  = $custom;
         $tier    = tier_of($custom);
-        $admin   = $withAdmin;
         $expires = $days === 0 ? null : date('Y-m-d H:i:s', strtotime($now . ' +' . $days . ' day'));
+
+        // ⚠️ Своими флагами админка НЕ дополняется (api.php шлёт with_admin
+        // только при пустых своих флагах) — но и не отбирается: она куплена
+        // отдельно, за отдельные деньги и со своим сроком. Считаем её тем же
+        // слиянием, попросив не трогать уровень, и берём только её половину.
+        $side        = merge_grant($existing, null, 0, $withAdmin, $adminDays, $now);
+        $adminAccess = $side['admin_access'];
+        $adminUntil  = $side['admin_until'];
     } else {
-        $merged  = merge_grant($existing, $tierIndex, $withAdmin, $days, $now);
-        $tier    = $merged['tier'];
-        $admin   = $merged['admin'];
-        $expires = $merged['expires'];
-        $access  = access_flags($tier < 0 ? null : $tier, $admin);
+        $merged      = merge_grant($existing, $tierIndex, $days, $withAdmin, $adminDays, $now);
+        $tier        = $merged['tier'];
+        $access      = $merged['access'];
+        $expires     = $merged['expires'];
+        $adminAccess = $merged['admin_access'];
+        $adminUntil  = $merged['admin_until'];
     }
 
     $account = account_flags($isSteam, $noPassword);
 
-    if ($access === '') {
-        return array('error' => array('не выбран уровень — отметьте его или впишите свои флаги'));
+    if ($access === '' && $adminAccess === '') {
+        return array('error' => array('не выбрано ничего: ни уровень, ни админка, ни свои флаги'));
     }
-    $bad = check_admin($who, $password, $access, $account);
+    // Проверяем СКЛЕЕННЫЕ буквы: представление zm_admins отдаёт серверу
+    // access и admin_access одной строкой, и придираться надо к ней же.
+    $bad = check_admin($who, $password, $access . $adminAccess, $account);
     if ($bad) {
         return array('error' => $bad);
     }
@@ -136,10 +219,10 @@ function grant_privilege($opts)
         // то, как игрок пишется сейчас.
         q(
             'UPDATE zm_privileges
-                SET auth = ?, password = ?, access = ?, account = ?, tier = ?, has_admin = ?,
-                    expires_at = ?, source = ?, order_id = ?, note = ?
+                SET auth = ?, password = ?, access = ?, account = ?, tier = ?, admin_access = ?,
+                    expires_at = ?, admin_until = ?, source = ?, order_id = ?, note = ?
               WHERE id = ?',
-            array($who, $password, $access, $account, $tierId, $admin ? 1 : 0, $expires,
+            array($who, $password, $access, $account, $tierId, $adminAccess, $expires, $adminUntil,
                   isset($opts['source']) ? $opts['source'] : 'admin',
                   isset($opts['order_id']) ? $opts['order_id'] : null,
                   isset($opts['note']) ? (string)$opts['note'] : '',
@@ -148,9 +231,10 @@ function grant_privilege($opts)
     } else {
         q(
             'INSERT INTO zm_privileges
-                (auth, auth_key, password, access, account, tier, has_admin, granted_at, expires_at, source, order_id, note)
-             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)',
-            array($who, $key, $password, $access, $account, $tierId, $admin ? 1 : 0, $expires,
+                (auth, auth_key, password, access, account, tier, admin_access,
+                 granted_at, expires_at, admin_until, source, order_id, note)
+             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)',
+            array($who, $key, $password, $access, $account, $tierId, $adminAccess, $expires, $adminUntil,
                   isset($opts['source']) ? $opts['source'] : 'admin',
                   isset($opts['order_id']) ? $opts['order_id'] : null,
                   isset($opts['note']) ? (string)$opts['note'] : '')
@@ -170,7 +254,8 @@ function grant_privilege($opts)
 
     audit($existing ? 'extend' : 'grant', $who, array(
         'access' => $access, 'account' => $account, 'expires' => $expires,
-        'tier' => $tierId, 'admin' => $admin, 'days' => $days,
+        'tier' => $tierId, 'days' => $days,
+        'admin_access' => $adminAccess, 'admin_until' => $adminUntil, 'admin_days' => $adminDays,
         'source' => isset($opts['source']) ? $opts['source'] : 'admin',
     ));
 
@@ -181,17 +266,18 @@ function grant_privilege($opts)
     $reload = empty($opts['defer_reload']) ? rcon_reload_admins() : null;
 
     return array(
-        'auth'     => $who,
-        'password' => $password,
-        'access'   => $access,
-        'account'  => $account,
-        'tier'     => $tier,
-        'admin'    => $admin,
-        'expires'  => $expires,
-        'replaced' => $existing ? array('access' => $existing['access'], 'expires' => $existing['expires_at']) : null,
-        'notice'   => $twin === null ? null : sprintf(
+        'auth'         => $who,
+        'password'     => $password,
+        'access'       => $access,
+        'account'      => $account,
+        'tier'         => $tier,
+        'expires'      => $expires,
+        'admin_access' => $adminAccess,
+        'admin_until'  => $adminUntil,
+        'replaced'     => $existing ? array('access' => $existing['access'], 'expires' => $existing['expires_at']) : null,
+        'notice'       => $twin === null ? null : sprintf(
             'Рядом есть запись «%s» — сервер считает её ДРУГИМ игроком: регистр русских букв он не сглаживает.', $twin),
-        'reload'   => $reload,
+        'reload'       => $reload,
     );
 }
 
@@ -205,7 +291,12 @@ function revoke_privilege($who)
         return array('error' => array(sprintf('записи «%s» больше нет — список уже обновился', $who)));
     }
     q('DELETE FROM zm_privileges WHERE id = ?', array($row['id']));
-    audit('revoke', $who, array('access' => $row['access'], 'expires' => $row['expires_at']));
+    // В журнал идут обе половины: снятие уносит и купленную админку, а «у меня
+    // забрали админку» — спор, который решается только записью о том, что было.
+    audit('revoke', $who, array(
+        'access' => $row['access'], 'expires' => $row['expires_at'],
+        'admin_access' => $row['admin_access'], 'admin_until' => $row['admin_until'],
+    ));
 
     return array('ok' => true, 'reload' => rcon_reload_admins());
 }
@@ -219,30 +310,60 @@ function revoke_privilege($who)
  */
 function privileges_list()
 {
-    $rows = q_all('SELECT * FROM zm_privileges ORDER BY (expires_at IS NULL) DESC, expires_at DESC, auth ASC');
+    /*
+     * Сортировка смотрит на ОБЕ жизни записи. Сортируй мы по одному
+     * expires_at, запись с протухшим уровнем, но живой купленной админкой
+     * улетела бы в самый хвост, к мёртвым, — а она действующая, и владелец
+     * должен видеть её среди живых. Сверху вечные (вечное хоть с одной
+     * стороны), дальше — по позднейшему из двух сроков.
+     *
+     * Пустые буквы выбрасывают свою сторону из счёта: срок без букв ничего не
+     * значит (см. extend_term).
+     */
+    $rows = q_all(
+        "SELECT * FROM zm_privileges
+          ORDER BY ((`access` <> ''       AND `expires_at`  IS NULL)
+                 OR (`admin_access` <> '' AND `admin_until` IS NULL)) DESC,
+                   GREATEST(
+                     IF(`access` <> '',       COALESCE(`expires_at`,  '9999-12-31'), '1000-01-01'),
+                     IF(`admin_access` <> '', COALESCE(`admin_until`, '9999-12-31'), '1000-01-01')
+                   ) DESC,
+                   `auth` ASC"
+    );
     $now = db_now();
     $tiers = tiers();
     $out = array();
 
     foreach ($rows as $r) {
-        $tier = tier_of($r['access']);
-        $expired = $r['expires_at'] !== null && $r['expires_at'] <= $now;
+        $tier     = tier_of($r['access']);
+        $hasTier  = $r['access'] !== '';
+        $hasAdmin = $r['admin_access'] !== '';
+        // expired и left — про УРОВЕНЬ; у админки свои четыре поля рядом.
+        $expired      = $hasTier && $r['expires_at'] !== null && $r['expires_at'] <= $now;
+        $adminExpired = $hasAdmin && $r['admin_until'] !== null && $r['admin_until'] <= $now;
+        $left         = ($hasTier && $r['expires_at'] !== null) ? days_left($now, $r['expires_at']) : null;
+        $adminLeft    = ($hasAdmin && $r['admin_until'] !== null) ? days_left($now, $r['admin_until']) : null;
+
         $out[] = array(
-            'auth'     => $r['auth'],
-            'password' => $r['password'],
-            'access'   => $r['access'],
-            'account'  => $r['account'],
-            'tier'     => $tier,
-            'tierName' => $tier >= 0 ? $tiers[$tier]['name'] : null,
-            'admin'    => (bool)$r['has_admin'],
-            'full'     => $r['access'] === ALL_FLAGS,
-            'nopass'   => strpos($r['account'], 'e') !== false,
-            'steamid'  => strpos($r['account'], 'c') !== false,
-            'expires'  => $r['expires_at'],
-            'expired'  => $expired,
-            'left'     => $r['expires_at'] === null ? null : days_left($now, $r['expires_at']),
-            'source'   => $r['source'],
-            'note'     => $r['note'],
+            'auth'         => $r['auth'],
+            'password'     => $r['password'],
+            'access'       => $r['access'],
+            'account'      => $r['account'],
+            'tier'         => $tier,
+            'tierName'     => $tier >= 0 ? $tiers[$tier]['name'] : null,
+            'admin'        => $hasAdmin,
+            'full'         => $r['access'] === ALL_FLAGS,
+            'nopass'       => strpos($r['account'], 'e') !== false,
+            'steamid'      => strpos($r['account'], 'c') !== false,
+            'expires'      => $hasTier ? $r['expires_at'] : null,
+            'expired'      => $expired,
+            'left'         => $left,
+            'adminUntil'   => $hasAdmin ? $r['admin_until'] : null,
+            'adminLeft'    => $adminLeft,
+            'adminExpired' => $adminExpired,
+            'adminForever' => $hasAdmin && $r['admin_until'] === null,
+            'source'       => $r['source'],
+            'note'         => $r['note'],
         );
     }
     return $out;
@@ -342,23 +463,46 @@ function apply_order($orderId)
             return array('ok' => true, 'packs' => (int)$order['packs'], 'order' => $order);
         }
 
-        $tier = tier_by_id($order['tier']);
-        if ($tier === null) {
-            $pdo->rollBack();
-            return array('error' => array('в заказе неизвестный уровень: ' . $order['tier']));
-        }
+        if ($order['kind'] === 'admin') {
+            // Админка — отдельный товар со своим сроком. tier_index = null
+            // здесь обязателен: без него слияние тронуло бы уровень, а покупка
+            // админки не смеет ни повысить его, ни сдвинуть его срок.
+            $res = grant_privilege(array(
+                'who'          => $order['auth'],
+                'is_steamid'   => (bool)$order['is_steamid'],
+                'tier_index'   => null,
+                'with_admin'   => true,
+                'admin_days'   => (int)$order['days'],
+                'source'       => 'order',
+                'order_id'     => (int)$order['id'],
+                'note'         => sprintf('заказ №%d', $order['id']),
+                'defer_reload' => true,
+            ));
+        } else {
+            $tier = tier_by_id($order['tier']);
+            if ($tier === null) {
+                $pdo->rollBack();
+                return array('error' => array('в заказе неизвестный уровень: ' . $order['tier']));
+            }
 
-        $res = grant_privilege(array(
-            'who'         => $order['auth'],
-            'is_steamid'  => (bool)$order['is_steamid'],
-            'tier_index'  => $tier['index'],
-            'with_admin'  => (bool)$order['with_admin'],
-            'days'        => (int)$order['days'],
-            'source'      => 'order',
-            'order_id'    => (int)$order['id'],
-            'note'        => sprintf('заказ №%d', $order['id']),
-            'defer_reload' => true,
-        ));
+            // with_admin не передаём вовсе: в заказе на уровень админки больше
+            // нет — у неё свой заказ, со своим сроком.
+            //
+            // ⚠️ Если на день перехода остался НЕприменённый старый заказ с
+            // with_admin = 1, админку по нему придётся выдать руками: срок
+            // админки в нём не записан, а угадывать за игрока нельзя. Такие
+            // заказы видно в панели — она показывает этот столбец, когда он 1.
+            $res = grant_privilege(array(
+                'who'          => $order['auth'],
+                'is_steamid'   => (bool)$order['is_steamid'],
+                'tier_index'   => $tier['index'],
+                'days'         => (int)$order['days'],
+                'source'       => 'order',
+                'order_id'     => (int)$order['id'],
+                'note'         => sprintf('заказ №%d', $order['id']),
+                'defer_reload' => true,
+            ));
+        }
 
         if (isset($res['error'])) {
             q('UPDATE zm_orders SET status = ?, error = ? WHERE id = ?',

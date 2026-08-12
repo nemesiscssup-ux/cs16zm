@@ -38,18 +38,25 @@ function panel_state()
           ORDER BY id DESC LIMIT 200"
     );
 
+    /*
+     * Сроки админки идут отдельным списком, а не одной ценой, как раньше:
+     * админка стала товаром со своим сроком, и панель рисует ей свой ряд
+     * кнопок. Цены панели для выдачи не нужны, но отдаются рядом — чтобы
+     * владелец видел в одном ответе то же, что видит покупатель в витрине.
+     */
     return array(
-        'admins'     => privileges_list(),
-        'orders'     => $orders,
-        'tiers'      => $tiers,
-        'terms'      => terms(),
-        'allFlags'   => ALL_FLAGS,
-        'adminFlags' => ADMIN_FLAGS,
-        'adminPrice' => ADMIN_PRICE,
-        'me'         => current_admin()['login'],
-        'payment'    => array('provider' => payment_provider(), 'ready' => payment_ready()),
-        'rcon'       => array('enabled' => (bool)cfg('rcon.enabled'), 'host' => (string)cfg('rcon.host')),
-        'now'        => db_now(),
+        'admins'      => privileges_list(),
+        'orders'      => $orders,
+        'tiers'       => $tiers,
+        'terms'       => terms(),
+        'allFlags'    => ALL_FLAGS,
+        'adminFlags'  => ADMIN_FLAGS,
+        'adminTerms'  => admin_terms(),
+        'adminPrices' => admin_prices(),
+        'me'          => current_admin()['login'],
+        'payment'     => array('provider' => payment_provider(), 'ready' => payment_ready()),
+        'rcon'        => array('enabled' => (bool)cfg('rcon.enabled'), 'host' => (string)cfg('rcon.host')),
+        'now'         => db_now(),
     );
 }
 
@@ -94,13 +101,28 @@ if ($do === 'grant') {
         $custom = ALL_FLAGS;
     }
 
+    /*
+     * Сроков два, и приходят они порознь: days — срок уровня, adminDays — срок
+     * админки. Склеить их здесь нельзя, они и в базе лежат в разных столбцах.
+     *
+     * ⚠️ Пропавший adminDays подменяем сроком уровня, а НЕ нулём: ноль в
+     * grant_privilege означает «навсегда», и вкладка, открытая до этой правки,
+     * раздавала бы вечную админку по недосмотру.
+     */
+    $days      = isset($body['days']) ? (int)$body['days'] : 0;
+    $adminDays = isset($body['adminDays']) ? (int)$body['adminDays'] : $days;
+
     $res = grant_privilege(array(
         'who'          => isset($body['who']) ? $body['who'] : '',
         'is_steamid'   => isset($body['kind']) && $body['kind'] === 'steamid',
         'tier_index'   => ($custom !== '' || !isset($body['tier']) || $body['tier'] === null) ? null : (int)$body['tier'],
+        // ⚠️ Своими флагами админка НЕ дополняется: набор своих букв на то и
+        // свой, чтобы в него не подмешивалось лишнее. Правило старое, и
+        // отдельный срок админки его не отменяет.
         'with_admin'   => $custom === '' && !empty($body['admin']),
         'custom_flags' => $custom,
-        'days'         => isset($body['days']) ? (int)$body['days'] : 0,
+        'days'         => $days,
+        'admin_days'   => $adminDays,
         'no_password'  => isset($body['passwordMode']) && $body['passwordMode'] === 'none',
         'password'     => (isset($body['passwordMode']) && $body['passwordMode'] === 'manual' && isset($body['password']))
                           ? (string)$body['password'] : '',

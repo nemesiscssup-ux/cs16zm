@@ -410,13 +410,22 @@ input[type="text"]:focus { border-color: var(--amber); outline: none; }
 
 .mv-box {
   position: relative;
-  width: min(760px, 100%);
+  width: min(1120px, 100%);
   max-height: calc(100vh - 40px);
   overflow: auto;
   background: var(--panel);
   border: 1px solid var(--rule);
   padding: 22px;
 }
+
+/*
+ * Широким окно делает только правая колонка. Когда её нет (окно открыто из
+ * магазина — одна сцена, ничего больше), растягивать нечего: модель от лишней
+ * ширины виднее не станет, а текст описания расползётся на весь монитор.
+ * Браузер без :has() просто пропустит правило и покажет широкое окно — это
+ * некрасиво, но не сломано.
+ */
+.mv-box:has(.mv-cols.solo) { width: min(760px, 100%); }
 
 .mv-close {
   position: absolute;
@@ -437,9 +446,45 @@ input[type="text"]:focus { border-color: var(--amber); outline: none; }
   padding-right: 40px;
 }
 
+/*
+ * Слева — сцена, описание и полоса выбора; справа — рассказ о товаре, который
+ * страница кладёт туда своим <template> (см. data-panel в viewer.js). Правая
+ * колонка нарочно в пикселях, а не в долях: тянуться должна сцена, а строка
+ * текста, растянутая на полмонитора, перестаёт читаться — глаз теряет начало
+ * следующей строки.
+ */
+.mv-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  margin-top: 18px;
+}
+@media (min-width: 900px) {
+  .mv-cols { grid-template-columns: minmax(0, 1fr) 380px; gap: 26px; }
+}
+
+/* Колонка ровно одна: либо модели нет (админка), либо правой колонки нет. */
+.mv-cols.solo { grid-template-columns: minmax(0, 1fr); }
+
+/* ⚠️ minmax(0, 1fr) в сетке и min-width здесь — про одно и то же: без них
+ * широкая строка внутри (длинный адрес, таблица прав) раздувает колонку сверх
+ * отведённого, и окно вместе со страницей уезжает вбок. */
+.mv-left, .mv-side { min-width: 0; }
+
+.mv-side {
+  background: var(--void);
+  border: 1px solid var(--rule);
+  padding: 18px;
+}
+
+/* ⚠️ Обе колонки прячет viewer.js атрибутом hidden, а он слабее любого своего
+ * display в стиле. Пока display здесь не объявлен, hidden работает и сам, но
+ * достаточно кому-то дописать display: flex — и колонка перестанет прятаться
+ * молча, без единой ошибки. Поэтому прячем явно. */
+.mv-left[hidden], .mv-side[hidden] { display: none; }
+
 .mv-stage {
   position: relative;
-  margin-top: 16px;
   height: min(56vh, 460px);
   background:
     radial-gradient(120% 90% at 50% 12%, rgba(255, 194, 31, .08), transparent 70%),
@@ -482,27 +527,213 @@ input[type="text"]:focus { border-color: var(--amber); outline: none; }
 .mv-pick:hover { border-color: var(--dim); color: var(--bone); }
 .mv-pick.on { border-color: var(--amber); color: var(--amber); }
 
+/* ── правая колонка окна ──────────────────────────────────────────────────── */
+
+.mv-h {
+  margin: 20px 0 9px;
+  font: 600 11px/1 var(--display);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.mv-h:first-child { margin-top: 0; }
+
+.mv-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 12.5px/1.7 var(--mono);
+  color: var(--dim);
+}
+.mv-list li { padding: 3px 0; }
+.mv-list b { color: var(--bone); font-weight: 400; }
+
+/*
+ * Права админки страница показывает таблицей «буква — название — что делает».
+ * Своего класса у таблицы нет: ловим её по месту, чтобы шаблон уровня и шаблон
+ * админки не разъехались в оформлении, когда их правят порознь.
+ */
+.mv-side table { width: 100%; border-collapse: collapse; font: 12.5px/1.5 var(--mono); }
+.mv-side th,
+.mv-side td {
+  text-align: left;
+  vertical-align: top;
+  padding: 6px 10px 6px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--dim);
+  font-weight: 400;
+}
+.mv-side tr:last-child th,
+.mv-side tr:last-child td { border-bottom: 0; }
+.mv-side td:first-child { color: var(--amber); white-space: nowrap; }
+.mv-side th { color: #5c6152; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+
+/*
+ * Строки «срок — цена». Каким тегом их набрали, стиль знать не должен: и <div>,
+ * и <li> здесь одинаково законны, а перечень цен, рассыпавшийся из-за выбора
+ * тега, — самая обидная поломка на витрине.
+ */
+.mv-prices { margin: 0; padding: 0; list-style: none; font: 13px/1 var(--mono); }
+.mv-prices > div,
+.mv-prices > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  color: var(--dim);
+}
+.mv-prices > :first-child { border-top: 0; }
+.mv-prices b { color: var(--amber); font-weight: 400; font-size: 15px; }
+
+.mv-buy {
+  margin-top: 18px;
+  width: 100%;
+  background: var(--amber);
+  border: 0;
+  color: var(--void);
+  font: 600 13px/1 var(--display);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 16px;
+  cursor: pointer;
+}
+.mv-buy:hover { background: #ffd45c; }
+
 /* Пока окно открыто, страница под ним не едет. */
 body.mv-open { overflow: hidden; }
-/* ═══ плитки со свойствами ══════════════════════════════════════════════════ */
 
-.facts {
+/* ═══ витрина уровней и админка ═════════════════════════════════════════════
+ *
+ * Карточка кликабельна целиком: щелчок по ней открывает окно просмотра со всем
+ * рассказом о товаре. Поэтому и курсор, и :hover, и :focus-visible живут на
+ * самой карточке, а «Подробнее» внутри — надпись, а не вложенная кнопка. Живая
+ * кнопка внутри кликабельной карточки означала бы два обработчика на один
+ * щелчок и остановку Tab дважды на одном и том же месте.
+ */
+
+.tier-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
 }
-.fact { background: var(--panel); padding: 22px 20px; }
-.fact-num { font: 600 40px/1 var(--display); color: var(--amber); }
-.fact-name {
-  font: 600 11px/1 var(--display);
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin: 8px 0 12px;
+
+.tier-card {
+  background: var(--panel);
+  padding: 20px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
 }
-.fact p { margin: 0; font-size: 13.5px; color: var(--dim); }
+.tier-card:hover { background: var(--raise); }
+.tier-card.on { background: var(--raise); box-shadow: inset 0 3px 0 var(--amber); }
+
+.tier-card .nm {
+  font: 600 21px/1 var(--display);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.tier-card.on .nm { color: var(--amber); }
+.tier-card .blurb { font-size: 13.5px; color: var(--dim); }
+
+/*
+ * Картинку кладёт model_img() — голый <img>, без своего окна просмотра: щёлкать
+ * по нему будет карточка снаружи. Своего класса у него нет, поэтому правило
+ * берёт его по тегу.
+ */
+.tier-card img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background:
+    radial-gradient(120% 90% at 50% 15%, rgba(255, 194, 31, .07), transparent 70%),
+    var(--void);
+  border: 1px solid var(--rule);
+}
+
+/* Верхний уровень выделен так же, как в магазине наборов, — метка в углу. */
+.tier-card.top::after {
+  content: "верхний";
+  position: absolute;
+  top: 0; right: 0;
+  background: var(--amber);
+  color: var(--void);
+  font: 600 10px/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 8px;
+}
+
+/*
+ * Админка — отдельный товар со своим сроком, и карточка у неё одна во всю
+ * ширину. В сетку уровней её класть нельзя: рядом с пятью уровнями она
+ * читалась бы шестым, а покупается она независимо.
+ */
+.admin-card {
+  margin-top: 22px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 26px;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+.admin-card:hover { background: var(--raise); }
+.admin-card .nm {
+  font: 600 22px/1 var(--display);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.admin-card .blurb { margin: 7px 0 0; font-size: 13.5px; color: var(--dim); max-width: 64ch; }
+
+/* Общий .price рассчитан на столбец: там он прижат вниз и отчёркнут сверху.
+   В строке админки и то и другое лишнее. */
+.admin-card .price { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* «Подробнее» — надпись, а не кнопка (см. выше). Если её всё же набрали
+   тегом <button>, она обязана выглядеть так же: разнобой на одной витрине
+   заметнее, чем лишний тег. */
+.tier-card .more,
+.tier-card button,
+.admin-card .more,
+.admin-card button {
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--dim);
+  font: 11px/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+/* В карточке уровня надпись стоит в столбце и тянулась бы во всю его ширину.
+   В строке админки её ширина задана содержимым, и растягивать нечего. */
+.tier-card .more,
+.tier-card button { align-self: flex-start; }
+
+.tier-card:hover .more,
+.tier-card:hover button,
+.tier-card:focus-visible .more,
+.tier-card:focus-visible button,
+.admin-card:hover .more,
+.admin-card:hover button,
+.admin-card:focus-visible .more,
+.admin-card:focus-visible button { color: var(--amber); border-color: var(--amber); }
+
+/* Обводка уходит внутрь: карточки стоят вплотную, сетка между ними в один
+   пиксель, и общая обводка с отступом наружу залезла бы на соседку. */
+.tier-card:focus-visible,
+.admin-card:focus-visible { outline-offset: -2px; }
 
 /* ═══ краткие карточки уровней на главной ═══════════════════════════════════ */
 
@@ -530,6 +761,68 @@ body.mv-open { overflow: hidden; }
 }
 .tier-brief:hover .nm { color: var(--amber); }
 .price-small { margin-top: auto; font: 600 16px/1 var(--display); color: var(--amber); }
+
+/* ═══ новости ═══════════════════════════════════════════════════════════════
+ *
+ * Одна лента на две страницы: на главной пять свежих, в архиве по десять.
+ * Оформление у них общее намеренно — новость, выглядящая на главной иначе, чем
+ * в архиве, читается как две разные новости.
+ */
+
+.news { margin-top: 16px; border: 1px solid var(--rule); }
+
+.news-item { padding: 20px 22px; border-bottom: 1px solid var(--rule); }
+.news-item:last-child { border-bottom: 0; }
+
+.news-date {
+  font: 11px/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.news-title {
+  margin: 9px 0 0;
+  font: 600 19px/1.25 var(--display);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.news-title a { color: inherit; text-decoration: none; }
+.news-title a:hover { color: var(--amber); }
+
+/* Внутри — только то, что собрала news_html(): абзацы и ссылки, больше там
+   ничего не бывает. Ширина ограничена: это единственная проза на сайте, и на
+   широком мониторе строка в полтораста знаков не читается. */
+.news-body { margin-top: 11px; max-width: 78ch; }
+.news-body p { margin: 0 0 11px; font-size: 14.5px; color: var(--bone); }
+.news-body p:last-child { margin-bottom: 0; }
+
+/* ⚠️ Адрес в теле новости приходит от человека и бывает длиннее колонки: без
+ * разрыва он растягивает всю ленту, и страница едет вбок вместе с шапкой. */
+.news-body a { word-break: break-word; }
+
+/* ── постраничная разбивка ────────────────────────────────────────────────── */
+
+.pager { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 22px; }
+.pager a,
+.pager .on {
+  min-width: 42px;
+  text-align: center;
+  border: 1px solid var(--rule);
+  padding: 11px 13px;
+  font: 12px/1 var(--mono);
+  letter-spacing: .08em;
+  color: var(--dim);
+  text-decoration: none;
+}
+/* ⚠️ :not(.on) здесь не украшение: текущую страницу разметка вправе оставить
+ * ссылкой, и без этого запрета наведение на неё перебивало бы жёлтую заливку
+ * ниже — правило со ссылкой и наведением весит больше правила с одним классом. */
+.pager a:not(.on):hover { color: var(--bone); border-color: var(--dim); }
+
+/* Текущая страница — не ссылка, поэтому правило берёт её по классу, а не по
+   тегу: страница вольна набрать её и <span>, и <a>. */
+.pager .on { background: var(--amber); border-color: var(--amber); color: var(--void); font-weight: 600; }
 
 /* ═══ сетка вещей (ножи, оружие) ════════════════════════════════════════════ */
 

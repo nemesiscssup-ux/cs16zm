@@ -1,6 +1,10 @@
 <?php
 /**
- * Оформление заказа — и привилегии, и кредитов.
+ * Оформление заказа: уровень привилегии, админка или кредиты.
+ *
+ * Заказ — ровно один товар. Админка продаётся отдельно от уровня и своим
+ * сроком: пока флажок «плюс админка» жил внутри заказа уровня, в одной строке
+ * оказывались два разных срока, и выдавать их приходилось на глаз.
  *
  * Заказ создаётся ТОЛЬКО по POST: заведённый переходом по ссылке заводился бы
  * и поисковым роботом, и любым, кто перешлёт ссылку в чат. После создания —
@@ -21,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $errors = array();
 
-$kindOf   = (isset($_POST['kind_of']) && $_POST['kind_of'] === 'packs') ? 'packs' : 'tier';
+// Вид товара берём только из перечня: незнакомое значение — это «tier», а не
+// повод искать цену там, где её нет.
+$kindOf = isset($_POST['kind_of']) ? (string)$_POST['kind_of'] : '';
+if ($kindOf !== 'packs' && $kindOf !== 'admin') {
+    $kindOf = 'tier';
+}
 $kind     = isset($_POST['kind']) && $_POST['kind'] === 'steamid' ? 'steamid' : 'nick';
 $auth     = post_str('auth', 64);
 $contact  = post_str('contact', 190);
@@ -29,14 +38,12 @@ $contact  = post_str('contact', 190);
 $tier = null;
 $tierId = null;
 $days = 0;
-$withAdmin = false;
 $packsTotal = 0;
 $amount = null;
 
 if ($kindOf === 'tier') {
-    $tierId    = post_str('tier', 16);
-    $days      = isset($_POST['days']) ? (int)$_POST['days'] : -1;
-    $withAdmin = !empty($_POST['with_admin']);
+    $tierId = post_str('tier', 16);
+    $days   = isset($_POST['days']) ? (int)$_POST['days'] : -1;
 
     $tier = tier_by_id($tierId);
     if ($tier === null || !$tier['sold']) {
@@ -45,10 +52,24 @@ if ($kindOf === 'tier') {
     if (!array_key_exists($days, terms())) {
         $errors[] = 'такого срока нет';
     }
-    $amount = price_of($tierId, $days, $withAdmin);
+    $amount = price_of($tierId, $days);
     if ($amount === null && !$errors) {
         $errors[] = 'для этого уровня такой срок не продаётся';
     }
+} elseif ($kindOf === 'admin') {
+    // Сроки и цены админки — свои: admin_terms() и admin_price_of(). Взять
+    // здесь terms() и цены уровня значило бы продать срок, которого у админки
+    // нет, а выдать его потом всё равно нечем.
+    $days = isset($_POST['days']) ? (int)$_POST['days'] : -1;
+    if (!array_key_exists($days, admin_terms())) {
+        $errors[] = 'такого срока нет';
+    }
+    $amount = admin_price_of($days);
+    if ($amount === null && !$errors) {
+        $errors[] = 'админка на такой срок не продаётся';
+    }
+    // Ключ покупателя тут такой же, как у уровня, — ник ЛИБО SteamID. Админка
+    // ложится в базу и ждёт игрока сама, живым на сервере он быть не обязан.
 } else {
     // Кредиты покупаются только по нику: команда сервера обращается к живому
     // игроку, а живого игрока он знает по имени, а не по SteamID.
@@ -99,10 +120,16 @@ if (!$errors) {
             $auth,
             $kind === 'steamid' ? 1 : 0,
             $kindOf,
+            // Уровень есть только у заказа уровня: у админки и у кредитов в
+            // этом столбце NULL, а не пустая строка — пустую строку потом не
+            // отличить от «уровень стёрли».
             $kindOf === 'tier' ? $tierId : null,
             $days,
             $packsTotal,
-            $withAdmin ? 1 : 0,
+            // with_admin остался ради истории старых заказов, где админка шла
+            // довеском к уровню. Новые заказы всегда пишут сюда 0: админка
+            // теперь отдельный заказ со своим kind и своим сроком.
+            0,
             $amount,
             (string)cfg('payment.freekassa.currency', 'RUB'),
             $contact,
@@ -147,7 +174,9 @@ page_head($errors ? 'Заказ не принят' : 'Заказ №' . (int)$or
       <?php if ($kindOf === 'tier'): ?>
         <div class="row"><span>уровень</span><b><?= h($tier['name']) ?></b></div>
         <div class="row"><span>срок</span><b><?= h(terms()[$days]['label']) ?></b></div>
-        <?php if ($withAdmin): ?><div class="row"><span>админка</span><b>да</b></div><?php endif; ?>
+      <?php elseif ($kindOf === 'admin'): ?>
+        <div class="row"><span>товар</span><b>админка</b></div>
+        <div class="row"><span>срок</span><b><?= h(admin_terms()[$days]['label']) ?></b></div>
       <?php else: ?>
         <div class="row"><span>кредитов</span><b><?= (int)$packsTotal ?></b></div>
       <?php endif; ?>
@@ -166,6 +195,17 @@ page_head($errors ? 'Заказ не принят' : 'Заказ №' . (int)$or
       </div>
     <?php endif; ?>
 
+    <?php
+    // Что именно мы сделаем после оплаты — по строке на вид заказа. Считаем
+    // заранее, а не тройным «?:» внутри разметки: вложенные тернарники в PHP 7.4
+    // требуют скобок и читаются как загадка.
+    $promise = 'выдадим привилегию';
+    if ($kindOf === 'packs') {
+        $promise = 'начислим кредиты';
+    } elseif ($kindOf === 'admin') {
+        $promise = 'выдадим админку';
+    }
+    ?>
     <ol class="steps">
       <li>Переведите <b><?= (int)$amount ?> ₽</b><?= empty($site['manual_requisites']) ? ' по реквизитам, которые мы пришлём' : '' ?>.</li>
       <li>В комментарии к переводу укажите <b>номер заказа <?= (int)$order['id'] ?></b> — по нему мы вас найдём.</li>
@@ -174,7 +214,12 @@ page_head($errors ? 'Заказ не принят' : 'Заказ №' . (int)$or
         if (!empty($site['contact']['vk'])) { $l[] = '<a href="' . h($site['contact']['vk']) . '">ВКонтакте</a>'; }
         if (!empty($site['contact']['telegram'])) { $l[] = '<a href="' . h($site['contact']['telegram']) . '">Telegram</a>'; }
         echo $l ? ' (' . implode(' или ', $l) . ')' : '';
-      ?>, и мы <?= $kindOf === 'packs' ? 'начислим кредиты' : 'выдадим привилегию' ?>.</li>
+      ?>, и мы <?= $promise ?>.</li>
+      <?php /*
+        Шаг «зайдите на сервер» — только для кредитов: их начисляет команда
+        живому игроку, и без него начислять некому. Уровень и админка ложатся
+        в базу и ждут игрока сами — звать его на сервер незачем.
+      */ ?>
       <?php if ($kindOf === 'packs'): ?>
         <li><b>Зайдите на сервер</b> и оставайтесь на нём — кредиты начисляются игроку, который сейчас в игре.</li>
       <?php endif; ?>

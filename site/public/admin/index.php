@@ -210,8 +210,9 @@ input[type="text"]:focus { border-color: var(--amber); outline: none; }
 
 /* ── таблицы ─────────────────────────────────────────────────────────────── */
 
-/* Таблица уезжает внутри своей рамки, а не растягивает всю страницу: шесть
-   колонок моноширинного текста шире узкого экрана. */
+/* Таблица уезжает внутри своей рамки, а не растягивает всю страницу: колонок
+   моноширинного текста больше, чем влезает в узкий экран, — а в ростере их
+   стало на одну больше с тех пор, как у админки завёлся свой срок. */
 #roster, #orders { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; margin-top: 14px; min-width: 560px; }
 th {
@@ -267,6 +268,7 @@ td:last-child, th:last-child { padding-right: 0; text-align: right; white-space:
   </div>
   <div style="text-align:right">
     <div class="subhead" style="margin-bottom:8px"><?= h($me['login']) ?></div>
+    <a class="ghost" href="news.php">Новости</a>
     <button class="ghost" id="ping" type="button">Проверить сервер</button>
     <a class="ghost" href="logout.php">Выйти</a>
   </div>
@@ -292,6 +294,13 @@ td:last-child, th:last-child { padding-right: 0; text-align: right; white-space:
       <span class="label">Уровень</span>
       <div class="tiers" id="tiers"></div>
       <label class="check"><input type="checkbox" id="admin-sold"> Плюс админка — кик, бан до 30 минут, чат и админ-меню</label>
+      <!-- Свой переключатель срока, а не общий с уровнем: у админки отдельный
+           столбец в базе и отдельный срок, и продление уровня его не двигает.
+           Спрятан, пока флажок не нажат: пустой ряд кнопок без товара сбивает. -->
+      <div class="field" id="admin-days-wrap" hidden>
+        <div class="seg" id="admin-days"></div>
+        <p class="hint">Срок админки считается отдельно от срока уровня — их и покупают порознь.</p>
+      </div>
       <label class="check"><input type="checkbox" id="admin-full"> Плюс ПОЛНЫЕ права — всё, включая rcon (только себе)</label>
       <label class="check"><input type="checkbox" id="custom-on"> Свои флаги, без уровней</label>
       <div class="field" id="custom-wrap" hidden>
@@ -303,6 +312,7 @@ td:last-child, th:last-child { padding-right: 0; text-align: right; white-space:
       <span class="label">На какой срок</span>
       <div class="seg" id="days"></div>
       <p class="hint">
+        Это срок <b>уровня</b>: у админки свой, рядом с её флажком.
         Срок считает база, а не плагин: просроченная запись просто перестаёт попадать серверу.
         Выдача поверх действующей <b>прибавляет</b> срок к остатку.
       </p>
@@ -362,13 +372,20 @@ const $ = id => document.getElementById(id);
 
 let TIERS = [];
 let TERMS = {};
+let ADMIN_TERMS = {};
 let ALL = "abcdefghijklmnopqrstu";
 let ADMIN = "bcdeiju";
 let ADMINS = [];
 let NOW = null;
 let reveal = new Set();
 
-const form = { kind: "nick", tier: null, admin: false, full: false, custom: false, pwMode: "auto", days: 30 };
+// days — срок уровня, adminDays — срок админки. Два поля, а не одно: сроки
+// живут в базе порознь, и склеить их здесь значило бы врать форме о том, что
+// запишется.
+const form = {
+  kind: "nick", tier: null, admin: false, full: false, custom: false,
+  pwMode: "auto", days: 30, adminDays: 30,
+};
 
 // ── связь с панелью ─────────────────────────────────────────────────────────
 
@@ -398,6 +415,17 @@ async function api(action, body) {
 
 // ── что уйдёт в базу ────────────────────────────────────────────────────────
 
+/*
+ * Буквы, которые увидит игровой сервер. Админка складывается с уровнем прямо
+ * здесь — и полоса ниже подсвечивает её буквы, как раньше, — но в базу они
+ * ложатся ОТДЕЛЬНЫМ столбцом admin_access со своим сроком admin_until, а
+ * обратно в одну строку их склеивает представление zm_admins.
+ *
+ * ⚠️ Значит, полоса и строка «Что запишется» — правда ровно до первого
+ * истечения: представление подставляет каждую половину, только пока жив её
+ * срок. Кончится срок уровня — сервер увидит одни буквы админки, кончится срок
+ * админки — одни буквы уровня. Читать полосу как «так будет всегда» нельзя.
+ */
 function flags() {
   if (form.custom) return ($("custom").value || "").replace(/\s+/g, "").toLowerCase();
   if (form.full) return ALL;
@@ -438,19 +466,30 @@ const slot = (cls, value, name) => value
   ? `<span class="${cls}">"${esc(value)}"</span>`
   : `<span class="hole">"${name}"</span>`;
 
+const termWords = days => (days === 0 ? "навсегда" : `на ${days} дней`);
+
 function drawGives() {
   const t = form.custom || form.full ? highestTier(flags()) : form.tier;
-  const term = form.days === 0 ? "навсегда" : `на ${form.days} дней`;
+  const rows = [];
+
   if (t === null || t < 0) {
-    $("gives").innerHTML = `<li>Уровень не выбран — игрок останется обычным бойцом.</li>`;
-    return;
+    rows.push(`<li>Уровень не выбран — игрок останется обычным бойцом.</li>`);
+  } else {
+    const v = TIERS[t];
+    rows.push(
+      `<li>уровень <b>${v.name}</b>, <b>${termWords(form.days)}</b></li>`,
+      `<li><b>+${v.packs}</b> кредитов и <b>+${v.health}</b> HP на каждом возрождении</li>`,
+      `<li>ножей <b>${v.knives}</b> из 11, облик <b>${v.skin}</b></li>`);
   }
-  const v = TIERS[t];
-  $("gives").innerHTML = [
-    `<li>уровень <b>${v.name}</b>, <b>${term}</b></li>`,
-    `<li><b>+${v.packs}</b> кредитов и <b>+${v.health}</b> HP на каждом возрождении</li>`,
-    `<li>ножей <b>${v.knives}</b> из 11, облик <b>${v.skin}</b></li>`,
-  ].join("");
+
+  // Админка идёт отдельной строкой со своим сроком, а не приписывается к
+  // уровню: в базе это отдельный столбец, и продление уровня его не двигает.
+  // Свои флаги и полные права её не подмешивают — там она и не выдаётся.
+  if (form.admin && !form.custom && !form.full) {
+    rows.push(`<li>админка — кик, бан, чат и меню, <b>${termWords(form.adminDays)}</b></li>`);
+  }
+
+  $("gives").innerHTML = rows.join("");
 }
 
 const highestTier = f => TIERS.reduce((best, t, i) => f.includes(t.letter) ? i : best, -1);
@@ -495,8 +534,15 @@ seg("pw-mode", d => {
 });
 
 seg("days", d => { form.days = Number(d.days); refresh(); });
+seg("admin-days", d => { form.adminDays = Number(d.days); refresh(); });
 
-$("admin-sold").addEventListener("change", e => { form.admin = e.target.checked; refresh(); });
+$("admin-sold").addEventListener("change", e => {
+  form.admin = e.target.checked;
+  // Ряд сроков появляется только вместе с товаром: кнопки над ненажатым
+  // флажком читаются как второй срок уровня, и по ним жмут не глядя.
+  $("admin-days-wrap").hidden = !form.admin;
+  refresh();
+});
 $("admin-full").addEventListener("change", e => { form.full = e.target.checked; refresh(); });
 
 $("custom-on").addEventListener("change", e => {
@@ -538,6 +584,7 @@ async function grant() {
       flagsMode: form.custom ? "custom" : "tier",
       customFlags: $("custom").value,
       days: form.days,
+      adminDays: form.adminDays,
       passwordMode: form.pwMode,
       password: $("password").value,
     });
@@ -595,9 +642,21 @@ function showResult(out) {
     rows.push(pair("Игрок вводит в консоли один раз", `setinfo _pw "${out.password}"`));
   }
 
-  const until = out.expires
-    ? `до <b>${esc(out.expires.slice(0, 16).replace("T", " "))}</b>`
+  /*
+   * Сроков в ответе два, и печатаются они порознь — по одной строке на живую
+   * половину записи.
+   *
+   * ⚠️ Пустой уровень с expires === null — это НЕ «навсегда», это «уровня нет
+   * вовсе»: так выглядит запись, где куплена одна админка. Печатать здесь одно
+   * «навсегда» значило бы пообещать вечный уровень, которого не выдавали.
+   */
+  const untilWords = ts => ts
+    ? `до <b>${esc(String(ts).slice(0, 16).replace("T", " "))}</b>`
     : "<b>навсегда</b>";
+
+  const got = [];
+  if (out.access) got.push(`${t < 0 ? "свои флаги" : esc(TIERS[t].name)}, ${untilWords(out.expires)}`);
+  if (out.admin_access) got.push(`админка, ${untilWords(out.admin_until)}`);
 
   // Про rcon говорим ровно то, что произошло: молчаливое «выдано» при
   // недоступном сервере — это обещание, которого панель не сдержала.
@@ -608,7 +667,7 @@ function showResult(out) {
 
   $("result").innerHTML = `
     <span class="label">Выдано${out.replaced ? " · срок продлён" : ""}</span>
-    <p style="margin:0;font:15px/1.4 var(--mono);color:var(--bone)">${esc(out.auth)} — ${t < 0 ? "свои флаги" : esc(TIERS[t].name)}, ${until}</p>
+    <p style="margin:0;font:15px/1.4 var(--mono);color:var(--bone)">${esc(out.auth)} — ${got.join("; ")}</p>
     ${out.replaced ? `<p class="hint">Было: «${esc(out.replaced.access)}»${out.replaced.expires ? ` до ${esc(String(out.replaced.expires).slice(0, 16))}` : " навсегда"}.</p>` : ""}
     ${out.notice ? `<p class="warn">${esc(out.notice)}</p>` : ""}
     ${rows.join("")}
@@ -644,6 +703,7 @@ async function copy(btn) {
 function apply(state) {
   TIERS = state.tiers;
   TERMS = state.terms;
+  ADMIN_TERMS = state.adminTerms || state.terms;
   ALL = state.allFlags;
   ADMIN = state.adminFlags || ADMIN;
   ADMINS = state.admins;
@@ -664,9 +724,17 @@ function apply(state) {
   refresh();
 }
 
+// Оба ряда сроков рисует одна функция: таблицы у них разные (terms() и
+// admin_terms()), а разметка обязана быть одна — иначе две почти одинаковые
+// строки кода разойдутся первой же правкой вида кнопок.
+function drawTermRow(id, list, picked) {
+  $(id).innerHTML = Object.entries(list).map(([days, t]) =>
+    `<button type="button" data-days="${days}" aria-pressed="${Number(days) === picked}">${esc(t.label)}</button>`).join("");
+}
+
 function drawTerms() {
-  $("days").innerHTML = Object.entries(TERMS).map(([days, t]) =>
-    `<button type="button" data-days="${days}" aria-pressed="${Number(days) === form.days}">${esc(t.label)}</button>`).join("");
+  drawTermRow("days", TERMS, form.days);
+  drawTermRow("admin-days", ADMIN_TERMS, form.adminDays);
 }
 
 function drawTiers() {
@@ -683,15 +751,29 @@ function drawTiers() {
     r.addEventListener("change", () => { form.tier = Number(r.value); refresh(); }));
 }
 
-// Срок словами. «Осталось 0 дней» звучит как «уже нет», поэтому у последних
-// суток свой текст.
-function termCell(a) {
-  if (a.expires === null) return `<span class="term forever">навсегда</span>`;
-  if (a.expired) return `<span class="term dead">истекла</span>`;
-  if (a.left <= 0) return `<span class="term soon">сегодня</span>`;
-  if (a.left <= 3) return `<span class="term soon">${a.left} дн.</span>`;
-  return `<span class="term">${a.left} дн.</span>`;
+/*
+ * Срок словами. «Осталось 0 дней» звучит как «уже нет», поэтому у последних
+ * суток свой текст.
+ *
+ * Одна функция на оба столбца ростера — уровня и админки: сроки у них разные и
+ * считаются в базе порознь, а читаться должны одинаково. Разъедься счёт на
+ * «жёлтое» — и «3 дн.» в одной колонке значило бы не то же, что в другой.
+ *
+ * ⚠️ Первый аргумент — есть ли сторона ВООБЩЕ. Без него пусто и «навсегда»
+ * сливаются: у записи без уровня expires тоже null, и колонка врала бы про
+ * вечный уровень там, где куплена одна админка.
+ */
+function termCell(has, forever, expired, left) {
+  if (!has) return `<span class="term">—</span>`;
+  if (forever) return `<span class="term forever">навсегда</span>`;
+  if (expired) return `<span class="term dead">истекла</span>`;
+  if (left <= 0) return `<span class="term soon">сегодня</span>`;
+  if (left <= 3) return `<span class="term soon">${left} дн.</span>`;
+  return `<span class="term">${left} дн.</span>`;
 }
+
+const tierTerm  = a => termCell(a.access !== "", a.expires === null, a.expired, a.left);
+const adminTerm = a => termCell(a.admin, a.adminForever, a.adminExpired, a.adminLeft);
 
 function drawRoster(admins) {
   if (!admins.length) {
@@ -699,20 +781,24 @@ function drawRoster(admins) {
     return;
   }
   const rows = admins.map(a => {
+    // Значок говорит только про УРОВЕНЬ: про админку рядом стоит своя колонка
+    // со своим сроком, и приписка «+админка» здесь была бы вторым, менее
+    // точным ответом на тот же вопрос.
     const badge = a.full
       ? `<span class="badge full">полные права</span>`
-      : a.admin && a.tier < 0
-      ? `<span class="badge">админка</span>`
-      : a.tierName ? `<span class="badge${a.expired ? " dead" : ""}">${esc(a.tierName)}</span>` : `<span class="badge none">свои флаги</span>`;
+      : a.tierName
+      ? `<span class="badge${a.expired ? " dead" : ""}">${esc(a.tierName)}</span>`
+      : a.access !== "" ? `<span class="badge none">свои флаги</span>` : `<span class="badge none">нет</span>`;
     const pw = a.nopass
       ? `<span class="pw-cell no" title="вход без пароля">без пароля</span>`
       : `<span class="pw-cell" data-pw="${esc(a.auth)}">${reveal.has(a.auth) ? esc(a.password) : "••••••••"}</span>`;
     return `<tr>
       <td class="who">${esc(a.auth)}${a.steamid ? ` <span style="color:var(--dim)">· SteamID</span>` : ""}</td>
-      <td>${badge}${a.admin && a.tier >= 0 ? ` <span class="badge">+админка</span>` : ""}</td>
+      <td>${badge}</td>
       <td style="color:var(--amber)">${esc(a.access)}</td>
       <td>${pw}</td>
-      <td>${termCell(a)}</td>
+      <td>${tierTerm(a)}</td>
+      <td>${adminTerm(a)}</td>
       <td>
         <button class="act" data-edit="${esc(a.auth)}">изменить</button>
         <button class="act kill" data-kill="${esc(a.auth)}">снять</button>
@@ -720,8 +806,12 @@ function drawRoster(admins) {
     </tr>`;
   }).join("");
 
+  // «Срок уровня» и «Админка» — два разных срока, и заголовки названы так,
+  // чтобы это было видно без пояснений: одинокое «Срок» рядом со второй датой
+  // читается как срок всей записи, а такого срока больше нет.
   $("roster").innerHTML = `<table>
-    <thead><tr><th>Кто</th><th>Уровень</th><th>Флаги</th><th>Пароль</th><th>Срок</th><th></th></tr></thead>
+    <thead><tr><th>Кто</th><th>Уровень</th><th>Флаги</th><th>Пароль</th>
+      <th>Срок уровня</th><th>Админка</th><th></th></tr></thead>
     <tbody>${rows}</tbody></table>`;
 
   $("roster").querySelectorAll("[data-kill]").forEach(b => b.addEventListener("click", () => revoke(b.dataset.kill)));
@@ -743,11 +833,17 @@ function drawOrders(orders) {
     const state = o.status === "paid" ? `<span class="badge money">оплачен, не выдан</span>`
       : o.status === "failed" ? `<span class="badge dead">сбой</span>`
       : `<span class="badge wait">ждёт оплаты</span>`;
-    // Кредиты и привилегия — разные покупки, и в одной колонке их путать
-    // нельзя: у кредитов нет ни уровня, ни срока.
+    // Три товара, и путать их в одной колонке нельзя: у кредитов нет ни
+    // уровня, ни срока, а у админки есть срок, но нет уровня.
+    //
+    // ⚠️ « + админка» у заказа уровня — это ИСТОРИЯ: так продавалось раньше,
+    // одним заказом с общим сроком. Новые заказы with_admin не пишут, но
+    // старые лежат в базе, и прочитаться они должны как были куплены.
     const packs = o.kind === "packs";
     const what = packs
       ? `<span style="color:var(--amber)">${Number(o.packs)} кредитов</span>`
+      : o.kind === "admin"
+      ? `<span style="color:var(--amber)">админка</span>`
       : `${esc(o.tier || "")}${Number(o.with_admin) ? " + админка" : ""}`;
     const term = packs ? "—" : (Number(o.days) === 0 ? "навсегда" : `${o.days} дн.`);
     return `<tr>
@@ -786,6 +882,9 @@ function fill(a) {
   form.admin = !!a.admin;
   $("admin-full").checked = a.full;
   $("admin-sold").checked = form.admin;
+  // Ряд сроков админки идёт за флажком и здесь: иначе он останется спрятанным
+  // у записи, где админка уже есть, и продлить её было бы нечем.
+  $("admin-days-wrap").hidden = !form.admin;
   form.tier = a.tier < 0 ? null : a.tier;
   form.custom = a.tier < 0 && !a.full && !form.admin;
   $("custom-on").checked = form.custom;

@@ -15,6 +15,13 @@
  * Заодно страница стала легче: раньше при прокрутке подтягивалось до пяти
  * мегабайт геометрии, теперь — только то, что открыли.
  *
+ * Окно двухколоночное: слева живая модель, справа — клон <template> со
+ * страницы (на него указывает data-panel). Про сам этот кусок просмотрщик не
+ * знает ничего: он его только вставляет, а щелчки по кнопкам внутри всплывают
+ * до document, где их ловит страница. Поэтому здесь нет и не должно появиться
+ * ни цен, ни уровней, ни магазина. Каждая из колонок необязательна: без модели
+ * прячется левая, без шаблона — правая.
+ *
  * Система координат у GoldSrc своя: X вперёд, Y влево, Z вверх. Поэтому
  * вращаем вокруг Z, а не вокруг Y, как принято почти везде.
  */
@@ -308,7 +315,8 @@
   // ── окно просмотра ────────────────────────────────────────────────────────
 
   const Modal = {
-    root: null, stage: null, title: null, desc: null, picks: null, note: null,
+    root: null, cols: null, left: null, side: null,
+    stage: null, title: null, desc: null, picks: null, note: null,
 
     build() {
       if (this.root) return;
@@ -320,13 +328,21 @@
         '<div class="mv-box" role="dialog" aria-modal="true">' +
           '<button class="mv-close" type="button" aria-label="Закрыть">×</button>' +
           '<div class="mv-title"></div>' +
-          '<div class="mv-stage"><canvas></canvas><div class="mv-note"></div></div>' +
-          '<div class="mv-desc"></div>' +
-          '<div class="mv-picks"></div>' +
+          '<div class="mv-cols">' +
+            '<div class="mv-left">' +
+              '<div class="mv-stage"><canvas></canvas><div class="mv-note"></div></div>' +
+              '<div class="mv-desc"></div>' +
+              '<div class="mv-picks"></div>' +
+            '</div>' +
+            '<div class="mv-side"></div>' +
+          '</div>' +
         '</div>';
       document.body.appendChild(root);
 
       this.root = root;
+      this.cols = root.querySelector(".mv-cols");
+      this.left = root.querySelector(".mv-left");
+      this.side = root.querySelector(".mv-side");
       this.stage = root.querySelector(".mv-stage");
       this.title = root.querySelector(".mv-title");
       this.desc = root.querySelector(".mv-desc");
@@ -335,6 +351,13 @@
 
       root.querySelector(".mv-back").addEventListener("click", () => this.close());
       root.querySelector(".mv-close").addEventListener("click", () => this.close());
+      // Любой элемент с data-mv-close закрывает окно — этим пользуются кнопки
+      // из правой колонки («Выбрать этот уровень»). Всплытие мы намеренно не
+      // останавливаем: тот же щелчок должен дойти до document, где страница
+      // сама решит, что он значит. Просмотрщику знать это не положено.
+      root.addEventListener("click", e => {
+        if (e.target.closest && e.target.closest("[data-mv-close]")) this.close();
+      });
       document.addEventListener("keydown", e => {
         if (e.key === "Escape" && !root.hidden) this.close();
       });
@@ -378,12 +401,49 @@
       }, { passive: false });
     },
 
+    /*
+     * Правая колонка — клон содержимого <template id="…"> со страницы.
+     *
+     * ⚠️ Клонируем при КАЖДОМ открытии, а не один раз при сборке окна. Внутри
+     * клона живут кнопки, и страница вправе с ним что угодно делать; вставь мы
+     * сам узел шаблона или клон «навсегда» — второе открытие показало бы то,
+     * что осталось после первого. Клон живёт ровно один показ.
+     *
+     * Возвращает, вышло ли из этого хоть что-то: пустой или отсутствующий
+     * шаблон — это окно без правой колонки.
+     */
+    fillSide(id) {
+      this.side.innerHTML = "";
+      const tpl = id ? document.getElementById(id) : null;
+      if (tpl && tpl.content) this.side.appendChild(tpl.content.cloneNode(true));
+      const has = !!this.side.firstChild;
+      this.side.hidden = !has;
+      return has;
+    },
+
     open(card) {
       this.build();
-      const items = this.itemsOf(card);
+      const id = card.dataset.model || "";
+      const side = this.fillSide(card.dataset.panel || "");
+
+      // Класс solo — когда второй колонки просто нет, хоть левой, хоть правой.
+      this.left.hidden = !id;
+      this.cols.classList.toggle("solo", !id || !side);
+
+      // Заголовок ставим здесь, а не только в show(): у окна без модели
+      // show() не позовётся вовсе, а название ему всё равно нужно.
+      this.title.textContent = card.dataset.title || "";
       this.root.hidden = false;
       document.body.classList.add("mv-open");
 
+      /*
+       * ⚠️ Без data-model сцену не поднимаем ВОВСЕ. Stage.init() завёл бы
+       * контекст WebGL на странице, где ни одной модели может не быть (у
+       * админки её нет), — и отнял бы его у чужой вкладки просто так.
+       */
+      if (!id) return;
+
+      const items = this.itemsOf(card);
       const canvas = this.stage.querySelector("canvas");
       let ok = true;
       try {
@@ -457,7 +517,9 @@
   // ── запуск ────────────────────────────────────────────────────────────────
 
   function boot() {
-    const cards = [].slice.call(document.querySelectorAll("[data-model]"));
+    // Окно открывает и то, у чего есть модель, и то, у чего есть только
+    // правая колонка (карточка админки): смотреть там нечего, читать — есть.
+    const cards = [].slice.call(document.querySelectorAll("[data-model], [data-panel]"));
     if (!cards.length) return;
 
     cards.forEach(card => {

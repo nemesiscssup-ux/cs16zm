@@ -1,10 +1,20 @@
 <?php
 /**
- * Привилегии: что даёт каждый уровень, как выглядит его облик и какие ножи он
- * открывает — плюс форма заказа.
+ * Привилегии: витрина уровней, подробности в окне и форма заказа.
  *
- * Страница ничего не пишет в базу. Заказ создаёт buy.php, и делает это по POST:
- * заказ, который заводится переходом по ссылке, заведёт и поисковый робот.
+ * Страница отвечает на один вопрос — «что я получу за деньги», — и отвечает
+ * дважды, на разной глубине. Витрина показывает только название, облик и цену:
+ * пробежать глазами четыре уровня должно быть делом секунды. Всё остальное —
+ * ножи, класс зомби, числа, цены по срокам — лежит в окне, которое открывается
+ * щелчком по карточке.
+ *
+ * ⚠️ ТАК СДЕЛАНО ПОТОМУ, ЧТО РАНЬШЕ БЫЛО НАОБОРОТ. Страница вываливала сразу
+ * всё: четыре карточки с перечнями, потом восемь ножей с моделями, потом
+ * четыре класса зомби с четырьмя числами каждый. Прочесть это целиком нельзя,
+ * а выбрать по такому — тем более.
+ *
+ * Заказ страница не создаёт: его создаёт buy.php, и делает это по POST. Заказ,
+ * который заводится переходом по ссылке, заведёт и поисковый робот.
  */
 
 require __DIR__ . '/_boot.php';
@@ -15,10 +25,14 @@ send_security_headers();
 $tiers = array_values(array_filter(tiers(), function ($t) {
     return $t['sold'];
 }));
-$terms = terms();
+$terms       = terms();
+$adminTerms  = admin_terms();
+$adminPrices = admin_prices();
 
-// Цены отдаём на страницу разом: пересчёт при каждом щелчке должен быть
-// мгновенным, а ходить за ним на сервер — значит показывать пустое место.
+/*
+ * Цены отдаём на страницу разом: пересчёт при каждом щелчке должен быть
+ * мгновенным, а ходить за ним на сервер — значит показывать пустое место.
+ */
 $priceTable = array();
 foreach ($tiers as $t) {
     $priceTable[$t['id']] = $t['prices'];
@@ -30,19 +44,15 @@ foreach ($tiers as $t) {
  * и так есть у каждого, этот ответ только размывают.
  */
 $byTier = array();
+$classByTier = array();
 foreach ($tiers as $t) {
     $byTier[$t['id']] = array();
+    $classByTier[$t['id']] = array();
 }
 foreach (catalog_knives() as $k) {
     if ($k['tier'] !== null && isset($byTier[$k['tier']])) {
         $byTier[$k['tier']][] = $k;
     }
-}
-
-// Классы зомби — так же по уровням и так же накопительно.
-$classByTier = array();
-foreach ($tiers as $t) {
-    $classByTier[$t['id']] = array();
 }
 foreach (catalog_classes() as $c) {
     if (isset($classByTier[$c['tier']])) {
@@ -51,8 +61,17 @@ foreach (catalog_classes() as $c) {
 }
 
 /*
- * Что можно покрутить из карточки уровня: сам облик, ножи и классы зомби ЭТОГО
- * уровня и всех младших — уровни накопительные, и игрок получает всё сразу.
+ * Что можно покрутить из карточки уровня. Список накопительный — ровно как
+ * права: уровни включают все младшие, и игрок получает всё сразу.
+ *
+ * Первым в окне идёт облик САМОГО уровня (он приходит через data-model), а в
+ * стопку складывается всё прочее: ножи и классы этого уровня и всех младших,
+ * плюс облики младших.
+ *
+ * ⚠️ Облики младших уровней появились здесь только сейчас, и это не украшение:
+ * zp_skins в allowed() проверяет бит флага, а флаги накопительные — значит
+ * Фараон действительно может надеть форму VIP. Раньше об этом на сайте не
+ * говорилось нигде, и покрутить их было негде.
  */
 $lookAt = array();
 $stack = array();
@@ -64,12 +83,49 @@ foreach ($tiers as $t) {
     }
     foreach ($classByTier[$t['id']] as $c) {
         $stack[] = array(
-            'id' => $c['model'],
+            'id'   => $c['model'],
             'name' => 'Зомби: ' . $c['name'],
             'desc' => $c['ability'] . ' (' . $c['key'] . ') — ' . $c['desc'],
         );
     }
+
+    // Снимок делаем ДО того, как в стопку ляжет собственный облик уровня:
+    // он показывается первым и в стопке был бы вторым же изображением.
     $lookAt[$t['id']] = $stack;
+
+    $skin = catalog_tier_skin($t['id']);
+    if ($skin) {
+        $stack[] = array(
+            'id'   => $skin['model'],
+            'name' => 'Облик «' . $skin['name'] . '»',
+            'desc' => $skin['desc'],
+        );
+    }
+}
+
+/** Скорость класса в процентах от обычного зомби: 240 — его скорость в моде. */
+function speed_gain($speed)
+{
+    $d = (int)round(((int)$speed - 240) / 240 * 100);
+    return $d ? ' (' . ($d > 0 ? '+' : '') . $d . '%)' : '';
+}
+
+/**
+ * Таблица сроков — списком пар, а не словарём.
+ *
+ * ⚠️ Порядок сроков ЗНАЧИМ и хрупок: у terms() ключи числовые (30, 90 и 0 —
+ * «навсегда»), а JavaScript в объекте раскладывает числовые ключи по
+ * возрастанию, что бы ни прислал PHP. Отдай мы словарь — «навсегда» встало бы
+ * первым. Здесь порядок задан положением в массиве, и переставить его молча
+ * уже нечему.
+ */
+function term_list($terms)
+{
+    $out = array();
+    foreach ($terms as $days => $t) {
+        $out[] = array('days' => (int)$days, 'label' => $t['label']);
+    }
+    return $out;
 }
 
 $manual = !payment_ready();
@@ -80,55 +136,84 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
 <section class="lead">
   <h1>Привилегии</h1>
   <p class="lead-text">
-    Каждый уровень — это кредиты и здоровье на каждом возрождении, свой облик и свои ножи.
-    Уровни <b>накопительные</b>: взяв Фараона, вы получаете и всё, что открывали младшие.
-    Модель под названием можно покрутить мышью.
+    Каждый уровень — это кредиты и здоровье на каждом возрождении, свой облик,
+    свои ножи и свой класс зомби. Уровни <b>накопительные</b>: взяв Фараона, вы
+    получаете и всё, что открывали младшие. Щёлкните по карточке — покажем
+    модель и распишем, что именно уровень даёт на сервере.
   </p>
 </section>
 
-<div class="shelf" id="shelf">
+<div class="tier-cards" id="shelf">
   <?php foreach ($tiers as $i => $t):
     $skin = catalog_tier_skin($t['id']); ?>
-    <label class="item<?= $i === count($tiers) - 1 ? ' top' : '' ?>" data-tier="<?= h($t['id']) ?>">
-      <input type="radio" name="tier" value="<?= h($t['id']) ?>" hidden<?= $i === 0 ? ' checked' : '' ?>>
+    <article class="tier-card<?= $i === count($tiers) - 1 ? ' top' : '' ?>"
+             role="button" tabindex="0"
+             data-tier="<?= h($t['id']) ?>"
+             aria-label="<?= h($t['name']) ?> — подробнее"
+             <?= viewer_attrs(
+                   $skin ? $skin['model'] : null,
+                   $skin ? $t['name'] . ' — облик «' . $skin['name'] . '»' : $t['name'],
+                   $skin ? $skin['desc'] : '',
+                   $lookAt[$t['id']],
+                   'tpl-tier-' . $t['id']
+                 ) ?>>
       <div class="nm"><?= h($t['name']) ?></div>
-      <?= viewer(
-            $skin ? $skin['model'] : null,
-            'viewer-tall',
-            $skin ? $t['name'] . ' — облик «' . $skin['name'] . '»' : $t['name'],
-            $skin ? $skin['desc'] : '',
-            $lookAt[$t['id']]
-          ) ?>
-      <div class="blurb"><?= h($t['blurb']) ?></div>
-      <ul class="perks">
-        <li><b>+<?= (int)$t['packs'] ?></b> кредитов за возрождение</li>
-        <li><b>+<?= (int)$t['health'] ?></b> здоровья</li>
-        <li>ножей <b><?= (int)$t['knives'] ?></b> из 11</li>
-        <?php if (!empty($classByTier[$t['id']])): ?>
-          <li>класс зомби <b><?= h(implode(', ', array_column($classByTier[$t['id']], 'name'))) ?></b></li>
-        <?php endif; ?>
-        <?php if ($skin): ?><li>облик <b><?= h($skin['name']) ?></b> — <?= h($skin['desc']) ?></li><?php endif; ?>
-      </ul>
-      <div class="price" data-price="<?= h($t['id']) ?>">
-        <?= (int)$t['prices'][30] ?> ₽ <span>/ 30 дней</span>
-      </div>
-    </label>
+      <?= model_img($skin ? $skin['model'] : null) ?>
+      <div class="price">от <?= (int)$t['prices'][30] ?> ₽</div>
+      <span class="more">Подробнее</span>
+    </article>
   <?php endforeach; ?>
 </div>
 
+<!--
+  Админка — отдельный товар со своим сроком, поэтому и карточка отдельная.
+  Модели у неё нет: окно откроется одной правой колонкой, и это законно —
+  смотреть там нечего, а читать есть что.
+-->
+<article class="admin-card" role="button" tabindex="0"
+         aria-label="Админка — подробнее"
+         <?= viewer_attrs(null, 'Админка', '', null, 'tpl-admin') ?>>
+  <div>
+    <div class="nm">Админка</div>
+    <p class="blurb">
+      Кик, бан, слей, админ-чат и меню — и место на забитом сервере.
+      Покупается сама по себе, уровень для неё не нужен, и докупить её можно
+      поверх уже действующей привилегии.
+    </p>
+  </div>
+  <div class="price">от <?= (int)$adminPrices[30] ?> ₽</div>
+  <span class="more">Подробнее</span>
+</article>
+
 <form class="order" method="post" action="buy.php" id="order">
-  <input type="hidden" name="kind_of" value="tier">
+  <input type="hidden" name="kind_of" id="f-what" value="tier">
   <input type="hidden" name="tier" id="f-tier" value="<?= h($tiers[0]['id']) ?>">
   <input type="hidden" name="days" id="f-days" value="30">
 
   <section class="card">
     <div class="group">
-      <span class="label">Срок</span>
-      <div class="seg" id="terms">
-        <?php $first = true; foreach ($terms as $days => $term): ?>
-          <button type="button" data-days="<?= (int)$days ?>" aria-pressed="<?= $first ? 'true' : 'false' ?>"><?= h($term['label']) ?></button>
-        <?php $first = false; endforeach; ?>
+      <span class="label">Что покупаем</span>
+      <div class="seg" id="what">
+        <button type="button" data-v="tier" aria-pressed="true">Уровень</button>
+        <button type="button" data-v="admin" aria-pressed="false">Админка</button>
       </div>
+    </div>
+
+    <div class="group" id="tier-group">
+      <span class="label">Уровень</span>
+      <div class="seg" id="tier-pick">
+        <?php foreach ($tiers as $i => $t): ?>
+          <button type="button" data-tier="<?= h($t['id']) ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>"><?= h($t['name']) ?></button>
+        <?php endforeach; ?>
+      </div>
+      <p class="hint">Подробности о каждом — в карточках выше.</p>
+    </div>
+
+    <div class="group">
+      <span class="label">Срок</span>
+      <!-- Кнопки сроков рисует JS: у уровня и у админки таблицы сроков свои, и
+           разъехаться они вправе в любой момент — см. admin_terms(). -->
+      <div class="seg" id="terms"></div>
     </div>
 
     <div class="group">
@@ -149,19 +234,6 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
     </div>
 
     <div class="group">
-      <span class="label">Дополнительно</span>
-      <label class="check">
-        <input type="checkbox" name="with_admin" id="f-admin" value="1">
-        <span>
-          Админка — кик, бан до 30 минут, чат и админ-меню. <b>+<?= (int)ADMIN_PRICE ?> ₽</b>
-          <span class="hint" style="display:block;margin-top:2px">
-            Полных прав она не даёт: ни смены карты, ни rcon, ни неприкосновенности.
-          </span>
-        </span>
-      </label>
-    </div>
-
-    <div class="group">
       <span class="label">Связь с вами</span>
       <div class="field">
         <input type="text" name="contact" maxlength="190" autocomplete="off"
@@ -175,9 +247,8 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
     <section class="card">
       <span class="label">Заказ</span>
       <div class="bill">
-        <div class="row"><span>уровень</span><b id="b-tier"><?= h($tiers[0]['name']) ?></b></div>
+        <div class="row"><span>товар</span><b id="b-what"><?= h($tiers[0]['name']) ?></b></div>
         <div class="row"><span>срок</span><b id="b-term">30 дней</b></div>
-        <div class="row" id="b-admin-row" hidden><span>админка</span><b>+<?= (int)ADMIN_PRICE ?> ₽</b></div>
         <div class="total">
           <span class="label" style="margin:0">итого</span>
           <span class="sum" id="b-sum"><?= (int)$tiers[0]['prices'][30] ?> ₽</span>
@@ -196,131 +267,243 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
       <p class="note">
         Покупка поверх действующей привилегии <b>прибавляет</b> срок к остатку,
         а уровень берёт наивысший. Потерять уже купленное доплатой невозможно.
+        У админки срок <b>свой</b>: она не двигает срок уровня, и уровень не двигает её.
       </p>
     </section>
   </aside>
 </form>
 
-<section class="section">
-  <h2>Ножи, которые открывает уровень</h2>
-  <p class="lead-text">
-    Нож выбирается в игровом меню и остаётся до конца раунда. Уровни
-    <b>накопительные</b>: взяв старший, вы получаете и все ножи младших.
-    Щёлкните по модели, чтобы покрутить её.
+<?php
+/*
+ * ── правые колонки окна ──────────────────────────────────────────────────
+ *
+ * По одному <template> на товар. Просмотрщик клонирует содержимое в .mv-side
+ * при каждом открытии и больше ничего о нём не знает — ни про цены, ни про
+ * уровни. Кнопка внутри помечена data-mv-close: окно закроется, а сам щелчок
+ * дойдёт до document, где его поймает обработчик внизу страницы.
+ */
+?>
+<?php foreach ($tiers as $t):
+  $skin = catalog_tier_skin($t['id']);
+  $knives = $byTier[$t['id']];
+  $classes = $classByTier[$t['id']]; ?>
+  <template id="tpl-tier-<?= h($t['id']) ?>">
+    <div class="mv-h">Что даёт на сервере</div>
+    <ul class="mv-list">
+      <li><b>+<?= (int)$t['packs'] ?></b> кредитов за каждое возрождение</li>
+      <li><b>+<?= (int)$t['health'] ?></b> здоровья</li>
+      <li>ножей <b><?= (int)$t['knives'] ?></b> из 11</li>
+      <?php if ($skin): ?>
+        <li>облик <b><?= h($skin['name']) ?></b> — <?= h($skin['desc']) ?>, надевается сам</li>
+      <?php endif; ?>
+    </ul>
+
+    <?php if ($knives): ?>
+      <div class="mv-h">Ножи, которые открывает уровень</div>
+      <ul class="mv-list">
+        <?php foreach ($knives as $k): ?>
+          <li><b><?= h($k['name']) ?></b> — <?= h($k['desc']) ?></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+
+    <?php foreach ($classes as $c): ?>
+      <div class="mv-h">Класс зомби «<?= h($c['name']) ?>»</div>
+      <ul class="mv-list">
+        <li><b><?= h($c['ability']) ?></b> (<?= h($c['key']) ?>) — <?= h($c['desc']) ?></li>
+        <li>здоровья <b><?= (int)$c['health'] ?></b></li>
+        <li>скорость <b><?= (int)$c['speed'] ?></b><?= h(speed_gain($c['speed'])) ?></li>
+        <li>прыжок <b><?= h(number_format(1 / $c['gravity'], 2)) ?>×</b></li>
+        <li>отбрасывание <b><?= h(number_format($c['knockback'], 2)) ?></b></li>
+      </ul>
+    <?php endforeach; ?>
+
+    <p class="hint">
+      Уровни накопительные: сюда добавляется всё, что открывают младшие.
+      Ножи и класс выбираются в игровом меню и держатся до конца раунда.
+    </p>
+
+    <div class="mv-h">Сколько стоит</div>
+    <ul class="mv-prices">
+      <?php foreach ($terms as $days => $term):
+        if (!isset($t['prices'][$days])) continue; ?>
+        <li><span><?= h($term['label']) ?></span><b><?= (int)$t['prices'][$days] ?> ₽</b></li>
+      <?php endforeach; ?>
+    </ul>
+
+    <button type="button" class="mv-buy" data-mv-close data-pick-tier="<?= h($t['id']) ?>">
+      Выбрать этот уровень
+    </button>
+  </template>
+<?php endforeach; ?>
+
+<template id="tpl-admin">
+  <div class="mv-h">Что даёт админка</div>
+  <?php
+  /*
+   * Буквы флагов (b, c, d…) покупателю не показываем: для него это шум. Они
+   * есть в admin_powers() и видны в панели выдачи — там их читает владелец, и
+   * там они к месту.
+   */
+  ?>
+  <table>
+    <?php foreach (admin_powers() as $p): ?>
+      <tr><td><?= h($p['name']) ?></td><td><?= h($p['desc']) ?></td></tr>
+    <?php endforeach; ?>
+  </table>
+
+  <div class="mv-h">Чего она не даёт</div>
+  <ul class="mv-list">
+    <?php foreach (admin_denied() as $d): ?>
+      <li><?= h($d) ?></li>
+    <?php endforeach; ?>
+  </ul>
+  <p class="hint">
+    Набор урезан нарочно: админка продаётся, то есть попадает к людям, которых
+    никто не проверял. Ничего, чем можно увести сервер, в ней нет.
   </p>
 
-  <?php foreach ($tiers as $t):
-    if (empty($byTier[$t['id']])) continue; ?>
-    <h3 class="group-title">С уровня <?= h($t['name']) ?></h3>
-    <div class="grid">
-      <?php foreach ($byTier[$t['id']] as $k): ?>
-        <article class="thing">
-          <?= viewer($k['model'], '', $k['name'], $k['desc']) ?>
-          <div class="thing-name"><?= h($k['name']) ?></div>
-          <div class="thing-desc"><?= h($k['desc']) ?></div>
-        </article>
-      <?php endforeach; ?>
-    </div>
-  <?php endforeach; ?>
-</section>
-
-<section class="section">
-  <h2>Классы зомби, которые открывает уровень</h2>
-  <p class="lead-text">
-    Класс выбирается в меню зомби и остаётся до конца раунда. У каждого своя
-    способность на отдельной клавише. Уровни <b>накопительные</b>: старший даёт
-    и классы младших.
+  <div class="mv-h">Сколько стоит</div>
+  <ul class="mv-prices">
+    <?php foreach ($adminTerms as $days => $term):
+      if (!isset($adminPrices[$days])) continue; ?>
+      <li><span><?= h($term['label']) ?></span><b><?= (int)$adminPrices[$days] ?> ₽</b></li>
+    <?php endforeach; ?>
+  </ul>
+  <p class="hint">
+    Срок у админки свой. Докупить её можно поверх действующей привилегии — срок
+    привилегии от этого не сдвинется, и наоборот.
   </p>
 
-  <?php foreach ($tiers as $t):
-    if (empty($classByTier[$t['id']])) continue; ?>
-    <h3 class="group-title">С уровня <?= h($t['name']) ?></h3>
-    <div class="grid">
-      <?php foreach ($classByTier[$t['id']] as $c): ?>
-        <article class="thing">
-          <?= viewer($c['model'], '', 'Зомби: ' . $c['name'],
-                $c['ability'] . ' (' . $c['key'] . ') — ' . $c['desc']) ?>
-          <div class="thing-name"><?= h($c['name']) ?></div>
-          <div class="thing-desc">
-            <?= h($c['ability']) ?> <b>(<?= h($c['key']) ?>)</b> — <?= h($c['desc']) ?>
-          </div>
-          <ul class="perks" style="margin-top:8px">
-            <li>здоровья <b><?= (int)$c['health'] ?></b></li>
-            <li>скорость <b><?= (int)$c['speed'] ?></b><?php
-              // 240 — скорость обычного зомби в моде; от неё и считаем разницу.
-              $d = (int)round(($c['speed'] - 240) / 240 * 100);
-              echo $d ? ' <span style="color:var(--dim)">(' . ($d > 0 ? '+' : '') . $d . '%)</span>' : '';
-            ?></li>
-            <li>прыжок <b><?= h(number_format(1 / $c['gravity'], 2)) ?>×</b></li>
-            <li>отбрасывание <b><?= h(number_format($c['knockback'], 2)) ?></b></li>
-          </ul>
-        </article>
-      <?php endforeach; ?>
-    </div>
-  <?php endforeach; ?>
-</section>
+  <button type="button" class="mv-buy" data-mv-close data-pick-admin="1">
+    Купить админку
+  </button>
+</template>
 
 <script>
 "use strict";
 
-const PRICES = <?= json_encode($priceTable, JSON_UNESCAPED_UNICODE) ?>;
-const NAMES = <?= json_encode(array_column($tiers, 'name', 'id'), JSON_UNESCAPED_UNICODE) ?>;
-const TERMS = <?= json_encode(array_map(function ($t) { return $t['label']; }, $terms), JSON_UNESCAPED_UNICODE) ?>;
-const ADMIN_PRICE = <?= (int)ADMIN_PRICE ?>;
+const PRICES       = <?= json_encode($priceTable, JSON_UNESCAPED_UNICODE) ?>;
+const NAMES        = <?= json_encode(array_column($tiers, 'name', 'id'), JSON_UNESCAPED_UNICODE) ?>;
+const ADMIN_PRICES = <?= json_encode($adminPrices, JSON_UNESCAPED_UNICODE) ?>;
+
+/*
+ * Сроки уезжают СПИСКОМ, а не словарём «дни → подпись».
+ *
+ * ⚠️ И это не вкусовщина. Ключи у сроков числовые (30, 90 и 0 — «навсегда»), а
+ * JavaScript в объекте всегда раскладывает числовые ключи по возрастанию,
+ * какой бы порядок ни прислал PHP. Словарь превратил бы «30 дней, 90 дней,
+ * навсегда» в «навсегда, 30 дней, 90 дней»: самый дорогой срок встал бы первым
+ * и выглядел бы выбранным по умолчанию. У массива такого своеволия нет.
+ */
+const TERMS       = <?= json_encode(term_list($terms), JSON_UNESCAPED_UNICODE) ?>;
+const ADMIN_TERMS = <?= json_encode(term_list($adminTerms), JSON_UNESCAPED_UNICODE) ?>;
 
 const $ = id => document.getElementById(id);
-const state = { tier: <?= json_encode($tiers[0]['id']) ?>, days: 30, admin: false };
+const state = { what: "tier", tier: <?= json_encode($tiers[0]['id']) ?>, days: 30 };
+
+const isAdmin    = () => state.what === "admin";
+const termTable  = () => (isAdmin() ? ADMIN_TERMS : TERMS);
+const priceTable = () => (isAdmin() ? ADMIN_PRICES : (PRICES[state.tier] || {}));
+const termLabel  = d => { const t = termTable().find(x => x.days === d); return t ? t.label : ""; };
+
+/*
+ * Кнопки сроков перерисовываем при каждой смене товара, а не прячем лишние.
+ * Сегодня admin_terms() возвращает то же, что terms(), но это решение владельца
+ * на один день: разойдутся — уровень и админка должны показать РАЗНЫЕ наборы,
+ * а не один общий, из которого половина ведёт к «такого срока нет».
+ */
+function drawTerms() {
+  const table = termTable();
+
+  // Выбранный срок мог исчезнуть вместе с таблицей — тогда берём первый.
+  if (!table.some(t => t.days === state.days)) {
+    state.days = table[0].days;
+  }
+
+  $("terms").innerHTML = table.map(t =>
+    `<button type="button" data-days="${t.days}" aria-pressed="${t.days === state.days}">${t.label}</button>`
+  ).join("");
+}
 
 function draw() {
-  const sum = (PRICES[state.tier][state.days] || 0) + (state.admin ? ADMIN_PRICE : 0);
+  const sum = priceTable()[state.days] || 0;
 
-  $("b-tier").textContent = NAMES[state.tier];
-  $("b-term").textContent = TERMS[state.days];
-  $("b-admin-row").hidden = !state.admin;
+  $("b-what").textContent = isAdmin() ? "Админка" : NAMES[state.tier];
+  $("b-term").textContent = termLabel(state.days);
   $("b-sum").textContent = sum + " ₽";
+
+  $("f-what").value = state.what;
   $("f-tier").value = state.tier;
   $("f-days").value = state.days;
 
-  // Цена на карточке следует за выбранным сроком: иначе витрина показывает
-  // одно, счёт другое, и это выглядит как обман.
-  for (const id in PRICES) {
-    const cell = document.querySelector(`[data-price="${id}"]`);
-    if (cell) cell.innerHTML = PRICES[id][state.days] + " ₽ <span>/ " + TERMS[state.days] + "</span>";
-  }
-  document.querySelectorAll(".item").forEach(el =>
-    el.classList.toggle("on", el.dataset.tier === state.tier));
+  // Уровень в заказе админки не участвует вовсе: buy.php запишет в этот
+  // столбец NULL, что бы ни лежало в скрытом поле.
+  $("tier-group").hidden = isAdmin();
+
+  document.querySelectorAll(".tier-card").forEach(el =>
+    el.classList.toggle("on", !isAdmin() && el.dataset.tier === state.tier));
+  [...$("tier-pick").children].forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.tier === state.tier)));
+  [...$("terms").children].forEach(b =>
+    b.setAttribute("aria-pressed", String(Number(b.dataset.days) === state.days)));
+  [...$("what").children].forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.v === state.what)));
 }
 
-// Щелчок по модели крутит её, а не выбирает уровень: иначе покрутить нельзя.
-document.querySelectorAll(".item .viewer").forEach(v =>
-  v.addEventListener("click", e => e.preventDefault()));
-
-$("shelf").addEventListener("change", e => {
-  if (e.target.name === "tier") { state.tier = e.target.value; draw(); }
-});
-
+/** Общий обработчик для полосок кнопок: нажатая помечается, остальные гаснут. */
 function seg(id, pick) {
   $(id).addEventListener("click", e => {
     const b = e.target.closest("button");
-    if (!b) return;
-    [...$(id).children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    if (!b || !$(id).contains(b)) return;
     pick(b.dataset);
   });
 }
 
+seg("what", d => { state.what = d.v; drawTerms(); draw(); });
+seg("tier-pick", d => { state.tier = d.tier; draw(); });
 seg("terms", d => { state.days = Number(d.days); draw(); });
 
 seg("kind", d => {
   $("f-kind").value = d.v;
   const steam = d.v === "steamid";
+  [...$("kind").children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === d.v)));
   $("f-auth").placeholder = steam ? "STEAM_0:1:12345" : "ник ровно как в игре";
   $("auth-hint").textContent = steam
     ? "SteamID не подделать чужим ником. Сервер пускает и без Steam — таким игрокам он выдаёт SteamID сам, и он может смениться."
     : "Ник должен совпадать буква в букву — сервер узнаёт игрока по нему. Вместе с привилегией вы получите пароль: без него ваш ник смог бы занять кто угодно.";
 });
 
-$("f-admin").addEventListener("change", e => { state.admin = e.target.checked; draw(); });
+/*
+ * Кнопки «Выбрать этот уровень» и «Купить админку» живут внутри <template>, и
+ * до открытия окна их в странице нет вовсе.
+ *
+ * ⚠️ ПОЭТОМУ ОБРАБОТЧИК ТОЛЬКО ДЕЛЕГИРОВАННЫЙ, НА document. Узлы внутри
+ * <template> неживые: обработчик, повешенный прямо на них, не сработает
+ * никогда, и это тихая поломка — разметка на месте, кнопка нажимается,
+ * а не происходит ничего.
+ *
+ * Просмотрщик к этому моменту уже закрыл окно (он видит data-mv-close), но
+ * всплытие не остановил — щелчок доходит сюда.
+ */
+document.addEventListener("click", e => {
+  const pick = e.target.closest("[data-pick-tier], [data-pick-admin]");
+  if (!pick) return;
 
+  if (pick.dataset.pickTier) {
+    state.what = "tier";
+    state.tier = pick.dataset.pickTier;
+  } else {
+    state.what = "admin";
+  }
+  drawTerms();
+  draw();
+
+  const smooth = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  $("order").scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+});
+
+drawTerms();
 draw();
 </script>
 
