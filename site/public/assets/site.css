@@ -8,10 +8,17 @@
  *
  *   * строка в чате «[Вспышка эпидемии] …» — её узнаёт тот, кто здесь играл,
  *     и не узнаёт никто больше;
- *   * меню Zombie Plague — нумерованный список, красные цифры, моноширинный
- *     шрифт. В игре по нему жмут цифры, и на сайте по нему тоже жмут цифры.
+ *   * сами модели сервера — они же стоят тенями по краям страницы;
+ *   * пульс, который проступает и гаснет, как отсвет от происходящего.
  *
  * Отсюда правило для правок: украшение, которого нет в игре, сюда не идёт.
+ *
+ * ⚠️ ЗДЕСЬ БЫЛО ЕЩЁ МЕНЮ ZOMBIE PLAGUE — нумерованный список с выбором по
+ * цифрам, как в моде. Задумка была верной по духу и неудачной на деле: список
+ * читается как перечень, а не как выбор, и про то, что цифры работают, надо
+ * было предупреждать словами. Заменено обычными кнопками, см. «выбор товара».
+ * Урок общий: цитата из игры хороша, пока она заодно и понятный орган
+ * управления, а не вместо него.
  *
  * ⚠️ ШРИФТЫ ТОЛЬКО СИСТЕМНЫЕ. Политика безопасности (см. send_security_headers)
  * запрещает любые чужие источники, и подключить шрифт со стороны нельзя —
@@ -99,13 +106,29 @@ body::after {
   z-index: 0;
 }
 
+/*
+ * Тени по краям — наши собственные зомби, отрисовки из site/public/models.
+ * Адреса подставляет PHP (см. page_head), потому что к ним нужен номер версии
+ * статики, а CSS про него не знает.
+ *
+ * ⚠️ Прозрачность .07 — не осторожность, а условие. Это ФОН: он должен
+ * узнаваться боковым зрением и не мешать читать. На .15 фигура начинает
+ * спорить с текстом, на .03 её нет вовсе. Обесцвечивание убирает у моделей
+ * их собственные цвета — иначе зелёная форма VIP по краю страницы тянула бы
+ * взгляд сильнее заголовка.
+ *
+ * Работает это только потому, что у отрисовок вырезан фон (см.
+ * site/tools/models-alpha.php). С прежней подложкой по краям стояли бы два
+ * тёмных прямоугольника.
+ */
 body::before {
   background:
-    linear-gradient(to right, rgba(10,12,14,.55), transparent 22%, transparent 78%, rgba(10,12,14,.55)),
-    var(--side-left)   left  center / auto 100% no-repeat,
-    var(--side-right)  right center / auto 100% no-repeat;
-  opacity: .5;
+    var(--side-left)  left  bottom / auto 76% no-repeat,
+    var(--side-right) right bottom / auto 76% no-repeat;
+  opacity: .07;
+  filter: grayscale(.8) contrast(1.1);
 }
+@media (max-width: 900px) { body::before { display: none; } }
 
 body::after {
   background-image:
@@ -297,97 +320,56 @@ code {
 }
 .chat-line .tag { color: var(--blood); }
 
-/* ── меню Zombie Plague ─────────────────────────────────────────────────────
+/* ── выбор товара ───────────────────────────────────────────────────────────
  *
- * ⚠️ ПОДПИСЬ ВСЕЙ СТРАНИЦЫ. В игре выбор делают так: всплывает список, слева
- * красные цифры, жмёшь цифру. Здесь то же самое, и цифры тоже работают —
- * обработчик висит на странице. Поэтому нумерация здесь не украшение: она
- * ЕСТЬ способ выбора, как и в игре.
+ * ⚠️ ЗДЕСЬ БЫЛО МЕНЮ ZOMBIE PLAGUE — нумерованный список, как в игре, с
+ * выбором по цифрам. Задумка была хороша на бумаге и не прижилась на деле:
+ * список читается как перечень, а не как выбор, а про то, что цифры работают,
+ * надо было отдельно писать — возможность, о которой приходится предупреждать,
+ * держится на честном слове. Владелец попросил обычные кнопки, и он прав:
+ * кнопка сама показывает, что на неё жмут.
  *
- * Из четырёх цветов мода (\r красный, \y жёлтый, \w белый, \d серый) взяты
- * три. Жёлтый выброшен сознательно: рядом с кровью он тянет страницу в
- * дешёвый неон, а без него язык меню остаётся узнаваемым.
+ * Клавиатура при этом не потерялась, а стала честнее: это настоящие <button>,
+ * по ним ходит Tab и работает Enter — без единой строки на обработчик.
  */
-/*
- * ⚠️ МЕНЮ ВЫХОДИТ ЗА ПОЛЯ КАРТОЧКИ, И ЭТО НАРОЧНО. Сначала оно было обычным
- * блоком со своей рамкой внутри .card — то есть коробка в коробке: две рамки
- * в трёх сантиметрах друг от друга, и взгляду не за что зацепиться. Теперь
- * отрицательные поля растягивают его во всю ширину карточки, а от рамки
- * осталась одна красная полоса слева — как у меню в игре, которое тоже не
- * коробка, а полоса у края экрана.
- *
- * 24px — это padding у .card. Разъедутся — меню вылезет за карточку или не
- * дотянет до края; править надо оба числа разом.
- */
-.zp-menu {
-  margin: 0 -24px;
-  background: var(--night);
-  border: 0;
-  border-left: 3px solid var(--blood);
-  padding: 16px 0 12px;
-  font: 14px/1 var(--mono);
+.pick {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 1px;
+  background: var(--seam);
+  border: 1px solid var(--seam);
 }
 
-/* 21 = 24 поля карточки минус 3 полосы: текст меню встаёт по той же
-   вертикали, что и остальные подписи формы. */
-.zp-head {
+.pick-btn {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px 16px;
-  flex-wrap: wrap;
-  padding: 0 21px 13px;
-  border-bottom: 1px solid var(--seam);
-  margin-bottom: 8px;
-}
-
-/* Строка-заголовок как у меню в игре: сверху имя, ниже пункты. */
-.zp-mod {
-  color: var(--bone);
-  font: 13px/1 var(--mono);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-/* ⚠️ Подсказка про цифры стоит ЗДЕСЬ, а не под меню. Возможность, о которой
-   сказали ниже списка, не существует: до неё не дочитывают. */
-.zp-keys { color: var(--ash); font: 11.5px/1.4 var(--mono); }
-
-.zp-items { margin: 0; padding: 0; list-style: none; }
-
-.zp-row {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  width: 100%;
-  padding: 11px 21px;
-  background: none;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 15px;
+  background: var(--crypt);
   border: 0;
-  color: var(--bone);
-  font: 14px/1.3 var(--mono);
-  text-align: left;
   cursor: pointer;
+  text-align: left;
+  transition: background .12s linear;
 }
-.zp-row:hover { background: var(--slab); }
-.zp-row .zp-num { color: var(--blood); width: 1.6em; flex: none; }
-.zp-row .zp-name { flex: 1; }
-.zp-row .zp-cost { color: var(--ash); white-space: nowrap; }
+.pick-btn:hover { background: var(--slab); }
 
-/* Выбранное — как курсор в консоли: красный блок слева и подсветка строки. */
-.zp-row[aria-pressed="true"] {
-  background: rgba(94,16,19,.34);
-  box-shadow: inset 3px 0 0 var(--blood);
+.pick-name {
+  font: 400 20px/.95 var(--scream);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--bone);
 }
-.zp-row[aria-pressed="true"] .zp-name { color: var(--blood); }
+.pick-cost { font: 12.5px/1 var(--mono); color: var(--ash); }
 
-.zp-sep { height: 1px; background: var(--seam); margin: 8px 21px; }
+/* Выбранное залито густым красным: под костью он читается (5.40), а рядом с
+   невыбранными его не спутать ни с наведением, ни с рамкой. */
+.pick-btn[aria-pressed="true"] { background: var(--gore); }
+.pick-btn[aria-pressed="true"] .pick-name,
+.pick-btn[aria-pressed="true"] .pick-cost { color: var(--bone); }
 
-.zp-foot {
-  padding: 12px 21px 0;
-  color: var(--ash);
-  font-size: 12.5px;
-}
-.zp-foot .zp-num { color: var(--clot); }
+/* Админка — не пятый уровень, а отдельный товар, и стоит она в своей строке
+   во всю ширину. В общем ряду её читали бы продолжением лестницы. */
+.pick-admin { grid-column: 1 / -1; flex-direction: row; align-items: baseline; justify-content: space-between; gap: 14px; }
 
 /* ── шапка главной ──────────────────────────────────────────────────────── */
 
@@ -549,6 +531,18 @@ code {
   transition: background .14s linear;
 }
 .admin-card:hover { background: var(--slab); }
+
+/*
+ * ⚠️ ТРИ ДОЛИ ЗАДАНЫ ЯВНО, И БЕЗ ЭТОГО ОНИ РАЗЪЕЗЖАЛИСЬ. При flex-wrap с
+ * justify-content: space-between браузер сам решает, кому расти и кто
+ * переносится, — и на средней ширине цена с кнопкой уезжали в разные концы
+ * пустой строки. Теперь растёт только текст, а цена и «Подробнее» держатся
+ * своего размера и своего края.
+ */
+.admin-card > div { flex: 1 1 320px; min-width: 0; }
+.admin-card .price { flex: none; }
+.admin-card .more { flex: none; align-self: center; }
+
 .admin-card .nm {
   font: 400 28px/.9 var(--scream);
   letter-spacing: .04em;
@@ -587,8 +581,7 @@ code {
 /* Внутри карточки надпись прижата влево и загорается вместе со всей карточкой,
    а не только когда мышь попала точно в неё. */
 .tier-card .more,
-.tier-card button,
-.admin-card .more { align-self: flex-start; }
+.tier-card button { align-self: flex-start; }
 .tier-card:hover .more,
 .tier-card:hover button,
 .admin-card:hover .more,

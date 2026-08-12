@@ -31,7 +31,20 @@ function page_head($title, $active = '', $extra = '')
 <link rel="stylesheet" href="assets/site.css?v=<?= h(ZM_ASSET_V) ?>">
 <?= $extra ?>
 </head>
-<body>
+<?php
+/*
+ * Тени по краям страницы — две наши отрисовки зомби. Адреса задаются здесь, а
+ * не в стиле, по одной причине: им нужен номер версии статики, а CSS про него
+ * не знает, и второе место, где этот номер надо не забыть поднять, рано или
+ * поздно про него забудет.
+ *
+ * Что именно стоит по краям — вкус, а не устройство: поменяйте имена, и всё.
+ */
+$sideL = 'zclass-revfire';
+$sideR = 'zclass-revpoison';
+?>
+<body style="--side-left:url('models/<?= h($sideL) ?>.png?v=<?= h(ZM_ASSET_V) ?>');
+             --side-right:url('models/<?= h($sideR) ?>.png?v=<?= h(ZM_ASSET_V) ?>')">
 <div class="wrap">
 
 <header class="top">
