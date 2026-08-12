@@ -17,6 +17,26 @@ require_once ZM_APP . '/view.php';
 send_security_headers();
 
 $packs = catalog_packs();
+
+/*
+ * ⚠️ Метка в углу набора говорит «выгоднее всего» — это утверждение о ЦЕНЕ, а
+ * не о месте в списке. Раньше её вешали на последний набор; сегодня последний
+ * и есть самый выгодный, поэтому вранья не видно, но достаточно поправить одну
+ * цену в catalog.php — и метка начнёт врать, а заметит это покупатель, который
+ * пересчитал сам. Считаем цену за кредит и метим тот набор, где она ниже всех.
+ *
+ * Бонусные кредиты входят в счёт: покупатель получает их вместе с набором, и
+ * без них «за 100 кредитов» на карточке и здесь разошлись бы.
+ */
+$best = 0;
+foreach ($packs as $i => $p) {
+    $per     = $p['price'] / ($p['packs'] + $p['bonus']);
+    $perBest = $packs[$best]['price'] / ($packs[$best]['packs'] + $packs[$best]['bonus']);
+    if ($per < $perBest) {
+        $best = $i;
+    }
+}
+
 $skins = catalog_shop_skins();
 $weapons = catalog_weapons();
 $manual = !payment_ready();
@@ -36,7 +56,7 @@ page_head('Кредиты', 'shop', '<script src="assets/viewer.js?v=' . h(ZM_AS
 <div class="shelf" id="shelf">
   <?php foreach ($packs as $i => $p):
     $total = $p['packs'] + $p['bonus']; ?>
-    <label class="item<?= $i === count($packs) - 1 ? ' top' : '' ?>" data-pack="<?= h($p['id']) ?>">
+    <label class="item<?= $i === $best ? ' top' : '' ?>" data-pack="<?= h($p['id']) ?>">
       <input type="radio" name="pack" value="<?= h($p['id']) ?>" hidden<?= $i === 0 ? ' checked' : '' ?>>
       <div class="nm"><?= (int)$total ?> кредитов</div>
       <?php if ($p['bonus']): ?>

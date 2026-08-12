@@ -8,6 +8,11 @@
  * ножи, класс зомби, числа, цены по срокам — лежит в окне, которое открывается
  * щелчком по карточке.
  *
+ * Выбирают же товар в одном месте — в меню Zombie Plague под витриной: тот же
+ * нумерованный список, что и в игре, и цифры на клавиатуре в нём работают так
+ * же. Раньше вместо него стояли две полоски кнопок; почему их не стало,
+ * написано у самой разметки меню.
+ *
  * ⚠️ ТАК СДЕЛАНО ПОТОМУ, ЧТО РАНЬШЕ БЫЛО НАОБОРОТ. Страница вываливала сразу
  * всё: четыре карточки с перечнями, потом восемь ножей с моделями, потом
  * четыре класса зомби с четырьмя числами каждый. Прочесть это целиком нельзя,
@@ -159,7 +164,9 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
                  ) ?>>
       <div class="nm"><?= h($t['name']) ?></div>
       <?= model_img($skin ? $skin['model'] : null) ?>
-      <div class="price">от <?= (int)$t['prices'][30] ?> ₽</div>
+      <?php /* «от» — в <span>: оформление даёт ему мелкий моноширинный шрифт, и
+               слово перестаёт спорить с самой ценой. См. «.price span». */ ?>
+      <div class="price"><span>от</span> <?= (int)$t['prices'][30] ?> ₽</div>
       <span class="more">Подробнее</span>
     </article>
   <?php endforeach; ?>
@@ -181,7 +188,7 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
       поверх уже действующей привилегии.
     </p>
   </div>
-  <div class="price">от <?= (int)$adminPrices[30] ?> ₽</div>
+  <div class="price"><span>от</span> <?= (int)$adminPrices[30] ?> ₽</div>
   <span class="more">Подробнее</span>
 </article>
 
@@ -191,22 +198,58 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
   <input type="hidden" name="days" id="f-days" value="30">
 
   <section class="card">
+    <?php
+    /*
+     * ── меню Zombie Plague ────────────────────────────────────────────────
+     *
+     * ⚠️ ЗДЕСЬ БЫЛО ДВЕ ПОЛОСКИ КНОПОК: «что покупаем» (уровень или админка) и
+     * «уровень». Товар при этом один, а выбирали его в двух местах, и второе
+     * ещё и пряталось, когда выбрана админка, — то есть полстраницы прыгало от
+     * щелчка по соседней кнопке.
+     *
+     * Теперь это один список, и он списан не с других сайтов, а с самого мода:
+     * в игре выбор делают ровно так — всплывает нумерованный список, слева
+     * красные цифры, жмёшь цифру. Поэтому нумерация здесь СКВОЗНАЯ, через
+     * разделитель: жмут номер строки, а не номер внутри своей группы.
+     */
+    ?>
     <div class="group">
-      <span class="label">Что покупаем</span>
-      <div class="seg" id="what">
-        <button type="button" data-v="tier" aria-pressed="true">Уровень</button>
-        <button type="button" data-v="admin" aria-pressed="false">Админка</button>
-      </div>
-    </div>
+      <div class="zp-menu" id="pick">
+        <div class="zp-title">Выберите привилегию</div>
+        <ul class="zp-items">
+          <?php foreach ($tiers as $i => $t): ?>
+            <li>
+              <button type="button" class="zp-row" data-pick="tier:<?= h($t['id']) ?>"
+                      aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>">
+                <span class="zp-num"><?= $i + 1 ?>.</span>
+                <span class="zp-name"><?= h($t['name']) ?></span>
+                <?php /* Цена — за выбранный срок, и JS пересчитывает её вместе со
+                         счётом. В разметке стоит цена начального срока: до первого
+                         щелчка страница обязана быть верной сама по себе. */ ?>
+                <span class="zp-cost"><?= (int)$t['prices'][30] ?> ₽</span>
+              </button>
+            </li>
+          <?php endforeach; ?>
 
-    <div class="group" id="tier-group">
-      <span class="label">Уровень</span>
-      <div class="seg" id="tier-pick">
-        <?php foreach ($tiers as $i => $t): ?>
-          <button type="button" data-tier="<?= h($t['id']) ?>" aria-pressed="<?= $i === 0 ? 'true' : 'false' ?>"><?= h($t['name']) ?></button>
-        <?php endforeach; ?>
+          <?php /* Черта: дальше идёт не пятый уровень, а отдельный товар со своим
+                   сроком. Без неё админка читалась бы продолжением лестницы. */ ?>
+          <li class="zp-sep"></li>
+          <li>
+            <button type="button" class="zp-row" data-pick="admin" aria-pressed="false">
+              <span class="zp-num"><?= count($tiers) + 1 ?>.</span>
+              <span class="zp-name">Админка</span>
+              <span class="zp-cost"><?= (int)$adminPrices[30] ?> ₽</span>
+            </button>
+          </li>
+        </ul>
+        <div class="zp-foot"><span class="zp-num">0.</span> Сбросить выбор</div>
       </div>
-      <p class="hint">Подробности о каждом — в карточках выше.</p>
+      <?php /* Возможность, о которой не сказали, — это не возможность: цифры
+               работают, но догадаться об этом неоткуда. */ ?>
+      <p class="hint">
+        Выбирайте мышью или цифрами на клавиатуре — как в игровом меню.
+        Подробности о каждом уровне — в карточках выше.
+      </p>
     </div>
 
     <div class="group">
@@ -407,6 +450,26 @@ const termTable  = () => (isAdmin() ? ADMIN_TERMS : TERMS);
 const priceTable = () => (isAdmin() ? ADMIN_PRICES : (PRICES[state.tier] || {}));
 const termLabel  = d => { const t = termTable().find(x => x.days === d); return t ? t.label : ""; };
 
+/** Что записано в data-pick строки меню: "admin" либо "tier:<уровень>". */
+const pickedTier = v => (v === "admin" ? "" : v.slice(v.indexOf(":") + 1));
+
+/*
+ * Цена в строке меню — за ВЫБРАННЫЙ срок: меню и счёт обязаны показывать одно
+ * и то же число, иначе одно из двух врёт.
+ *
+ * ⚠️ Товар может не продавать выбранный срок: сроки уровня и админки вправе
+ * разойтись в любой день (см. drawTerms). Тогда пишем «от» и самую дешёвую
+ * цену — молча подставить цену другого срока значит соврать в ценнике.
+ */
+function costOf(table) {
+  const price = table[state.days];
+  if (price != null) {
+    return price + " ₽";
+  }
+  const all = Object.keys(table).map(d => Number(table[d]));
+  return all.length ? "от " + Math.min(...all) + " ₽" : "";
+}
+
 /*
  * Кнопки сроков перерисовываем при каждой смене товара, а не прячем лишние.
  * Сегодня admin_terms() возвращает то же, что terms(), но это решение владельца
@@ -434,21 +497,26 @@ function draw() {
   $("b-sum").textContent = sum + " ₽";
 
   $("f-what").value = state.what;
+  // Уровень в заказе админки не участвует вовсе: buy.php запишет в этот
+  // столбец NULL, что бы ни лежало в скрытом поле.
   $("f-tier").value = state.tier;
   $("f-days").value = state.days;
 
-  // Уровень в заказе админки не участвует вовсе: buy.php запишет в этот
-  // столбец NULL, что бы ни лежало в скрытом поле.
-  $("tier-group").hidden = isAdmin();
+  // Меню: нажатая строка помечена, цена в каждой — за выбранный срок.
+  rows.forEach(row => {
+    const id = pickedTier(row.dataset.pick);
+    const mine = id === "" ? isAdmin() : (!isAdmin() && id === state.tier);
+    row.setAttribute("aria-pressed", String(mine));
+    row.querySelector(".zp-cost").textContent = costOf(id === "" ? ADMIN_PRICES : (PRICES[id] || {}));
+  });
 
+  // Витрина светится вслед за меню: выбор один, а показан в двух местах, и
+  // разойтись им нельзя — иначе человек читает карточку одного уровня, а
+  // покупает другой.
   document.querySelectorAll(".tier-card").forEach(el =>
     el.classList.toggle("on", !isAdmin() && el.dataset.tier === state.tier));
-  [...$("tier-pick").children].forEach(b =>
-    b.setAttribute("aria-pressed", String(b.dataset.tier === state.tier)));
   [...$("terms").children].forEach(b =>
     b.setAttribute("aria-pressed", String(Number(b.dataset.days) === state.days)));
-  [...$("what").children].forEach(b =>
-    b.setAttribute("aria-pressed", String(b.dataset.v === state.what)));
 }
 
 /** Общий обработчик для полосок кнопок: нажатая помечается, остальные гаснут. */
@@ -460,8 +528,6 @@ function seg(id, pick) {
   });
 }
 
-seg("what", d => { state.what = d.v; drawTerms(); draw(); });
-seg("tier-pick", d => { state.tier = d.tier; draw(); });
 seg("terms", d => { state.days = Number(d.days); draw(); });
 
 seg("kind", d => {
@@ -472,6 +538,72 @@ seg("kind", d => {
   $("auth-hint").textContent = steam
     ? "SteamID не подделать чужим ником. Сервер пускает и без Steam — таким игрокам он выдаёт SteamID сам, и он может смениться."
     : "Ник должен совпадать буква в букву — сервер узнаёт игрока по нему. Вместе с привилегией вы получите пароль: без него ваш ник смог бы занять кто угодно.";
+});
+
+/*
+ * ── меню Zombie Plague ──────────────────────────────────────────────────────
+ *
+ * Выбор товара сходится в одну воронку: сюда ведут и щелчок по строке меню, и
+ * цифра с клавиатуры, и кнопки из окна просмотра. Две дороги к одному состоянию
+ * расходятся молча — рано или поздно одна из них забудет перерисовать сроки.
+ */
+function choose(v) {
+  const id = pickedTier(v);
+  if (id === "") {
+    state.what = "admin";
+  } else {
+    state.what = "tier";
+    state.tier = id;
+  }
+  drawTerms();
+  draw();
+}
+
+/*
+ * Строки меню по порядку — он же порядок цифр: первая строка это «1», вторая
+ * «2» и так далее, сквозь разделитель до админки. Нумерацию рисует PHP по тому
+ * же списку, так что второго источника правды здесь нет.
+ *
+ * <li class="zp-sep"> кнопки не содержит и в счёт не идёт — потому цифры и
+ * остаются теми же, что нарисованы.
+ */
+const rows = [...document.querySelectorAll("#pick .zp-row")];
+
+$("pick").addEventListener("click", e => {
+  const row = e.target.closest(".zp-row");
+  if (row) choose(row.dataset.pick);
+});
+
+document.addEventListener("keydown", e => {
+  /*
+   * ⚠️ ПОКА ЧЕЛОВЕК ПЕЧАТАЕТ, ЦИФРЫ ПРИНАДЛЕЖАТ ПОЛЮ, А НЕ МЕНЮ. Без этой
+   * проверки тот, кто набирает ник «zm1x», молча переключал бы себе товар:
+   * меню в этот момент выше по странице и в глаза не бросается, и узнал бы он
+   * об этом уже в счёте — если бы вообще заметил.
+   *
+   * Ctrl/Alt/Meta пропускаем по той же причине: Ctrl+1 — чужое сочетание
+   * (вкладки браузера, расширения), и присваивать его себе мы не вправе.
+   */
+  const el = e.target;
+  const tag = el && el.tagName ? el.tagName.toLowerCase() : "";
+  if (tag === "input" || tag === "textarea" || (el && el.isContentEditable)) return;
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+  // Открыто окно просмотра — клавиши его: там свой Escape, а переключать под
+  // ним товар, которого не видно, — то же молчаливое переключение.
+  if (document.body.classList.contains("mv-open")) return;
+
+  /*
+   * ⚠️ Смотрим e.key, а НЕ e.keyCode. У верхнего ряда и цифровой клавиатуры
+   * коды разные (49 и 97), а e.key у обеих даёт "1" — по коду половина
+   * клавиатур молча перестала бы работать.
+   */
+  if (!/^[0-9]$/.test(e.key)) return;
+
+  // Ноль — как в игре: сброс. Возвращаемся к первому уровню, а не в пустоту:
+  // заказ без товара отправлять некуда.
+  const row = e.key === "0" ? rows[0] : rows[Number(e.key) - 1];
+  if (row) choose(row.dataset.pick);
 });
 
 /*
@@ -487,17 +619,10 @@ seg("kind", d => {
  * всплытие не остановил — щелчок доходит сюда.
  */
 document.addEventListener("click", e => {
-  const pick = e.target.closest("[data-pick-tier], [data-pick-admin]");
-  if (!pick) return;
+  const btn = e.target.closest("[data-pick-tier], [data-pick-admin]");
+  if (!btn) return;
 
-  if (pick.dataset.pickTier) {
-    state.what = "tier";
-    state.tier = pick.dataset.pickTier;
-  } else {
-    state.what = "admin";
-  }
-  drawTerms();
-  draw();
+  choose(btn.dataset.pickTier ? "tier:" + btn.dataset.pickTier : "admin");
 
   const smooth = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   $("order").scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });

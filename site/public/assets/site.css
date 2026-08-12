@@ -1,495 +1,643 @@
-/*
- * Витрина одета в свой сервер: цвета взяты из кодов меню Zombie Plague
- * (\y жёлтый, \r красный, \w белый, \d серый), цифры и флаги набраны
- * моноширинным — это данные, а не проза. Жёлтый ведёт, красный отвечает
- * только за опасное и за отказ.
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Оформление сайта: «кровь и ночь».
  *
- * Тот же набор переменных, что в панели выдачи: страницы должны выглядеть
- * одним хозяйством, даже когда открыты в соседних вкладках.
- */
+ * ⚠️ ОТКУДА ВЗЯТ ЭТОТ ВИД — ЧТОБЫ СЛЕДУЮЩИЙ НЕ ПЕРЕДЕЛАЛ ЕГО В ОЧЕРЕДНОЙ
+ * ТЁМНЫЙ ШАБЛОН. «Тёмный фон плюс красный акцент» — это внешность половины
+ * зомби-серверов, и сама по себе она не значит ничего. Здесь образность взята
+ * не из жанра, а из ЯЗЫКА САМОГО МОДА, который игрок видит каждый раунд:
+ *
+ *   * строка в чате «[Вспышка эпидемии] …» — её узнаёт тот, кто здесь играл,
+ *     и не узнаёт никто больше;
+ *   * меню Zombie Plague — нумерованный список, красные цифры, моноширинный
+ *     шрифт. В игре по нему жмут цифры, и на сайте по нему тоже жмут цифры.
+ *
+ * Отсюда правило для правок: украшение, которого нет в игре, сюда не идёт.
+ *
+ * ⚠️ ШРИФТЫ ТОЛЬКО СИСТЕМНЫЕ. Политика безопасности (см. send_security_headers)
+ * запрещает любые чужие источники, и подключить шрифт со стороны нельзя —
+ * запрос просто не уйдёт. Поэтому здесь то, что уже стоит в Windows.
+ * ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --void:    #12130f;
-  --panel:   #1a1c16;
-  --raise:   #22251d;
-  --rule:    #2f3327;
-  --bone:    #e9e7dc;
-  --dim:     #848a76;
-  --amber:   #ffc21f;
-  --crimson: #d8402f;
+  /* Ночь. Не чёрная: на ночных картах CS темнота синевато-серая, и чистый
+     чёрный рядом с ней выглядит дырой в экране, а не темнотой. */
+  --night: #0a0c0e;
+  --crypt: #12161a;   /* плоскость карточки */
+  --slab:  #1a2026;   /* приподнятое: наведение, выбранное */
+  --seam:  #2a3238;   /* шов: рамка в один пиксель */
 
-  --display: "Bahnschrift", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
-  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
-  --text: "Segoe UI", system-ui, sans-serif;
+  /* Кость и пепел. Текст тёплый, чтобы не отдавать в синеву вслед за фоном. */
+  --bone:  #e8e4d8;
+  --ash:   #79838a;
+
+  /* ⚠️ --dust ТОЛЬКО ДЛЯ ЛИНИЙ И ПЯТЕН, НЕ ДЛЯ ТЕКСТА. Хотелось иметь серый
+     тише, чем --ash, для подписей и подвала. Померили: на карточке он даёт
+     2.36 к фону при нужных 4.5 — на дешёвом мониторе в светлой комнате такой
+     текст пропадает совсем. А серого, который и тише --ash, и читаем, не
+     существует: --ash сам едва проходит (4.70). Поэтому подписи набраны
+     --ash, а тише их делают размер и разрядка, а не выцветание. */
+  --dust:  #4c545a;
+
+  /* ТРИ красных, и у каждого своя работа. Один на всё не годится: тот, что
+     читается текстом на чёрном, слишком светел, чтобы держать на себе белые
+     буквы кнопки, — и наоборот. Цифры мерены по WCAG, а не подобраны на глаз.
+       --blood 4.94 к фону карточки — годится для текста;
+       --gore  5.40 под костью    — годится для заливки;
+       --clot  тёмный, текста на нём не бывает вовсе. */
+  --blood: #e8514c;   /* ТЕКСТ: цифры меню, цены, ссылки, суммы */
+  --gore:  #b4141f;   /* ЗАЛИВКА: кнопки, метки, нажатое — под костью */
+  --clot:  #5e1013;   /* линии, подложки, рамки — где нужен красный без крика */
+
+  /* Живой сервер. Ядовито-зелёного нарочно нет — он спорит с кровью и тянет
+     страницу в неон. Это приглушённый мох: «дышит», а не «светится». */
+  --pulse: #7e8b4f;
+
+  /* Заголовки: узкий тяжёлый гротеск, афишный. Haettenschweiler стоит в
+     Windows и почти не используется в вебе — оттого и не выглядит дежурным.
+     Impact — запасной на случай, если его нет. */
+  --scream: "Haettenschweiler", "Arial Narrow Bold", Impact, "Arial Narrow", sans-serif;
+  --text:   "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:   "Cascadia Mono", Consolas, "Courier New", monospace;
+
+  /* Сюда позже лягут боковые картинки с карт. Пусто — значит их нет, и
+     страница про них не знает: подставите два адреса, и они появятся. */
+  --side-left: none;
+  --side-right: none;
 }
 
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 body {
   margin: 0;
-  padding: 28px 20px 72px;
-  background: var(--void);
+  min-height: 100vh;
+  background: var(--night);
   color: var(--bone);
   font: 15px/1.6 var(--text);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.wrap { max-width: 1120px; margin: 0 auto; }
+/* ── воздух вокруг страницы ─────────────────────────────────────────────────
+ *
+ * Три слоя, все под содержимым и все не ловят мышь: боковые картинки (пока
+ * пустые), плёнка зерна и виньетка. Зерно и виньетка делают из ровной заливки
+ * пространство — без них «ночь» читается как выключенный монитор.
+ *
+ * ⚠️ Зерно — SVG прямо в адресе, а не файл. Так надо: политика безопасности
+ * пускает data: для картинок, а лишний запрос за текстурой в 2 килобайта на
+ * каждой странице — это лишний запрос на каждой странице.
+ */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
 
-a { color: var(--amber); }
+body::before {
+  background:
+    linear-gradient(to right, rgba(10,12,14,.55), transparent 22%, transparent 78%, rgba(10,12,14,.55)),
+    var(--side-left)   left  center / auto 100% no-repeat,
+    var(--side-right)  right center / auto 100% no-repeat;
+  opacity: .5;
+}
 
-/* ── шапка ────────────────────────────────────────────────────────────────── */
+body::after {
+  background-image:
+    radial-gradient(120% 85% at 50% 0%, transparent 40%, rgba(0,0,0,.55) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  opacity: .18;
+  mix-blend-mode: overlay;
+}
 
-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px 72px;
+}
+@media (max-width: 640px) { .wrap { padding: 0 16px 56px; } }
+
+/* ⚠️ Вспышка заражения — единственная анимация на всей странице, и она одна
+   потому, что в игре это тоже одно событие: экран краснеет в момент, когда
+   тебя обратили. Полсекунды при загрузке, дальше страница неподвижна. */
+.flash {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 40%, rgba(193,18,31,.42), transparent 70%);
+  animation: bite .55s ease-out forwards;
+}
+@keyframes bite {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .flash { display: none; } }
+
+/* ── шапка ──────────────────────────────────────────────────────────────── */
+
+.top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 26px;
+  flex-wrap: wrap;
+  padding: 26px 0 18px;
+  border-bottom: 1px solid var(--seam);
+  margin-bottom: 38px;
+}
+
+.brand { text-decoration: none; color: inherit; display: block; }
 
 .eyebrow {
-  font: 500 11px/1 var(--mono);
-  letter-spacing: .22em;
+  display: block;
+  font: 500 10.5px/1 var(--mono);
+  letter-spacing: .26em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: var(--ash);
 }
 
-h1 {
-  margin: 8px 0 6px;
-  font: 600 clamp(30px, 5.5vw, 50px)/1 var(--display);
-  letter-spacing: .01em;
+.brand-name {
+  display: block;
+  margin-top: 7px;
+  font: 400 34px/.9 var(--scream);
+  letter-spacing: .03em;
   text-transform: uppercase;
 }
+.brand:hover .brand-name { color: var(--blood); }
 
-.subhead { font: 13px/1.5 var(--mono); color: var(--dim); }
-.subhead b { color: var(--amber); font-weight: 500; }
+.nav { display: flex; gap: 2px; flex-wrap: wrap; }
+.nav a {
+  padding: 9px 14px;
+  font: 500 12px/1 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.nav a:hover { color: var(--bone); border-color: var(--seam); }
+.nav a.on { color: var(--bone); border-color: var(--clot); background: rgba(94,16,19,.35); }
 
-hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 24px 0 30px; }
+/* ── заголовки и текст ──────────────────────────────────────────────────── */
+
+h1, h2, h3 { margin: 0; font-weight: 400; }
+
+.lead { margin-bottom: 34px; }
+.lead h1 {
+  font: 400 clamp(40px, 7vw, 72px)/.92 var(--scream);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.lead-text { max-width: 68ch; color: var(--ash); font-size: 15px; margin: 0; }
+.lead-text b { color: var(--bone); font-weight: 600; }
+
+.section { margin-top: 64px; }
+.section h2 {
+  font: 400 clamp(26px, 4vw, 38px)/1 var(--scream);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* Подзаголовок группы — с красной засечкой слева: она отмечает, что дальше
+   идёт отдельный кусок, и делает это тише, чем ещё один крупный шрифт. */
+.group-title {
+  margin: 34px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--clot);
+  font: 600 12px/1.3 var(--mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
 
 .label {
   display: block;
-  font: 600 11px/1 var(--display);
+  font: 600 10.5px/1 var(--mono);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin: 0 0 11px;
+}
+
+.hint { font-size: 13px; color: var(--ash); margin: 9px 0 0; }
+
+code {
+  font: 13px/1.4 var(--mono);
+  color: var(--blood);
+  background: rgba(94,16,19,.22);
+  border: 1px solid var(--clot);
+  padding: 1px 6px;
+}
+
+/* ── строка чата ────────────────────────────────────────────────────────────
+ *
+ * ⚠️ Это цитата, а не украшение. Ровно так сервер пишет в чат: имя мода в
+ * красных скобках, дальше белый текст. Цвета взяты из кодов ^x04 и ^x01,
+ * которыми пользуются плагины (см. custom/plugins/*.sma). Игрок узнаёт эту
+ * строку мгновенно — на том и построена вся шапка.
+ */
+.chat-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+  font: 13.5px/1.5 var(--mono);
+  color: var(--bone);
+  background: rgba(10,12,14,.72);
+  border-left: 3px solid var(--blood);
+  padding: 9px 14px;
+  margin-bottom: 22px;
+}
+.chat-line .tag { color: var(--blood); }
+
+/* ── меню Zombie Plague ─────────────────────────────────────────────────────
+ *
+ * ⚠️ ПОДПИСЬ ВСЕЙ СТРАНИЦЫ. В игре выбор делают так: всплывает список, слева
+ * красные цифры, жмёшь цифру. Здесь то же самое, и цифры тоже работают —
+ * обработчик висит на странице. Поэтому нумерация здесь не украшение: она
+ * ЕСТЬ способ выбора, как и в игре.
+ *
+ * Из четырёх цветов мода (\r красный, \y жёлтый, \w белый, \d серый) взяты
+ * три. Жёлтый выброшен сознательно: рядом с кровью он тянет страницу в
+ * дешёвый неон, а без него язык меню остаётся узнаваемым.
+ */
+.zp-menu {
+  background: rgba(10,12,14,.82);
+  border: 1px solid var(--seam);
+  border-left: 3px solid var(--blood);
+  padding: 16px 0 12px;
+  font: 14px/1 var(--mono);
+}
+
+.zp-title {
+  padding: 0 18px 14px;
+  color: var(--ash);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.zp-items { margin: 0; padding: 0; list-style: none; }
+
+.zp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 18px;
+  background: none;
+  border: 0;
+  color: var(--bone);
+  font: 14px/1.3 var(--mono);
+  text-align: left;
+  cursor: pointer;
+}
+.zp-row:hover { background: var(--slab); }
+.zp-row .zp-num { color: var(--blood); width: 1.6em; flex: none; }
+.zp-row .zp-name { flex: 1; }
+.zp-row .zp-cost { color: var(--ash); white-space: nowrap; }
+
+/* Выбранное — как курсор в консоли: красный блок слева и подсветка строки. */
+.zp-row[aria-pressed="true"] {
+  background: rgba(94,16,19,.34);
+  box-shadow: inset 3px 0 0 var(--blood);
+}
+.zp-row[aria-pressed="true"] .zp-name { color: var(--blood); }
+
+.zp-sep { height: 1px; background: var(--seam); margin: 8px 18px; }
+
+.zp-foot {
+  padding: 12px 18px 0;
+  color: var(--ash);
+  font-size: 12.5px;
+}
+.zp-foot .zp-num { color: var(--clot); }
+
+/* ── шапка главной ──────────────────────────────────────────────────────── */
+
+.hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+
+/* ⚠️ min-width: 0 — не украшение. У ячейки сетки наименьшая ширина по
+   умолчанию равна ширине её содержимого, и одна неразрывная строка (адрес
+   «connect 1.2.3.4:27015» или длинный ник) раздвинула бы колонку, а за ней и
+   всю страницу — с полосой прокрутки вбок на телефоне. */
+.hero-text, .hero-model { min-width: 0; }
+@media (min-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 48px; align-items: start; }
+}
+
+.hero-title {
+  font: 400 clamp(52px, 10vw, 104px)/.86 var(--scream);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hero-sub {
+  margin: 14px 0 26px;
+  font: 12.5px/1.5 var(--mono);
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--dim);
-  margin: 0 0 12px;
+  color: var(--ash);
 }
 
-.hint { font-size: 13px; color: var(--dim); margin: 8px 0 0; }
+.status { display: flex; align-items: center; gap: 11px; font: 13px/1.5 var(--mono); color: var(--ash); }
+.status b { color: var(--bone); font-weight: 400; }
+.dot { width: 8px; height: 8px; flex: none; }
+.dot.live { background: var(--pulse); box-shadow: 0 0 0 3px rgba(126,139,79,.2); }
+.dot.dead { background: var(--blood); }
+.dot.dim  { background: var(--seam); }
 
-/* ── витрина уровней ──────────────────────────────────────────────────────── */
+.connect { margin-top: 26px; }
 
-.shelf {
+.pair { display: flex; align-items: stretch; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.pair code {
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+  background: var(--night);
+  border: 1px solid var(--seam);
+  color: var(--bone);
+  padding: 12px 14px;
+  word-break: break-all;
+}
+
+.copy {
+  background: none;
+  border: 1px solid var(--seam);
+  color: var(--ash);
+  font: 11px/1 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 0 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.copy:hover { color: var(--blood); border-color: var(--blood); }
+
+/* ── витрина уровней ────────────────────────────────────────────────────────
+ *
+ * Карточка кликабельна целиком: щелчок открывает окно со всем рассказом о
+ * товаре. Поэтому курсор, наведение и обводка живут на самой карточке, а
+ * «Подробнее» внутри — надпись, а не вложенная кнопка. Живая кнопка внутри
+ * кликабельной карточки означала бы два обработчика на один щелчок и две
+ * остановки Tab на одном месте.
+ */
+
+.tier-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
   gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+  background: var(--seam);
+  border: 1px solid var(--seam);
+  margin-top: 8px;
 }
 
-.item {
-  background: var(--panel);
-  padding: 22px 20px 24px;
+.tier-card {
+  position: relative;
+  background: var(--crypt);
+  padding: 20px 18px 22px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
   cursor: pointer;
-  position: relative;
+  transition: background .14s linear, box-shadow .14s linear;
 }
-.item:hover { background: var(--raise); }
-.item.on { background: var(--raise); box-shadow: inset 0 3px 0 var(--amber); }
+.tier-card:hover { background: var(--slab); box-shadow: inset 0 0 0 1px var(--clot); }
+.tier-card.on { background: var(--slab); box-shadow: inset 0 3px 0 var(--blood); }
 
-.item .nm {
-  font: 600 22px/1 var(--display);
-  letter-spacing: .05em;
+.tier-card .nm {
+  font: 400 26px/.9 var(--scream);
+  letter-spacing: .04em;
   text-transform: uppercase;
 }
-.item.on .nm { color: var(--amber); }
+.tier-card.on .nm { color: var(--blood); }
+.tier-card .blurb { font-size: 13px; color: var(--ash); }
 
-.item .blurb { font-size: 13.5px; color: var(--dim); min-height: 3.2em; }
-
-.perks { margin: 0; padding: 0; list-style: none; font: 12.5px/2 var(--mono); color: var(--dim); }
-.perks b { color: var(--bone); font-weight: 400; }
-
-.price {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-  font: 600 26px/1 var(--display);
-  color: var(--amber);
+/*
+ * Картинку кладёт model_img() — голый <img>, без своего окна просмотра:
+ * щёлкать по нему будет карточка снаружи. Своего класса у него нет, поэтому
+ * правило берёт его по тегу.
+ */
+.tier-card img {
+  display: block;
+  width: 100%;
+  height: 196px;
+  object-fit: contain;
+  background:
+    radial-gradient(120% 90% at 50% 12%, rgba(193,18,31,.10), transparent 70%),
+    var(--night);
+  border: 1px solid var(--seam);
 }
-.price span { font: 12px/1 var(--mono); color: var(--dim); letter-spacing: .1em; }
 
-/* Верхний уровень стоит выделить: он и самый дорогой, и самый заметный. */
-.item.top::after {
+/* Верхний уровень помечен, но тихо: строка в углу, а не лента через всю карту. */
+.tier-card.top::after {
   content: "верхний";
   position: absolute;
   top: 0; right: 0;
-  background: var(--amber);
-  color: var(--void);
-  font: 600 10px/1 var(--mono);
-  letter-spacing: .14em;
+  background: var(--gore);
+  color: var(--bone);
+  font: 600 9.5px/1 var(--mono);
+  letter-spacing: .16em;
   text-transform: uppercase;
   padding: 5px 8px;
 }
 
-/* ── заказ ────────────────────────────────────────────────────────────────── */
-
-.order { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 34px; }
-@media (min-width: 900px) { .order { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 28px; } }
-
-.card { background: var(--panel); border: 1px solid var(--rule); padding: 24px; }
-
-.group + .group { margin-top: 26px; }
-
-.seg { display: flex; border: 1px solid var(--rule); width: fit-content; max-width: 100%; flex-wrap: wrap; }
-.seg button {
-  background: none;
-  border: 0;
-  border-right: 1px solid var(--rule);
-  color: var(--dim);
-  font: 13px/1 var(--mono);
-  padding: 12px 18px;
-  cursor: pointer;
+.price {
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid var(--seam);
+  font: 400 24px/1 var(--scream);
+  letter-spacing: .03em;
+  color: var(--blood);
 }
-.seg button:last-child { border-right: 0; }
-.seg button[aria-pressed="true"] { background: var(--amber); color: var(--void); font-weight: 600; }
-.seg button:hover:not([aria-pressed="true"]) { color: var(--bone); }
+.price span { font: 11.5px/1 var(--mono); color: var(--ash); letter-spacing: .1em; }
 
-input[type="text"] {
-  width: 100%;
-  background: var(--void);
-  border: 1px solid var(--rule);
-  color: var(--bone);
-  font: 15px/1 var(--mono);
-  padding: 13px 14px;
-}
-input[type="text"]::placeholder { color: #5c6152; }
-input[type="text"]:focus { border-color: var(--amber); outline: none; }
-
-.field { margin-top: 10px; }
-
-.check { display: flex; align-items: flex-start; gap: 11px; margin-top: 14px; cursor: pointer; font-size: 14px; }
-.check input { accent-color: var(--amber); width: 16px; height: 16px; margin-top: 2px; flex: none; }
-
-:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-
-/* ── счёт ─────────────────────────────────────────────────────────────────── */
-
-@media (min-width: 900px) { aside { position: sticky; top: 24px; align-self: start; } }
-
-.bill { font: 13.5px/2 var(--mono); }
-.bill .row { display: flex; justify-content: space-between; gap: 14px; color: var(--dim); }
-.bill .row b { color: var(--bone); font-weight: 400; text-align: right; }
-.bill .total {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.bill .total .sum { font: 600 30px/1 var(--display); color: var(--amber); }
-
-.go {
-  margin-top: 24px;
-  width: 100%;
-  background: var(--amber);
-  border: 0;
-  color: var(--void);
-  font: 600 15px/1 var(--display);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  padding: 17px;
-  cursor: pointer;
-}
-.go:hover { background: #ffd45c; }
-.go:disabled { background: var(--rule); color: var(--dim); cursor: default; }
-
-.errors {
-  margin-top: 18px;
-  border-left: 3px solid var(--crimson);
-  padding: 11px 15px;
-  background: rgba(216, 64, 47, .08);
-  font-size: 14px;
-}
-.errors ul { margin: 0; padding-left: 18px; }
-
-.note {
-  margin-top: 16px;
-  border-left: 3px solid var(--rule);
-  padding: 10px 15px;
-  font-size: 13px;
-  color: var(--dim);
-}
-
-/* ── ответ после заказа ───────────────────────────────────────────────────── */
-
-.big-ok { border-color: var(--amber); }
-.big-ok .label { color: var(--amber); }
-
-.pair { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-.pair code {
-  flex: 1;
-  background: var(--void);
-  border: 1px solid var(--rule);
-  padding: 12px 14px;
-  font: 14px/1.4 var(--mono);
-  word-break: break-all;
-  color: var(--bone);
-}
-.copy {
-  background: none;
-  border: 1px solid var(--rule);
-  color: var(--dim);
-  font: 11px/1 var(--mono);
-  padding: 12px 13px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.copy:hover { color: var(--amber); border-color: var(--amber); }
-
-.steps { margin: 18px 0 0; padding-left: 20px; font-size: 14px; }
-.steps li { margin: 8px 0; }
-
-/* ── подвал ───────────────────────────────────────────────────────────────── */
-
-.foot { margin-top: 40px; font: 12.5px/1.9 var(--mono); color: #5c6152; }
-.foot a { color: var(--dim); }
-
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-
-/* ═══ шапка с меню ═══════════════════════════════════════════════════════════ */
-
-.top {
+/*
+ * Админка — отдельный товар со своим сроком, и карточка у неё одна во всю
+ * ширину. В сетку уровней её класть нельзя: рядом с четырьмя уровнями она
+ * читалась бы пятым, а покупается она независимо.
+ */
+.admin-card {
+  margin-top: 22px;
+  background: var(--crypt);
+  border: 1px solid var(--seam);
+  border-left: 3px solid var(--clot);
+  padding: 22px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px 28px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 32px;
+  cursor: pointer;
+  transition: background .14s linear;
 }
-
-.brand { text-decoration: none; color: inherit; display: block; }
-.brand .eyebrow { display: block; }
-.brand-name {
-  display: block;
-  font: 600 26px/1.1 var(--display);
+.admin-card:hover { background: var(--slab); }
+.admin-card .nm {
+  font: 400 28px/.9 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
-  margin-top: 4px;
 }
-.brand:hover .brand-name { color: var(--amber); }
+.admin-card .blurb { margin: 9px 0 0; font-size: 13px; color: var(--ash); max-width: 62ch; }
+.admin-card .price { margin-top: 0; padding-top: 0; border-top: 0; }
 
-.nav { display: flex; gap: 4px; flex-wrap: wrap; }
-.nav a {
-  text-decoration: none;
-  color: var(--dim);
-  font: 12px/1 var(--mono);
+/* «Подробнее» — надпись, а не кнопка (см. выше). Если её всё же набрали
+   тегом <button>, она обязана выглядеть так же: разнобой на одной витрине
+   заметнее, чем лишний тег. */
+.tier-card .more,
+.tier-card button,
+.admin-card .more,
+.admin-card button {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--seam);
+  color: var(--ash);
+  font: 11px/1 var(--mono);
   letter-spacing: .12em;
   text-transform: uppercase;
-  padding: 11px 15px;
-  border: 1px solid transparent;
+  padding: 9px 13px;
+  cursor: pointer;
 }
-.nav a:hover { color: var(--bone); border-color: var(--rule); }
-.nav a.on { color: var(--void); background: var(--amber); font-weight: 600; }
+.tier-card:hover .more,
+.tier-card:hover button,
+.admin-card:hover .more,
+.admin-card:hover button { color: var(--blood); border-color: var(--blood); }
 
-/* ═══ вводные блоки ═════════════════════════════════════════════════════════ */
+.tier-card:focus-visible,
+.admin-card:focus-visible { outline-offset: -2px; }
 
-.lead { margin-bottom: 30px; }
-.lead h1 { margin: 0 0 12px; }
-.lead-text { max-width: 70ch; color: var(--dim); font-size: 15px; margin: 0; }
-.lead-text b { color: var(--bone); font-weight: 500; }
+.perks { margin: 0; padding: 0; list-style: none; font: 12.5px/1.9 var(--mono); color: var(--ash); }
+.perks b { color: var(--bone); font-weight: 400; }
 
-.section { margin-top: 56px; }
-.section h2 {
-  margin: 0 0 14px;
-  font: 600 clamp(22px, 3.4vw, 30px)/1.1 var(--display);
-  letter-spacing: .04em;
-  text-transform: uppercase;
+/* ── краткие карточки уровней на главной ────────────────────────────────── */
+
+.tier-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
+  gap: 1px;
+  background: var(--seam);
+  border: 1px solid var(--seam);
+  margin-top: 8px;
 }
-.group-title {
-  margin: 34px 0 0;
-  font: 600 12px/1 var(--display);
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-/* ═══ первый экран ══════════════════════════════════════════════════════════ */
-
-.hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; }
-@media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 44px; align-items: start; } }
-
-.hero-title {
-  margin: 0;
-  font: 600 clamp(34px, 6.5vw, 62px)/1 var(--display);
-  letter-spacing: .01em;
-  text-transform: uppercase;
-}
-.hero-sub {
-  margin: 6px 0 18px;
-  font: 13px/1 var(--mono);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--amber);
-}
-
-.cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0 22px; }
-
-.btn {
-  display: inline-block;
-  background: var(--amber);
-  color: var(--void);
+.tier-brief {
+  background: var(--crypt);
+  padding: 18px;
   text-decoration: none;
-  font: 600 13px/1 var(--display);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  padding: 16px 26px;
-  border: 1px solid var(--amber);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.btn:hover { background: #ffd45c; border-color: #ffd45c; }
-.btn.ghost-btn { background: none; color: var(--dim); border-color: var(--rule); }
-.btn.ghost-btn:hover { color: var(--bone); border-color: var(--dim); background: none; }
+.tier-brief:hover { background: var(--slab); }
+.tier-brief .nm {
+  font: 400 22px/.9 var(--scream);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.tier-brief:hover .nm { color: var(--blood); }
+.price-small { margin-top: auto; font: 400 20px/1 var(--scream); color: var(--blood); letter-spacing: .03em; }
 
-.status { display: flex; align-items: center; gap: 10px; font: 13px/1.5 var(--mono); color: var(--dim); }
-.status b { color: var(--bone); font-weight: 400; }
-.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-.dot.live { background: #7fb069; box-shadow: 0 0 0 3px rgba(127, 176, 105, .18); }
-.dot.dead { background: var(--crimson); }
-.dot.dim { background: var(--rule); }
-
-.connect { margin-top: 26px; }
-
-/* ═══ окошко модели на карточке ══════════════════════════════════════════════
- *
- * Внутри — заранее нарисованная картинка, а не живой WebGL. Причина в
- * site/private/app/view.php: контекстов WebGL браузер даёт около шестнадцати,
- * а окошек на странице привилегий вдвое больше.
- */
+/* ── окошко модели на карточке ──────────────────────────────────────────── */
 
 .viewer {
   position: relative;
   width: 100%;
   height: 190px;
   background:
-    radial-gradient(120% 90% at 50% 15%, rgba(255, 194, 31, .07), transparent 70%),
-    var(--void);
-  border: 1px solid var(--rule);
+    radial-gradient(120% 90% at 50% 15%, rgba(193,18,31,.10), transparent 70%),
+    var(--night);
+  border: 1px solid var(--seam);
   cursor: zoom-in;
   overflow: hidden;
 }
-.viewer img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
+.viewer img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .viewer-open {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   padding: 7px 9px;
-  background: linear-gradient(to top, rgba(18, 19, 15, .92), transparent);
-  font: 11px/1 var(--mono);
-  letter-spacing: .1em;
+  background: linear-gradient(to top, rgba(10,12,14,.94), transparent);
+  font: 10.5px/1 var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: var(--ash);
   text-align: center;
   opacity: 0;
   transition: opacity .12s linear;
 }
 .viewer:hover .viewer-open,
-.viewer:focus-visible .viewer-open { opacity: 1; color: var(--amber); }
+.viewer:focus-visible .viewer-open { opacity: 1; color: var(--blood); }
 
-.viewer-tall { height: 260px; }
+.viewer-tall { height: 258px; }
 .viewer-hero { height: 420px; }
 @media (max-width: 620px) { .viewer-hero { height: 300px; } }
 
-/* ═══ окно просмотра ════════════════════════════════════════════════════════ */
+/* ── окно просмотра ─────────────────────────────────────────────────────── */
 
 .mv { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; }
 .mv[hidden] { display: none; }
-.mv-back { position: absolute; inset: 0; background: rgba(6, 7, 5, .86); }
+.mv-back { position: absolute; inset: 0; background: rgba(4, 5, 6, .9); }
 
 .mv-box {
   position: relative;
   width: min(1120px, 100%);
   max-height: calc(100vh - 40px);
   overflow: auto;
-  background: var(--panel);
-  border: 1px solid var(--rule);
+  background: var(--crypt);
+  border: 1px solid var(--seam);
+  border-top: 3px solid var(--blood);
   padding: 22px;
 }
 
-/*
- * Широким окно делает только правая колонка. Когда её нет (окно открыто из
- * магазина — одна сцена, ничего больше), растягивать нечего: модель от лишней
- * ширины виднее не станет, а текст описания расползётся на весь монитор.
- * Браузер без :has() просто пропустит правило и покажет широкое окно — это
- * некрасиво, но не сломано.
- */
-.mv-box:has(.mv-cols.solo) { width: min(760px, 100%); }
-
 .mv-close {
   position: absolute;
-  top: 10px; right: 12px;
-  background: none;
-  border: 0;
-  color: var(--dim);
+  top: 8px; right: 10px;
+  background: none; border: 0;
+  color: var(--ash);
   font: 26px/1 var(--text);
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 4px 9px;
 }
-.mv-close:hover { color: var(--amber); }
+.mv-close:hover { color: var(--blood); }
 
 .mv-title {
-  font: 600 20px/1.2 var(--display);
+  font: 400 30px/.95 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
-  padding-right: 40px;
+  padding-right: 44px;
 }
 
-/*
- * Слева — сцена, описание и полоса выбора; справа — рассказ о товаре, который
- * страница кладёт туда своим <template> (см. data-panel в viewer.js). Правая
- * колонка нарочно в пикселях, а не в долях: тянуться должна сцена, а строка
- * текста, растянутая на полмонитора, перестаёт читаться — глаз теряет начало
- * следующей строки.
- */
-.mv-cols {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
-  margin-top: 18px;
-}
+.mv-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 16px; }
 @media (min-width: 900px) {
   .mv-cols { grid-template-columns: minmax(0, 1fr) 380px; gap: 26px; }
 }
-
-/* Колонка ровно одна: либо модели нет (админка), либо правой колонки нет. */
 .mv-cols.solo { grid-template-columns: minmax(0, 1fr); }
-
-/* ⚠️ minmax(0, 1fr) в сетке и min-width здесь — про одно и то же: без них
- * широкая строка внутри (длинный адрес, таблица прав) раздувает колонку сверх
- * отведённого, и окно вместе со страницей уезжает вбок. */
 .mv-left, .mv-side { min-width: 0; }
+.mv-left[hidden], .mv-side[hidden] { display: none; }
 
 .mv-side {
-  background: var(--void);
-  border: 1px solid var(--rule);
-  padding: 18px;
+  background: var(--night);
+  border: 1px solid var(--seam);
+  padding: 18px 20px;
 }
-
-/* ⚠️ Обе колонки прячет viewer.js атрибутом hidden, а он слабее любого своего
- * display в стиле. Пока display здесь не объявлен, hidden работает и сам, но
- * достаточно кому-то дописать display: flex — и колонка перестанет прятаться
- * молча, без единой ошибки. Поэтому прячем явно. */
-.mv-left[hidden], .mv-side[hidden] { display: none; }
 
 .mv-stage {
   position: relative;
   height: min(56vh, 460px);
   background:
-    radial-gradient(120% 90% at 50% 12%, rgba(255, 194, 31, .08), transparent 70%),
-    var(--void);
-  border: 1px solid var(--rule);
+    radial-gradient(120% 90% at 50% 12%, rgba(193,18,31,.12), transparent 70%),
+    var(--night);
+  border: 1px solid var(--seam);
   cursor: grab;
   touch-action: pan-y;
 }
@@ -502,397 +650,318 @@ input[type="text"]:focus { border-color: var(--amber); outline: none; }
   display: grid;
   place-items: center;
   font: 12px/1.5 var(--mono);
-  color: var(--dim);
+  color: var(--ash);
   pointer-events: none;
   text-align: center;
   padding: 12px;
 }
 
-.mv-desc { margin-top: 12px; font: 13px/1.6 var(--mono); color: var(--dim); }
+.mv-desc { margin-top: 12px; font: 13px/1.6 var(--mono); color: var(--ash); }
 
-.mv-picks { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.mv-picks { display: flex; gap: 7px; margin-top: 14px; flex-wrap: wrap; }
 .mv-picks[hidden] { display: none; }
 .mv-pick {
-  background: var(--void);
-  border: 1px solid var(--rule);
+  background: var(--night);
+  border: 1px solid var(--seam);
   padding: 6px;
   cursor: pointer;
-  width: 94px;
-  color: var(--dim);
-  font: 11px/1.3 var(--mono);
+  width: 92px;
+  color: var(--ash);
+  font: 10.5px/1.3 var(--mono);
   text-align: center;
 }
-.mv-pick img { display: block; width: 100%; height: 62px; object-fit: contain; }
+.mv-pick img { display: block; width: 100%; height: 60px; object-fit: contain; }
 .mv-pick span { display: block; margin-top: 5px; word-break: break-word; }
-.mv-pick:hover { border-color: var(--dim); color: var(--bone); }
-.mv-pick.on { border-color: var(--amber); color: var(--amber); }
-
-/* ── правая колонка окна ──────────────────────────────────────────────────── */
+.mv-pick:hover { border-color: var(--ash); color: var(--bone); }
+.mv-pick.on { border-color: var(--blood); color: var(--blood); }
 
 .mv-h {
-  margin: 20px 0 9px;
-  font: 600 11px/1 var(--display);
+  margin: 22px 0 10px;
+  font: 600 11px/1 var(--mono);
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--ash);
 }
 .mv-h:first-child { margin-top: 0; }
 
-.mv-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font: 12.5px/1.7 var(--mono);
-  color: var(--dim);
-}
-.mv-list li { padding: 3px 0; }
+.mv-list { margin: 0; padding: 0; list-style: none; font: 12.5px/1.6 var(--mono); color: var(--ash); }
+.mv-list li { padding: 4px 0; border-bottom: 1px solid rgba(42,50,56,.5); }
+.mv-list li:last-child { border-bottom: 0; }
 .mv-list b { color: var(--bone); font-weight: 400; }
 
-/*
- * Права админки страница показывает таблицей «буква — название — что делает».
- * Своего класса у таблицы нет: ловим её по месту, чтобы шаблон уровня и шаблон
- * админки не разъехались в оформлении, когда их правят порознь.
- */
 .mv-side table { width: 100%; border-collapse: collapse; font: 12.5px/1.5 var(--mono); }
-.mv-side th,
 .mv-side td {
-  text-align: left;
+  padding: 7px 10px 7px 0;
+  border-bottom: 1px solid rgba(42,50,56,.5);
+  color: var(--ash);
   vertical-align: top;
-  padding: 6px 10px 6px 0;
-  border-bottom: 1px solid var(--rule);
-  color: var(--dim);
-  font-weight: 400;
 }
-.mv-side tr:last-child th,
 .mv-side tr:last-child td { border-bottom: 0; }
-.mv-side td:first-child { color: var(--amber); white-space: nowrap; }
-.mv-side th { color: #5c6152; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+.mv-side td:first-child { color: var(--blood); white-space: nowrap; }
 
-/*
- * Строки «срок — цена». Каким тегом их набрали, стиль знать не должен: и <div>,
- * и <li> здесь одинаково законны, а перечень цен, рассыпавшийся из-за выбора
- * тега, — самая обидная поломка на витрине.
- */
 .mv-prices { margin: 0; padding: 0; list-style: none; font: 13px/1 var(--mono); }
-.mv-prices > div,
 .mv-prices > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 0;
+  border-top: 1px solid var(--seam);
+  color: var(--ash);
+}
+.mv-prices > :first-child { border-top: 0; }
+.mv-prices b { color: var(--blood); font-weight: 400; font: 400 20px/1 var(--scream); letter-spacing: .03em; }
+
+.mv-buy {
+  margin-top: 20px;
+  width: 100%;
+  background: var(--gore);
+  border: 0;
+  color: var(--bone);
+  font: 400 18px/1 var(--scream);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 15px;
+  cursor: pointer;
+}
+.mv-buy:hover { background: #c9202c; }
+
+body.mv-open { overflow: hidden; }
+
+/* ── форма заказа ───────────────────────────────────────────────────────── */
+
+.order { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 36px; }
+@media (min-width: 900px) { .order { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 28px; } }
+@media (min-width: 900px) { aside { position: sticky; top: 24px; align-self: start; } }
+
+.card { background: var(--crypt); border: 1px solid var(--seam); padding: 24px; }
+.group + .group { margin-top: 28px; }
+
+.seg { display: flex; border: 1px solid var(--seam); width: fit-content; max-width: 100%; flex-wrap: wrap; }
+.seg button {
+  background: none;
+  border: 0;
+  border-right: 1px solid var(--seam);
+  color: var(--ash);
+  font: 12px/1 var(--mono);
+  letter-spacing: .06em;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--gore); color: var(--bone); }
+.seg button:hover:not([aria-pressed="true"]) { color: var(--bone); background: var(--slab); }
+
+input[type="text"] {
+  width: 100%;
+  background: var(--night);
+  border: 1px solid var(--seam);
+  color: var(--bone);
+  font: 14px/1 var(--mono);
+  padding: 13px 14px;
+}
+input[type="text"]::placeholder { color: var(--ash); }
+input[type="text"]:focus { border-color: var(--blood); outline: none; }
+
+.field { margin-top: 10px; }
+:focus-visible { outline: 2px solid var(--blood); outline-offset: 2px; }
+
+.check { display: flex; align-items: flex-start; gap: 11px; margin-top: 14px; cursor: pointer; font-size: 14px; }
+.check input { accent-color: var(--gore); width: 16px; height: 16px; margin-top: 2px; flex: none; }
+
+/* ── счёт ───────────────────────────────────────────────────────────────── */
+
+.bill { font: 13.5px/2 var(--mono); }
+.bill .row { display: flex; justify-content: space-between; gap: 14px; color: var(--ash); }
+.bill .row b { color: var(--bone); font-weight: 400; text-align: right; }
+.bill .total {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 14px;
-  padding: 10px 0;
-  border-top: 1px solid var(--rule);
-  color: var(--dim);
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--seam);
 }
-.mv-prices > :first-child { border-top: 0; }
-.mv-prices b { color: var(--amber); font-weight: 400; font-size: 15px; }
+.bill .total .sum { font: 400 40px/1 var(--scream); color: var(--blood); letter-spacing: .02em; }
 
-.mv-buy {
-  margin-top: 18px;
+.go {
+  margin-top: 24px;
   width: 100%;
-  background: var(--amber);
+  background: var(--gore);
   border: 0;
-  color: var(--void);
-  font: 600 13px/1 var(--display);
-  letter-spacing: .16em;
+  color: var(--bone);
+  font: 400 22px/1 var(--scream);
+  letter-spacing: .12em;
   text-transform: uppercase;
-  padding: 16px;
+  padding: 17px;
   cursor: pointer;
 }
-.mv-buy:hover { background: #ffd45c; }
+.go:hover { background: #c9202c; }
+.go:disabled { background: var(--seam); color: var(--ash); cursor: default; }
 
-/* Пока окно открыто, страница под ним не едет. */
-body.mv-open { overflow: hidden; }
+.note { margin: 16px 0 0; font-size: 12.5px; color: var(--ash); }
+.note b { color: var(--bone); font-weight: 600; }
 
-/* ═══ витрина уровней и админка ═════════════════════════════════════════════
- *
- * Карточка кликабельна целиком: щелчок по ней открывает окно просмотра со всем
- * рассказом о товаре. Поэтому и курсор, и :hover, и :focus-visible живут на
- * самой карточке, а «Подробнее» внутри — надпись, а не вложенная кнопка. Живая
- * кнопка внутри кликабельной карточки означала бы два обработчика на один
- * щелчок и остановку Tab дважды на одном и том же месте.
- */
+.errors {
+  margin-top: 18px;
+  border-left: 3px solid var(--blood);
+  padding: 11px 15px;
+  background: rgba(193,18,31,.09);
+  font-size: 13.5px;
+}
+.errors ul { margin: 0; padding-left: 18px; }
 
-.tier-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+.warn-box {
+  margin-top: 26px;
+  border-left: 3px solid var(--blood);
+  background: rgba(193,18,31,.07);
+  padding: 15px 17px;
+}
+.warn-box p { margin: 0 0 7px; font-size: 13.5px; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.big-ok { border-color: var(--blood); }
+.big-ok .label { color: var(--blood); }
+
+.steps { margin: 18px 0 0; padding-left: 20px; font-size: 14px; }
+.steps li { margin: 9px 0; }
+.big-steps { font-size: 15px; }
+.big-steps li { margin: 12px 0; color: var(--ash); }
+.big-steps b { color: var(--bone); font-weight: 600; }
+
+/* ── новости ────────────────────────────────────────────────────────────── */
+
+.news { margin-top: 16px; border: 1px solid var(--seam); }
+.news-item { padding: 22px 24px; border-bottom: 1px solid var(--seam); }
+.news-item:last-child { border-bottom: 0; }
+.news-item:hover { background: rgba(26,32,38,.4); }
+
+.news-date {
+  font: 11px/1 var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ash);
 }
 
-.tier-card {
-  background: var(--panel);
+.news-title {
+  margin: 10px 0 0;
+  font: 400 26px/1 var(--scream);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.news-title a { color: inherit; text-decoration: none; }
+.news-title a:hover { color: var(--blood); }
+
+.news-body { margin-top: 12px; max-width: 76ch; }
+.news-body p { margin: 0 0 11px; font-size: 14.5px; color: var(--bone); }
+.news-body p:last-child { margin-bottom: 0; }
+.news-body a { color: var(--blood); word-break: break-word; }
+
+.pager { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 24px; }
+.pager a, .pager .on {
+  padding: 9px 14px;
+  border: 1px solid var(--seam);
+  color: var(--ash);
+  font: 12px/1 var(--mono);
+  text-decoration: none;
+}
+.pager a:not(.on):hover { color: var(--bone); border-color: var(--ash); }
+.pager .on { background: var(--gore); border-color: var(--gore); color: var(--bone); }
+
+/* ── сетка вещей ────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(198px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.thing { background: var(--crypt); border: 1px solid var(--seam); padding: 14px; }
+.thing .viewer { height: 158px; margin: -14px -14px 12px; border: 0; border-bottom: 1px solid var(--seam); width: auto; }
+.thing-name { font: 400 19px/1 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
+.thing-desc { margin-top: 6px; font: 12.5px/1.5 var(--mono); color: var(--ash); }
+.thing-price { margin-top: 9px; font: 12px/1 var(--mono); color: var(--blood); }
+
+/* ── наборы кредитов ────────────────────────────────────────────────────── */
+
+.shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1px;
+  background: var(--seam);
+  border: 1px solid var(--seam);
+  margin-top: 8px;
+}
+.item {
+  position: relative;
+  background: var(--crypt);
   padding: 20px 18px 22px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   cursor: pointer;
-  position: relative;
 }
-.tier-card:hover { background: var(--raise); }
-.tier-card.on { background: var(--raise); box-shadow: inset 0 3px 0 var(--amber); }
-
-.tier-card .nm {
-  font: 600 21px/1 var(--display);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-.tier-card.on .nm { color: var(--amber); }
-.tier-card .blurb { font-size: 13.5px; color: var(--dim); }
-
-/*
- * Картинку кладёт model_img() — голый <img>, без своего окна просмотра: щёлкать
- * по нему будет карточка снаружи. Своего класса у него нет, поэтому правило
- * берёт его по тегу.
- */
-.tier-card img {
-  display: block;
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  background:
-    radial-gradient(120% 90% at 50% 15%, rgba(255, 194, 31, .07), transparent 70%),
-    var(--void);
-  border: 1px solid var(--rule);
-}
-
-/* Верхний уровень выделен так же, как в магазине наборов, — метка в углу. */
-.tier-card.top::after {
-  content: "верхний";
+.item:hover { background: var(--slab); }
+.item.on { background: var(--slab); box-shadow: inset 0 3px 0 var(--blood); }
+.item .nm { font: 400 26px/.9 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
+.item.on .nm { color: var(--blood); }
+.item .blurb { font-size: 13px; color: var(--ash); }
+.item.top::after {
+  content: "выгоднее всего";
   position: absolute;
   top: 0; right: 0;
-  background: var(--amber);
-  color: var(--void);
-  font: 600 10px/1 var(--mono);
+  background: var(--gore);
+  color: var(--bone);
+  font: 600 9.5px/1 var(--mono);
   letter-spacing: .14em;
   text-transform: uppercase;
   padding: 5px 8px;
 }
 
-/*
- * Админка — отдельный товар со своим сроком, и карточка у неё одна во всю
- * ширину. В сетку уровней её класть нельзя: рядом с пятью уровнями она
- * читалась бы шестым, а покупается она независимо.
- */
-.admin-card {
-  margin-top: 22px;
-  background: var(--panel);
-  border: 1px solid var(--rule);
-  padding: 22px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 26px;
-  flex-wrap: wrap;
-  cursor: pointer;
-}
-.admin-card:hover { background: var(--raise); }
-.admin-card .nm {
-  font: 600 22px/1 var(--display);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-.admin-card .blurb { margin: 7px 0 0; font-size: 13.5px; color: var(--dim); max-width: 64ch; }
-
-/* Общий .price рассчитан на столбец: там он прижат вниз и отчёркнут сверху.
-   В строке админки и то и другое лишнее. */
-.admin-card .price { margin-top: 0; padding-top: 0; border-top: 0; }
-
-/* «Подробнее» — надпись, а не кнопка (см. выше). Если её всё же набрали
-   тегом <button>, она обязана выглядеть так же: разнобой на одной витрине
-   заметнее, чем лишний тег. */
-.tier-card .more,
-.tier-card button,
-.admin-card .more,
-.admin-card button {
-  background: none;
-  border: 1px solid var(--rule);
-  color: var(--dim);
-  font: 11px/1 var(--mono);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  padding: 10px 13px;
-  cursor: pointer;
-}
-
-/* В карточке уровня надпись стоит в столбце и тянулась бы во всю его ширину.
-   В строке админки её ширина задана содержимым, и растягивать нечего. */
-.tier-card .more,
-.tier-card button { align-self: flex-start; }
-
-.tier-card:hover .more,
-.tier-card:hover button,
-.tier-card:focus-visible .more,
-.tier-card:focus-visible button,
-.admin-card:hover .more,
-.admin-card:hover button,
-.admin-card:focus-visible .more,
-.admin-card:focus-visible button { color: var(--amber); border-color: var(--amber); }
-
-/* Обводка уходит внутрь: карточки стоят вплотную, сетка между ними в один
-   пиксель, и общая обводка с отступом наружу залезла бы на соседку. */
-.tier-card:focus-visible,
-.admin-card:focus-visible { outline-offset: -2px; }
-
-/* ═══ краткие карточки уровней на главной ═══════════════════════════════════ */
-
-.tier-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-}
-.tier-brief {
-  background: var(--panel);
-  padding: 18px;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.tier-brief:hover { background: var(--raise); }
-.tier-brief .nm {
-  font: 600 18px/1 var(--display);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-.tier-brief:hover .nm { color: var(--amber); }
-.price-small { margin-top: auto; font: 600 16px/1 var(--display); color: var(--amber); }
-
-/* ═══ новости ═══════════════════════════════════════════════════════════════
- *
- * Одна лента на две страницы: на главной пять свежих, в архиве по десять.
- * Оформление у них общее намеренно — новость, выглядящая на главной иначе, чем
- * в архиве, читается как две разные новости.
- */
-
-.news { margin-top: 16px; border: 1px solid var(--rule); }
-
-.news-item { padding: 20px 22px; border-bottom: 1px solid var(--rule); }
-.news-item:last-child { border-bottom: 0; }
-
-.news-date {
-  font: 11px/1 var(--mono);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.news-title {
-  margin: 9px 0 0;
-  font: 600 19px/1.25 var(--display);
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.news-title a { color: inherit; text-decoration: none; }
-.news-title a:hover { color: var(--amber); }
-
-/* Внутри — только то, что собрала news_html(): абзацы и ссылки, больше там
-   ничего не бывает. Ширина ограничена: это единственная проза на сайте, и на
-   широком мониторе строка в полтораста знаков не читается. */
-.news-body { margin-top: 11px; max-width: 78ch; }
-.news-body p { margin: 0 0 11px; font-size: 14.5px; color: var(--bone); }
-.news-body p:last-child { margin-bottom: 0; }
-
-/* ⚠️ Адрес в теле новости приходит от человека и бывает длиннее колонки: без
- * разрыва он растягивает всю ленту, и страница едет вбок вместе с шапкой. */
-.news-body a { word-break: break-word; }
-
-/* ── постраничная разбивка ────────────────────────────────────────────────── */
-
-.pager { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 22px; }
-.pager a,
-.pager .on {
-  min-width: 42px;
-  text-align: center;
-  border: 1px solid var(--rule);
-  padding: 11px 13px;
-  font: 12px/1 var(--mono);
-  letter-spacing: .08em;
-  color: var(--dim);
-  text-decoration: none;
-}
-/* ⚠️ :not(.on) здесь не украшение: текущую страницу разметка вправе оставить
- * ссылкой, и без этого запрета наведение на неё перебивало бы жёлтую заливку
- * ниже — правило со ссылкой и наведением весит больше правила с одним классом. */
-.pager a:not(.on):hover { color: var(--bone); border-color: var(--dim); }
-
-/* Текущая страница — не ссылка, поэтому правило берёт её по классу, а не по
-   тегу: страница вольна набрать её и <span>, и <a>. */
-.pager .on { background: var(--amber); border-color: var(--amber); color: var(--void); font-weight: 600; }
-
-/* ═══ сетка вещей (ножи, оружие) ════════════════════════════════════════════ */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
-}
-.thing { background: var(--panel); border: 1px solid var(--rule); padding: 14px; }
-.thing .viewer { height: 160px; margin: -14px -14px 12px; border: 0; border-bottom: 1px solid var(--rule); width: auto; }
-.thing-name { font: 600 15px/1.2 var(--display); letter-spacing: .04em; text-transform: uppercase; }
-.thing-desc { margin-top: 5px; font: 12.5px/1.5 var(--mono); color: var(--dim); }
-.thing-price { margin-top: 9px; font: 12px/1 var(--mono); color: var(--amber); }
-
-/* ═══ наборы кредитов ═══════════════════════════════════════════════════════ */
-
 .bonus {
   display: inline-block;
   align-self: flex-start;
-  border: 1px solid var(--amber);
-  color: var(--amber);
+  border: 1px solid var(--blood);
+  color: var(--blood);
   font: 11px/1 var(--mono);
-  letter-spacing: .06em;
+  letter-spacing: .08em;
   padding: 5px 9px;
 }
 
-.warn-box {
-  margin-top: 26px;
-  border-left: 3px solid var(--amber);
-  background: rgba(255, 194, 31, .06);
-  padding: 14px 16px;
-}
-.warn-box p { margin: 0 0 6px; font-size: 13.5px; }
-.warn-box p:last-child { margin-bottom: 0; }
+/* ── список обликов ─────────────────────────────────────────────────────── */
 
-/* ═══ список обликов ════════════════════════════════════════════════════════ */
-
-.skin-list { margin-top: 16px; border: 1px solid var(--rule); }
+.skin-list { margin-top: 16px; border: 1px solid var(--seam); }
 .skin-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
   gap: 14px;
   align-items: baseline;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--seam);
   font: 13px/1.4 var(--mono);
 }
 .skin-row:last-child { border-bottom: 0; }
-.skin-row:hover { background: var(--raise); }
+.skin-row:hover { background: var(--slab); }
 .skin-name { color: var(--bone); }
-.skin-desc { color: var(--dim); }
-.skin-price { color: var(--amber); white-space: nowrap; }
-.skin-price::after { content: " кр"; color: var(--dim); }
+.skin-desc { color: var(--ash); }
+.skin-price { color: var(--blood); white-space: nowrap; }
+.skin-price::after { content: " кр"; color: var(--ash); }
 @media (max-width: 560px) {
   .skin-row { grid-template-columns: minmax(0, 1fr) auto; }
   .skin-desc { grid-column: 1 / -1; }
 }
 
-/* ═══ шаги ══════════════════════════════════════════════════════════════════ */
+/* ── подвал ─────────────────────────────────────────────────────────────── */
 
-.big-steps { font-size: 15px; }
-.big-steps li { margin: 12px 0; color: var(--dim); }
-.big-steps b { color: var(--bone); font-weight: 500; }
-
-code {
-  font: 13px/1.4 var(--mono);
-  color: var(--amber);
-  background: var(--void);
-  border: 1px solid var(--rule);
-  padding: 1px 6px;
+.foot {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--seam);
+  font: 12px/1.9 var(--mono);
+  color: var(--ash);
 }
-.pair code { border-color: var(--rule); color: var(--bone); }
+.foot a { color: var(--ash); }
+.foot a:hover { color: var(--blood); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
