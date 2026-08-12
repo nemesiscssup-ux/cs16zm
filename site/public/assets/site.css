@@ -115,31 +115,67 @@ body::after {
   mix-blend-mode: overlay;
 }
 
+/* Три слоя по высоте, и порядок между ними значим:
+     0 — зерно и виньетка (body::before / body::after),
+     1 — пульсирующее пятно: оно должно проступать ПОВЕРХ виньетки, иначе по
+         углам, куда его чаще всего заносит, его просто съест затемнение,
+     2 — само содержимое: его не заслоняет ничто. */
 .wrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 24px 72px;
 }
 @media (max-width: 640px) { .wrap { padding: 0 16px 56px; } }
 
-/* ⚠️ Вспышка заражения — единственная анимация на всей странице, и она одна
-   потому, что в игре это тоже одно событие: экран краснеет в момент, когда
-   тебя обратили. Полсекунды при загрузке, дальше страница неподвижна. */
-.flash {
+/* ── пульс ──────────────────────────────────────────────────────────────────
+ *
+ * Красное пятно проступает в случайном месте, дважды ударяет и гаснет. Место,
+ * размер и пауза до следующего раза каждый раз новые — их задаёт скрипт в
+ * подвале страницы (см. page_foot в private/app/view.php).
+ *
+ * ⚠️ ЗДЕСЬ БЫЛА ВСПЫШКА ПРИ ЗАГРУЗКЕ, И ОНА БЫЛА ОШИБКОЙ. Экран краснел
+ * каждый раз, когда человек открывал ЛЮБУЮ страницу: перешёл в «Кредиты» —
+ * вспышка, вернулся назад — снова. В игре это событие происходит с игроком
+ * один раз за раунд и что-то значит; на сайте оно происходило от нажатия
+ * ссылки и не значило ничего, а раздражало с третьего перехода.
+ *
+ * Ритм взят у сердца: два удара подряд и пауза, а не ровное мигание. Ровное
+ * читается как неисправность интерфейса, неровное — как что-то живое.
+ *
+ * ⚠️ Двигаем ТОЛЬКО прозрачность. Она считается видеокартой и не заставляет
+ * браузер пересчитывать разметку — а у здешних игроков машины небыстрые, и
+ * анимация фона не вправе отнимать у них кадры. Место меняется, пока пятна
+ * не видно.
+ */
+.blot {
   position: fixed;
-  inset: 0;
-  z-index: 60;
+  z-index: 1;
   pointer-events: none;
-  background: radial-gradient(120% 80% at 50% 40%, rgba(193,18,31,.42), transparent 70%);
-  animation: bite .55s ease-out forwards;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(circle,
+    rgba(193, 18, 31, .55) 0%,
+    rgba(193, 18, 31, .22) 42%,
+    transparent 70%);
+  /* На тёмном screen работает как свет, а не как краска поверх. */
+  mix-blend-mode: screen;
 }
-@keyframes bite {
-  0%   { opacity: 1; }
+.blot.on { animation: beat 6.4s ease-in-out both; }
+
+@keyframes beat {
+  0%   { opacity: 0; }
+  22%  { opacity: .38; }   /* проступило */
+  30%  { opacity: .20; }
+  38%  { opacity: .52; }   /* удар */
+  46%  { opacity: .24; }
+  54%  { opacity: .40; }   /* второй, слабее */
+  70%  { opacity: .16; }
   100% { opacity: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .flash { display: none; } }
+
+@media (prefers-reduced-motion: reduce) { .blot { display: none; } }
 
 /* ── шапка ──────────────────────────────────────────────────────────────── */
 
@@ -272,21 +308,50 @@ code {
  * три. Жёлтый выброшен сознательно: рядом с кровью он тянет страницу в
  * дешёвый неон, а без него язык меню остаётся узнаваемым.
  */
+/*
+ * ⚠️ МЕНЮ ВЫХОДИТ ЗА ПОЛЯ КАРТОЧКИ, И ЭТО НАРОЧНО. Сначала оно было обычным
+ * блоком со своей рамкой внутри .card — то есть коробка в коробке: две рамки
+ * в трёх сантиметрах друг от друга, и взгляду не за что зацепиться. Теперь
+ * отрицательные поля растягивают его во всю ширину карточки, а от рамки
+ * осталась одна красная полоса слева — как у меню в игре, которое тоже не
+ * коробка, а полоса у края экрана.
+ *
+ * 24px — это padding у .card. Разъедутся — меню вылезет за карточку или не
+ * дотянет до края; править надо оба числа разом.
+ */
 .zp-menu {
-  background: rgba(10,12,14,.82);
-  border: 1px solid var(--seam);
+  margin: 0 -24px;
+  background: var(--night);
+  border: 0;
   border-left: 3px solid var(--blood);
   padding: 16px 0 12px;
   font: 14px/1 var(--mono);
 }
 
-.zp-title {
-  padding: 0 18px 14px;
-  color: var(--ash);
-  font-size: 12px;
-  letter-spacing: .18em;
+/* 21 = 24 поля карточки минус 3 полосы: текст меню встаёт по той же
+   вертикали, что и остальные подписи формы. */
+.zp-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 0 21px 13px;
+  border-bottom: 1px solid var(--seam);
+  margin-bottom: 8px;
+}
+
+/* Строка-заголовок как у меню в игре: сверху имя, ниже пункты. */
+.zp-mod {
+  color: var(--bone);
+  font: 13px/1 var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
+
+/* ⚠️ Подсказка про цифры стоит ЗДЕСЬ, а не под меню. Возможность, о которой
+   сказали ниже списка, не существует: до неё не дочитывают. */
+.zp-keys { color: var(--ash); font: 11.5px/1.4 var(--mono); }
 
 .zp-items { margin: 0; padding: 0; list-style: none; }
 
@@ -295,7 +360,7 @@ code {
   align-items: baseline;
   gap: 12px;
   width: 100%;
-  padding: 11px 18px;
+  padding: 11px 21px;
   background: none;
   border: 0;
   color: var(--bone);
@@ -315,10 +380,10 @@ code {
 }
 .zp-row[aria-pressed="true"] .zp-name { color: var(--blood); }
 
-.zp-sep { height: 1px; background: var(--seam); margin: 8px 18px; }
+.zp-sep { height: 1px; background: var(--seam); margin: 8px 21px; }
 
 .zp-foot {
-  padding: 12px 18px 0;
+  padding: 12px 21px 0;
   color: var(--ash);
   font-size: 12.5px;
 }
@@ -492,23 +557,38 @@ code {
 .admin-card .blurb { margin: 9px 0 0; font-size: 13px; color: var(--ash); max-width: 62ch; }
 .admin-card .price { margin-top: 0; padding-top: 0; border-top: 0; }
 
-/* «Подробнее» — надпись, а не кнопка (см. выше). Если её всё же набрали
-   тегом <button>, она обязана выглядеть так же: разнобой на одной витрине
-   заметнее, чем лишний тег. */
-.tier-card .more,
+/*
+ * «Подробнее» — надпись внутри кликабельной карточки, а не кнопка (см. выше).
+ * Но тот же вид нужен и отдельно стоящим ссылкам — «Смотреть подробно»,
+ * «Все новости». Поэтому правило общее, а не привязано к карточке.
+ *
+ * ⚠️ РАНЬШЕ БЫЛ .btn, И ЕГО ПОТЕРЯЛИ. При переписывании оформления класс
+ * .btn исчез из стиля, а ссылки на главной остались с ним — и превратились в
+ * обычный синий текст посреди тёмной страницы. Урок простой: класс, который
+ * задаётся в одном файле, а применяется в другом, надо удалять или
+ * переименовывать в обоих сразу.
+ */
+.more,
 .tier-card button,
-.admin-card .more,
 .admin-card button {
-  align-self: flex-start;
+  display: inline-block;
   background: none;
   border: 1px solid var(--seam);
   color: var(--ash);
   font: 11px/1 var(--mono);
   letter-spacing: .12em;
   text-transform: uppercase;
-  padding: 9px 13px;
+  padding: 10px 14px;
   cursor: pointer;
+  text-decoration: none;
 }
+.more:hover { color: var(--blood); border-color: var(--blood); }
+
+/* Внутри карточки надпись прижата влево и загорается вместе со всей карточкой,
+   а не только когда мышь попала точно в неё. */
+.tier-card .more,
+.tier-card button,
+.admin-card .more { align-self: flex-start; }
 .tier-card:hover .more,
 .tier-card:hover button,
 .admin-card:hover .more,

@@ -215,7 +215,10 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
     ?>
     <div class="group">
       <div class="zp-menu" id="pick">
-        <div class="zp-title">Выберите привилегию</div>
+        <div class="zp-head">
+          <span class="zp-mod">Вспышка эпидемии</span>
+          <span class="zp-keys">щёлкните строку или нажмите её цифру</span>
+        </div>
         <ul class="zp-items">
           <?php foreach ($tiers as $i => $t): ?>
             <li>
@@ -244,12 +247,10 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
         </ul>
         <div class="zp-foot"><span class="zp-num">0.</span> Сбросить выбор</div>
       </div>
-      <?php /* Возможность, о которой не сказали, — это не возможность: цифры
-               работают, но догадаться об этом неоткуда. */ ?>
-      <p class="hint">
-        Выбирайте мышью или цифрами на клавиатуре — как в игровом меню.
-        Подробности о каждом уровне — в карточках выше.
-      </p>
+      <?php /* Про цифры сказано в шапке самого меню, а не здесь: подсказка под
+               списком стоит там, куда уже не смотрят — выбор к этому моменту
+               сделан. Здесь остаётся только то, чего в меню не видно. */ ?>
+      <p class="hint">Подробности о каждом уровне — в карточках выше.</p>
     </div>
 
     <div class="group">

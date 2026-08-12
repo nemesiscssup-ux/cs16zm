@@ -119,7 +119,7 @@ $liveMap = !empty($info['online']) && !empty($info['map']) ? $info['map'] : '';
     <?php endforeach; ?>
   </div>
   <?php /* Класса .btn в новом оформлении нет — под лентой новостей такая же простая ссылка. */ ?>
-  <p style="margin-top:22px"><a href="privileges.php">Смотреть подробно →</a></p>
+  <p style="margin-top:22px"><a class="more" href="privileges.php">Смотреть подробно →</a></p>
 </section>
 
 <?php
@@ -145,7 +145,7 @@ if ($news): ?>
         </article>
       <?php endforeach; ?>
     </div>
-    <p style="margin-top:22px"><a href="news.php">Все новости →</a></p>
+    <p style="margin-top:22px"><a class="more" href="news.php">Все новости →</a></p>
   </section>
 <?php endif; ?>
 
