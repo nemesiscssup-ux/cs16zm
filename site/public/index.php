@@ -20,7 +20,7 @@ $info = a2s_info();
 $tiers = array_values(array_filter(tiers(), function ($t) { return $t['sold']; }));
 $news = news_latest(5);
 
-page_head('Сервер', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASSET_V) . '" defer></script>');
+page_head('Главная', 'index', '<script src="assets/viewer.js?v=' . h(ZM_ASSET_V) . '" defer></script>');
 
 /*
  * Подпись шапки — строка из игрового чата, и первое, что человек читает.
@@ -122,53 +122,6 @@ $liveMap = !empty($info['online']) && !empty($info['map']) ? $info['map'] : '';
   <p style="margin-top:22px"><a class="more" href="privileges.php">Смотреть подробно →</a></p>
 </section>
 
-<?php
-/*
- * Классы зомби — все, и платные, и открытые всем.
- *
- * Показывать вперемешку — решение намеренное. Страница привилегий отвечает на
- * вопрос «за что деньги», и там бесплатным классам делать нечего. Главная
- * отвечает на другой — «во что тут играют», — и человеку, который сюда попал
- * впервые, полезнее увидеть всех сразу: половина достаётся даром, и это
- * довод зайти, а не довод не покупать.
- *
- * За какие деньги открыт класс, написано у него же под описанием — иначе
- * витрина превратилась бы в обещание, что всё бесплатно.
- */
-$classes = catalog_classes();
-$tierNames = array();
-foreach (tiers() as $t) {
-    $tierNames[$t['id']] = $t['name'];
-}
-?>
-<section class="section">
-  <h2>Классы зомби</h2>
-  <p class="lead-text">
-    Класс выбирается в меню зомби и держится до конца раунда. У каждого своя
-    способность на отдельной клавише. Щёлкните по модели — покрутится.
-  </p>
-  <div class="grid">
-    <?php foreach ($classes as $c): ?>
-      <article class="thing">
-        <?= viewer($c['model'], '', 'Зомби: ' . $c['name'],
-              $c['ability'] . ' (' . $c['key'] . ') — ' . $c['desc']) ?>
-        <div class="thing-name"><?= h($c['name']) ?></div>
-        <div class="thing-desc">
-          <?= h($c['ability']) ?> <b>(<?= h($c['key']) ?>)</b> — <?= h($c['desc']) ?>
-        </div>
-        <ul class="perks" style="margin-top:8px">
-          <li>здоровья <b><?= (int)$c['health'] ?></b></li>
-          <li>скорость <b><?= (int)$c['speed'] ?></b></li>
-        </ul>
-        <div class="thing-price">
-          <?= $c['tier'] === null
-                ? 'открыт всем'
-                : 'с уровня ' . h(isset($tierNames[$c['tier']]) ? $tierNames[$c['tier']] : $c['tier']) ?>
-        </div>
-      </article>
-    <?php endforeach; ?>
-  </div>
-</section>
 
 <?php
 /*

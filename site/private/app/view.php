@@ -10,11 +10,17 @@
 /** Разделы меню: адрес, подпись, признак «этот раздел сейчас открыт». */
 function nav_items()
 {
+    /*
+     * ⚠️ «Кредиты» УБРАНЫ ИЗ МЕНЮ ПО ПРОСЬБЕ ВЛАДЕЛЬЦА, НО СТРАНИЦА ЖИВА.
+     * shop.php работает и принимает заказы, к ней просто больше нет ссылки в
+     * шапке. Кто попадёт на неё по прямому адресу, купит кредиты как прежде;
+     * ошибки в buy.php тоже уводят обратно на неё. Захотите закрыть продажу
+     * кредитов совсем — этого мало, надо закрывать саму страницу.
+     */
     return array(
-        'index'      => array('href' => 'index.php',      'label' => 'Сервер'),
+        'index'      => array('href' => 'index.php',      'label' => 'Главная'),
         'news'       => array('href' => 'news.php',       'label' => 'Новости'),
         'privileges' => array('href' => 'privileges.php', 'label' => 'Привилегии'),
-        'shop'       => array('href' => 'shop.php',       'label' => 'Кредиты'),
     );
 }
 
@@ -33,8 +39,7 @@ function page_head($title, $active = '', $extra = '')
 </head>
 <?php
 /*
- * Что стоит по краю страницы: слева вид карты. Справа пусто — см. .side-r
- * в assets/site.css, там записано почему.
+ * Что стоит по краям страницы: слева снимок карты, справа следы когтей.
  *
  * Адрес задаётся здесь, а не в стиле, по одной причине: к нему нужен номер
  * версии статики, а CSS про него не знает, и второе место, где этот номер надо
@@ -45,6 +50,7 @@ function page_head($title, $active = '', $extra = '')
  * правки вёрстки.
  */
 $sideL = '/assets/map-left.jpg';
+$sideR = '/assets/claw-marks.png';
 ?>
 <?php
 /*
@@ -60,7 +66,8 @@ $sideL = '/assets/map-left.jpg';
  * порядке слоёв и в маске — а виноват был один пропущенный слэш.
  */
 ?>
-<body style="--side-left:url('<?= h($sideL) ?>?v=<?= h(ZM_ASSET_V) ?>');">
+<body style="--side-left:url('<?= h($sideL) ?>?v=<?= h(ZM_ASSET_V) ?>');
+             --side-right:url('<?= h($sideR) ?>?v=<?= h(ZM_ASSET_V) ?>')">
 <?php
 /*
  * Полоса с видом карты — отдельным узлом, а не псевдоэлементом тела.
@@ -74,6 +81,7 @@ $sideL = '/assets/map-left.jpg';
  */
 ?>
 <div class="side side-l" aria-hidden="true"></div>
+<div class="side side-r" aria-hidden="true"></div>
 <div class="wrap">
 
 <header class="top">
