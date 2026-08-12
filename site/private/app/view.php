@@ -41,8 +41,12 @@ function page_head($title, $active = '', $extra = '')
  * Захотите другую карту — положите картинку рядом и поменяйте одно имя.
  * Настоящие снимки с сервера сюда встанут так же, без правки вёрстки.
  */
-$sideL = 'map-left';
-$sideR = 'map-right';
+/*
+ * Слева вид карты, справа зомби. Пути полные — от корня сайта, и каждый может
+ * указывать куда угодно: карта лежит в assets, модели в models.
+ */
+$sideL = '/assets/map-left.jpg';
+$sideR = '/models/zclass-revpoison.png';
 ?>
 <?php
 /*
@@ -58,8 +62,8 @@ $sideR = 'map-right';
  * порядке слоёв и в маске — а виноват был один пропущенный слэш.
  */
 ?>
-<body style="--side-left:url('/assets/<?= h($sideL) ?>.jpg?v=<?= h(ZM_ASSET_V) ?>');
-             --side-right:url('/assets/<?= h($sideR) ?>.jpg?v=<?= h(ZM_ASSET_V) ?>')">
+<body style="--side-left:url('<?= h($sideL) ?>?v=<?= h(ZM_ASSET_V) ?>');
+             --side-right:url('<?= h($sideR) ?>?v=<?= h(ZM_ASSET_V) ?>')">
 <?php
 /*
  * Полосы с видом карты — отдельными узлами, а не псевдоэлементами тела.
