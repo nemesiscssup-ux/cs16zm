@@ -41,10 +41,11 @@ function page_head($title, $active = '', $extra = '')
  * Захотите другую карту — положите картинку рядом и поменяйте одно имя.
  * Настоящие снимки с сервера сюда встанут так же, без правки вёрстки.
  */
-$side = 'map-side';
+$sideL = 'map-left';
+$sideR = 'map-right';
 ?>
-<body style="--side-left:url('assets/<?= h($side) ?>.png?v=<?= h(ZM_ASSET_V) ?>');
-             --side-right:url('assets/<?= h($side) ?>.png?v=<?= h(ZM_ASSET_V) ?>')">
+<body style="--side-left:url('assets/<?= h($sideL) ?>.jpg?v=<?= h(ZM_ASSET_V) ?>');
+             --side-right:url('assets/<?= h($sideR) ?>.jpg?v=<?= h(ZM_ASSET_V) ?>')">
 <div class="wrap">
 
 <header class="top">
