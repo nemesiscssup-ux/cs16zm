@@ -71,22 +71,45 @@ function catalog_classes()
         array(
             'name' => 'Ганимед', 'tier' => 'vip', 'model' => 'zclass-ganymede',
             'key' => 'G', 'ability' => 'Разгон', 'desc' => 'резко набирает скорость',
-            'health' => 3000, 'speed' => 245, 'gravity' => 0.79, 'knockback' => 0.49,
+            'health' => 4800, 'speed' => 245, 'gravity' => 0.79, 'knockback' => 0.49,
         ),
         array(
             'name' => 'Ревенант Огонь', 'tier' => 'leader', 'model' => 'zclass-revfire',
             'key' => 'G', 'ability' => 'Огненный шар', 'desc' => 'поджигает всех, кого задел',
-            'health' => 3600, 'speed' => 270, 'gravity' => 0.80, 'knockback' => 0.10,
+            'health' => 5750, 'speed' => 270, 'gravity' => 0.80, 'knockback' => 0.10,
         ),
         array(
             'name' => 'Ревенант Лёд', 'tier' => 'imperator', 'model' => 'zclass-revice',
             'key' => 'G', 'ability' => 'Паралич', 'desc' => 'замораживает на месте',
-            'health' => 3400, 'speed' => 245, 'gravity' => 0.69, 'knockback' => 1.00,
+            'health' => 5450, 'speed' => 245, 'gravity' => 0.69, 'knockback' => 1.00,
         ),
         array(
             'name' => 'Ревенант Яд', 'tier' => 'pharaoh', 'model' => 'zclass-revpoison',
             'key' => 'G', 'ability' => 'Ядовитый шар', 'desc' => 'отравляет всех, кого задел',
-            'health' => 4000, 'speed' => 270, 'gravity' => 0.80, 'knockback' => 0.10,
+            'health' => 6400, 'speed' => 270, 'gravity' => 0.80, 'knockback' => 0.10,
+        ),
+
+        /*
+         * Ниже — классы, открытые ВСЕМ. tier = null означает не «данных нет», а
+         * «денег не требует».
+         *
+         * ⚠️ Страница привилегий их не показывает и не должна: там перебор идёт
+         * по уровням, а ключа null среди уровней нет — такая запись отсеивается
+         * сама. Показывает их витрина классов на главной, и там они стоят
+         * наравне с платными: человеку полезно видеть, что достаётся даром.
+         *
+         * ⚠️ Числа сверены с плагинами: cso_class_shaman.sma и таблица
+         * g_classes в zp_zclass_vip.sma. Правя их там, правьте и здесь.
+         */
+        array(
+            'name' => 'Шаман', 'tier' => null, 'model' => 'zclass-shaman',
+            'key' => 'R', 'ability' => 'Гипноз', 'desc' => 'обездвиживает взглядом',
+            'health' => 5100, 'speed' => 255, 'gravity' => 0.80, 'knockback' => 0.49,
+        ),
+        array(
+            'name' => 'Спринтер', 'tier' => null, 'model' => 'zclass-sprinter',
+            'key' => 'E', 'ability' => 'Спринт', 'desc' => 'рывок на короткое время',
+            'health' => 3350, 'speed' => 300, 'gravity' => 0.80, 'knockback' => 1.30,
         ),
     );
 }
@@ -141,7 +164,10 @@ function catalog_weapons()
     return array(
         array('name' => 'AK-47 Long', 'desc' => 'автомат, урон +30%',                  'packs' => 18, 'model' => 'gun-ak47long'),
         array('name' => 'ВСК-94',     'desc' => 'снайперская, урон +25%, скорость +15%', 'packs' => 22, 'model' => 'gun-vsk94'),
-        array('name' => 'Devil Baby', 'desc' => 'пистолет ближнего боя',                'packs' => 14, 'model' => 'gun-devilbaby'),
+        // ⚠️ Строка расходилась с игрой: в магазине ствол зовётся «Evil Baby»,
+        // это автомат и стоит он 25, а не 14. Сверено 12 августа 2026 по
+        // zp_automat_devilbaby.sma после приведения магазина к одному виду.
+        array('name' => 'Evil Baby',  'desc' => 'автомат, урон +80%',                  'packs' => 25, 'model' => 'gun-devilbaby'),
     );
 }
 
