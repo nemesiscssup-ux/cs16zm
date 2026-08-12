@@ -78,18 +78,50 @@ copy(join(REUNION, 'bin', 'Windows', 'reunion_mm.dll'), join(CSTRIKE, 'addons', 
 // reunion.cfg кладётся в каталог мода, а НЕ рядом с библиотекой: по Readme ReUnion
 // ищет его в server root или gamedir. Из addons/reunion он не читается, и модуль
 // молча уходит в «fail load».
-copy(join(REUNION, 'reunion.cfg'), join(CSTRIKE, 'reunion.cfg'), 'ReUnion конфигурация')
+// Берём НАШ конфиг, а не родной из архива: в нашем объяснено, почему что
+// выставлено, и изменено опознание Setti-клиентов. Родной остаётся в архиве —
+// с ним сверяются при обновлении ReUnion.
+const OUR_REUNION = join(ROOT, 'custom', 'reunion.cfg')
+copy(existsSync(OUR_REUNION) ? OUR_REUNION : join(REUNION, 'reunion.cfg'),
+     join(CSTRIKE, 'reunion.cfg'),
+     existsSync(OUR_REUNION) ? 'ReUnion: настройки из custom/reunion.cfg' : 'ReUnion конфигурация (родная)')
 
-// Без соли ReUnion не запускается вовсе («SteamIdHashSalt is not set or too short»).
-// Соль своя у каждой установки: она участвует в вычислении SteamID нон-стим игроков,
-// поэтому менять её после запуска нельзя — у всех игроков сменятся идентификаторы.
+/*
+ * Соль, которой ReUnion считает SteamID игрокам без лицензии.
+ *
+ * Без неё ReUnion не запускается вовсе («SteamIdHashSalt is not set or too
+ * short»). Она же и мешает принести чужой SteamID со стороны: сервер считает
+ * свой собственный, зная секрет, которого больше нет ни у кого.
+ *
+ * ⚠️ ЗДЕСЬ БЫЛА ОШИБКА, И ОНА ЖДАЛА ПЕРВОЙ ПЕРЕСБОРКИ ПОСЛЕ ЗАПУСКА. Соль
+ * генерировалась ЗАНОВО при каждом прогоне — при том, что соседний комментарий
+ * сам предупреждал, что менять её нельзя. Пока сервер не запущен, это ничего
+ * не стоит; после запуска первая же пересборка сменила бы SteamID у всех
+ * игроков без лицензии, и кредиты, ножи, облики и привилегии по SteamID стали
+ * бы им чужими — молча, без единой ошибки в консоли.
+ *
+ * Поэтому соль живёт в custom/reunion-salt.txt, вне репозитория (см.
+ * .gitignore). Заводится один раз, дальше только читается.
+ */
+const SALT_FILE = join(ROOT, 'custom', 'reunion-salt.txt')
+let reunionSalt = ''
+if (existsSync(SALT_FILE)) {
+  reunionSalt = readFileSync(SALT_FILE, 'utf8').trim()
+}
+if (reunionSalt.length < 16) {
+  // 48 знаков: родная документация просит от 16 и советует 32 и больше.
+  reunionSalt = randomBytes(24).toString('hex')
+  writeFileSync(SALT_FILE, reunionSalt + '\n', 'utf8')
+  console.log('+ ReUnion: заведена соль custom/reunion-salt.txt — НЕ ТЕРЯЙТЕ ЕЁ')
+} else {
+  console.log('+ ReUnion: соль взята из custom/reunion-salt.txt')
+}
+
 const reunionCfg = join(CSTRIKE, 'reunion.cfg')
 if (existsSync(reunionCfg)) {
-  const salt = randomBytes(24).toString('hex')
   const text = readFileSync(reunionCfg, 'latin1')
-    .replace(/^SteamIdHashSalt\s*=.*$/m, `SteamIdHashSalt = ${salt}`)
+    .replace(/^SteamIdHashSalt\s*=.*$/m, `SteamIdHashSalt = ${reunionSalt}`)
   writeFileSync(reunionCfg, text, 'latin1')
-  console.log('+ ReUnion: сгенерирована соль SteamIdHashSalt')
 }
 
 // 5. ReGameDLL — игровая логика.
@@ -329,6 +361,58 @@ if (existsSync(pluginsIni)) {
   const classes = [...CLASS_ORDER.filter(n => classPlugins.includes(n)), ...unlisted]
   const plain = rest.filter(n => !classPlugins.includes(n))
 
+  // ⚠️ ПОРЯДОК ПОЗИЦИЙ В СПЕЦ-МАГАЗИНЕ — ЭТО ТОЖЕ ПОРЯДОК ЗАГРУЗКИ. Мод
+  // показывает спец-вещи в том порядке, в каком их зарегистрировали. По алфавиту
+  // имён файлов получалась каша: шесть автоматов, потом броня, потом пулемёт,
+  // потом пистолет, потом снайперская. Владелец попросил один вид — вид это и
+  // порядок тоже. Здесь список идёт по типам, как в самих названиях.
+  //
+  // ⚠️ ОДНОЙ ЭТОЙ СТРОКОЙ ПОРЯДОК НЕ ЗАДАЁТСЯ. AMXX проходит все плагины
+  // сначала на предзагрузке (plugin_precache) и только потом на запуске
+  // (plugin_init): что бы ни стояло здесь, зарегистрированное на предзагрузке
+  // встанет выше. Магазин оружия регистрирует свои девятнадцать стволов именно
+  // там и поэтому всегда первый — остальные вещи регистрируются на запуске, и
+  // вот их порядок задаёт этот список.
+  const SHOP_ORDER = [
+    'zp_shop_weapons', // 19 стволов: [П] [Д] [А] [Пм] [С] [В] — регистрирует на предзагрузке
+    'zp_pistol_elephant', // [П]
+    'zp_automat_ak47long', // [А]
+    'zp_automat_aquablaster', // [А]
+    'zp_automat_arxmoto', // [А]
+    'zp_automat_devilbaby', // [А]
+    'zp_automat_famas_pixel', // [А]
+    'zp_automat_lego_crow3', // [А]
+    'zp_machinegun_mg3neon', // [Пм]
+    'zp_sniper_savery', // [С]
+    'zp_rifle_falconvsk94', // [С]
+    'zp_rifle_pandacrossbow', // [В]
+    'zp_vip_deagle', // [П]
+    'cso_extra_ak47_blackstar', // [А]
+    'zb_extra_railgun', // [Пм]
+    'zb_extra_ak47gold', // [А] — уровень Лидер, покупается ещё и из /вип
+    'zb_extra_m4a1gold', // [А] — уровень Император, покупается ещё и из /вип
+    'zp_shop_props', // [Э] экипировка
+    'zp_extra_hp_ap', // [У] усиления — в самый низ: их берут не выбирая
+    'zp_extra_norecoil', // [У]
+    'zp_zombie_nades', // [Г] гранаты зомби — своя команда, своё меню
+  ]
+  // Плагин магазина узнаём по вызову, а не по имени файла: забытая в списке
+  // вещь тогда не молчит, а сама о себе сообщает.
+  //
+  // ⚠️ ЗАКОММЕНТИРОВАННЫЕ ВЫЗОВЫ НЕ СЧИТАЮТСЯ. У четырёх перенесённых плагинов
+  // регистрация вещи закрыта двойной косой чертой самим автором — ствол там
+  // выдаётся ролью, а не покупкой. Без этой проверки они попадали в список
+  // «вне SHOP_ORDER» и заставляли гадать, что за вещь потерялась.
+  const registersItem = text => text.split(/\r?\n/)
+    .some(l => l.includes('zp_register_extra_item') && !/^\s*(\/\/|\*)/.test(l))
+  const shopPlugins = plain.filter(n => registersItem(readFileSync(join(OURS, `${n}.sma`), 'utf8')))
+  const unlistedShop = shopPlugins.filter(n => !SHOP_ORDER.includes(n))
+  if (unlistedShop.length) {
+    console.log(`! плагины спец-магазина вне SHOP_ORDER: ${unlistedShop.join(', ')} — встанут в конец меню`)
+  }
+  const shop = [...SHOP_ORDER.filter(n => shopPlugins.includes(n)), ...unlistedShop]
+  const others = plain.filter(n => !shopPlugins.includes(n))
+
   writeFileSync(pluginsIni, [
     ...(early.length
       ? ['; --- must load BEFORE admincmd: intercepts amx_ban ---', `${EARLY}.amxx`]
@@ -338,7 +422,9 @@ if (existsSync(pluginsIni)) {
     'zombie_plague44.amxx',
     'zp_zclasses44.amxx',
     '; --- our own plugins: must load AFTER zombie_plague44 ---',
-    ...plain.map(n => `${n}.amxx`),
+    ...others.map(n => `${n}.amxx`),
+    '; --- extra items: load order == shop menu order, grouped by kind ---',
+    ...shop.map(n => `${n}.amxx`),
     '; --- zombie classes: load order == menu order, free first, then by rank ---',
     ...classes.map(n => `${n}.amxx`),
     '',
