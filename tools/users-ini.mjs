@@ -50,11 +50,11 @@ const HEADER = [
 // каждого уровня ровно ОДИН облик, он надевается сам. Название обязано
 // совпадать с таблицей в zp_skins.sma и с TSKIN в zp_vip.sma — сверяет verify-ru.
 export const TIERS = [
-  { id: 'vip',       name: 'VIP',       letter: 't', konst: 'ADMIN_LEVEL_H', packs: 3,  health: 25,  knives: 7,  skin: 'Форма VIP', sold: true },
-  { id: 'leader',    name: 'Лидер',     letter: 's', konst: 'ADMIN_LEVEL_G', packs: 6,  health: 50,  knives: 9,  skin: 'Форма 9',   sold: true },
-  { id: 'imperator', name: 'Император', letter: 'q', konst: 'ADMIN_LEVEL_E', packs: 10, health: 75,  knives: 10, skin: 'Отпускник', sold: true },
-  { id: 'pharaoh',   name: 'Фараон',    letter: 'p', konst: 'ADMIN_LEVEL_D', packs: 15, health: 100, knives: 11, skin: 'Фараон',    sold: true },
-  { id: 'creator',   name: 'Создатель', letter: 'o', konst: 'ADMIN_LEVEL_C', packs: 20, health: 150, knives: 11, skin: 'Создатель', sold: false },
+  { id: 'vip',       name: 'VIP',       letter: 't', konst: 'ADMIN_LEVEL_H', packs: 3,  health: 25,  knives: 9,  skin: 'Форма VIP', sold: true },
+  { id: 'leader',    name: 'Лидер',     letter: 's', konst: 'ADMIN_LEVEL_G', packs: 6,  health: 50,  knives: 11,  skin: 'Форма 9',   sold: true },
+  { id: 'imperator', name: 'Император', letter: 'q', konst: 'ADMIN_LEVEL_E', packs: 10, health: 75,  knives: 13, skin: 'Отпускник', sold: true },
+  { id: 'pharaoh',   name: 'Фараон',    letter: 'p', konst: 'ADMIN_LEVEL_D', packs: 15, health: 100, knives: 15, skin: 'Фараон',    sold: true },
+  { id: 'creator',   name: 'Создатель', letter: 'o', konst: 'ADMIN_LEVEL_C', packs: 20, health: 150, knives: 15, skin: 'Создатель', sold: false },
 ]
 
 // Полные права: флаги AMXX идут от «a» до «u», дальше букв нет.

@@ -48,6 +48,9 @@ function panel_state()
         'admins'      => privileges_list(),
         'orders'      => $orders,
         'tiers'       => $tiers,
+        // Знаменатель строки «ножей N из M». Считается по описи, а не пишется
+        // числом: ножей в игре прибавляется, и зашитое число врёт молча.
+        'knivesTotal' => count(catalog_knives()),
         'terms'       => terms(),
         'allFlags'    => ALL_FLAGS,
         'adminFlags'  => ADMIN_FLAGS,

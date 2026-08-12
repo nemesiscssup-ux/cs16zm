@@ -371,6 +371,7 @@ const CSRF = <?= json_encode(csrf_token()) ?>;
 const $ = id => document.getElementById(id);
 
 let TIERS = [];
+let KNIVES_TOTAL = 0;   // сколько всего ножей в игре — знаменатель строки «ножей N из M»
 let TERMS = {};
 let ADMIN_TERMS = {};
 let ALL = "abcdefghijklmnopqrstu";
@@ -479,7 +480,11 @@ function drawGives() {
     rows.push(
       `<li>уровень <b>${v.name}</b>, <b>${termWords(form.days)}</b></li>`,
       `<li><b>+${v.packs}</b> кредитов и <b>+${v.health}</b> HP на каждом возрождении</li>`,
-      `<li>ножей <b>${v.knives}</b> из 11, облик <b>${v.skin}</b></li>`);
+      // ⚠️ Знаменатель приходит с сервера, а не пишется здесь. Раньше стояло
+      // «из 11» — число из той поры, когда ножей было одиннадцать. Их стало
+      // пятнадцать, числитель вырос вместе с описью, а знаменатель остался, и
+      // при выдаче Фараона панель показывала «ножей 15 из 11».
+      `<li>ножей <b>${v.knives}</b> из ${KNIVES_TOTAL || '?'}, облик <b>${v.skin}</b></li>`);
   }
 
   // Админка идёт отдельной строкой со своим сроком, а не приписывается к
@@ -702,6 +707,7 @@ async function copy(btn) {
 
 function apply(state) {
   TIERS = state.tiers;
+  KNIVES_TOTAL = state.knivesTotal || 0;
   TERMS = state.terms;
   ADMIN_TERMS = state.adminTerms || state.terms;
   ALL = state.allFlags;
