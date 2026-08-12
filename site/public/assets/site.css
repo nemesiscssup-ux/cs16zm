@@ -68,7 +68,24 @@
   /* Заголовки: узкий тяжёлый гротеск, афишный. Haettenschweiler стоит в
      Windows и почти не используется в вебе — оттого и не выглядит дежурным.
      Impact — запасной на случай, если его нет. */
-  --scream: "Haettenschweiler", "Arial Narrow Bold", Impact, "Arial Narrow", sans-serif;
+  /*
+   * ⚠️ ЗДЕСЬ СТОЯЛ HAETTENSCHWEILER, И ОН КАЛЕЧИЛ КИРИЛЛИЦУ. Шрифт немецкий,
+   * в Windows он есть, узкий и тяжёлый — на вид ровно то, что нужно афише. Но
+   * букву «П» он рисует как «ТП»: на витрине название сервера читалось
+   * «ВСТПЫШКА ЭТПИДЕМИИ», а раздел — «ТПРИВИЛЕГИИ». В разметке текст был
+   * правильный, ошибка жила только в отрисовке, и увидеть её можно было лишь
+   * глазами — что владелец и сделал.
+   *
+   * Мораль: шрифт, выбранный по описанию, обязан быть проверен на языке, на
+   * котором на нём будут набирать. Bahnschrift тоже узкий и тоже стоит в
+   * Windows, но кириллица у него настоящая.
+   *
+   * ⚠️ Bahnschrift ЛЕГЧЕ Haettenschweiler при том же начертании, поэтому всем
+   * заголовкам поднят вес до 600. Вернёте прежний шрифт — верните и 400, иначе
+   * буквы поплывут.
+   */
+  --scream: "Bahnschrift SemiBold Condensed", "Bahnschrift Condensed", "Bahnschrift",
+            Impact, "Arial Narrow", sans-serif;
   --text:   "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono:   "Cascadia Mono", Consolas, "Courier New", monospace;
 
@@ -164,12 +181,12 @@ body::before {
  */
 .side-l {
   background:
-    linear-gradient(to right, rgba(10, 12, 14, .2), var(--night) 92%),
+    linear-gradient(to right, rgba(10, 12, 14, .05), var(--night)),
     var(--side-left) center / cover no-repeat;
 }
 .side-r {
   background:
-    linear-gradient(to left, rgba(10, 12, 14, .2), var(--night) 92%),
+    linear-gradient(to left, rgba(10, 12, 14, .05), var(--night)),
     var(--side-right) center / cover no-repeat;
 }
 
@@ -264,7 +281,7 @@ body::before {
 .brand-name {
   display: block;
   margin-top: 7px;
-  font: 400 34px/.9 var(--scream);
+  font: 600 34px/.9 var(--scream);
   letter-spacing: .03em;
   text-transform: uppercase;
 }
@@ -289,7 +306,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 
 .lead { margin-bottom: 34px; }
 .lead h1 {
-  font: 400 clamp(40px, 7vw, 72px)/.92 var(--scream);
+  font: 600 clamp(40px, 7vw, 72px)/.92 var(--scream);
   letter-spacing: .02em;
   text-transform: uppercase;
   margin-bottom: 14px;
@@ -300,7 +317,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 
 .section { margin-top: 64px; }
 .section h2 {
-  font: 400 clamp(26px, 4vw, 38px)/1 var(--scream);
+  font: 600 clamp(26px, 4vw, 38px)/1 var(--scream);
   letter-spacing: .03em;
   text-transform: uppercase;
   margin-bottom: 14px;
@@ -411,7 +428,7 @@ code {
 .pick-btn[aria-pressed="true"]:hover .pick-name { color: var(--bone); }
 
 .pick-name {
-  font: 400 20px/.95 var(--scream);
+  font: 600 20px/.95 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--bone);
@@ -442,7 +459,7 @@ code {
 }
 
 .hero-title {
-  font: 400 clamp(52px, 10vw, 104px)/.86 var(--scream);
+  font: 600 clamp(52px, 10vw, 104px)/.86 var(--scream);
   letter-spacing: .01em;
   text-transform: uppercase;
   margin: 0;
@@ -522,7 +539,7 @@ code {
 .tier-card.on { background: var(--slab); box-shadow: inset 0 3px 0 var(--blood); }
 
 .tier-card .nm {
-  font: 400 26px/.9 var(--scream);
+  font: 600 26px/.9 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
 }
@@ -576,7 +593,7 @@ code {
   margin-top: auto;
   padding-top: 13px;
   border-top: 1px solid var(--seam);
-  font: 400 24px/1 var(--scream);
+  font: 600 24px/1 var(--scream);
   letter-spacing: .03em;
   color: var(--blood);
 }
@@ -615,7 +632,7 @@ code {
 .admin-card .more { flex: none; align-self: center; }
 
 .admin-card .nm {
-  font: 400 28px/.9 var(--scream);
+  font: 600 28px/.9 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
 }
@@ -685,12 +702,12 @@ code {
 }
 .tier-brief:hover { background: var(--slab); }
 .tier-brief .nm {
-  font: 400 22px/.9 var(--scream);
+  font: 600 22px/.9 var(--scream);
   letter-spacing: .05em;
   text-transform: uppercase;
 }
 .tier-brief:hover .nm { color: var(--blood); }
-.price-small { margin-top: auto; font: 400 20px/1 var(--scream); color: var(--blood); letter-spacing: .03em; }
+.price-small { margin-top: auto; font: 600 20px/1 var(--scream); color: var(--blood); letter-spacing: .03em; }
 
 /* ── окошко модели на карточке ──────────────────────────────────────────── */
 
@@ -755,7 +772,7 @@ code {
 .mv-close:hover { color: var(--blood); }
 
 .mv-title {
-  font: 400 30px/.95 var(--scream);
+  font: 600 30px/.95 var(--scream);
   letter-spacing: .04em;
   text-transform: uppercase;
   padding-right: 44px;
@@ -854,7 +871,7 @@ code {
   color: var(--ash);
 }
 .mv-prices > :first-child { border-top: 0; }
-.mv-prices b { color: var(--blood); font-weight: 400; font: 400 20px/1 var(--scream); letter-spacing: .03em; }
+.mv-prices b { color: var(--blood); font-weight: 400; font: 600 20px/1 var(--scream); letter-spacing: .03em; }
 
 .mv-buy {
   margin-top: 20px;
@@ -862,7 +879,7 @@ code {
   background: var(--gore);
   border: 0;
   color: var(--bone);
-  font: 400 18px/1 var(--scream);
+  font: 600 18px/1 var(--scream);
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 15px;
@@ -927,7 +944,7 @@ input[type="text"]:focus { border-color: var(--blood); outline: none; }
   padding-top: 14px;
   border-top: 1px solid var(--seam);
 }
-.bill .total .sum { font: 400 40px/1 var(--scream); color: var(--blood); letter-spacing: .02em; }
+.bill .total .sum { font: 600 40px/1 var(--scream); color: var(--blood); letter-spacing: .02em; }
 
 .go {
   margin-top: 24px;
@@ -935,7 +952,7 @@ input[type="text"]:focus { border-color: var(--blood); outline: none; }
   background: var(--gore);
   border: 0;
   color: var(--bone);
-  font: 400 22px/1 var(--scream);
+  font: 600 22px/1 var(--scream);
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 17px;
@@ -1011,7 +1028,7 @@ input[type="text"]:focus { border-color: var(--blood); outline: none; }
 
 .news-title {
   margin: 10px 0 0;
-  font: 400 26px/1 var(--scream);
+  font: 600 26px/1 var(--scream);
   letter-spacing: .03em;
   text-transform: uppercase;
 }
@@ -1044,7 +1061,7 @@ input[type="text"]:focus { border-color: var(--blood); outline: none; }
 }
 .thing { background: var(--crypt); border: 1px solid var(--seam); padding: 14px; }
 .thing .viewer { height: 158px; margin: -14px -14px 12px; border: 0; border-bottom: 1px solid var(--seam); width: auto; }
-.thing-name { font: 400 19px/1 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
+.thing-name { font: 600 19px/1 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
 .thing-desc { margin-top: 6px; font: 12.5px/1.5 var(--mono); color: var(--ash); }
 .thing-price { margin-top: 9px; font: 12px/1 var(--mono); color: var(--blood); }
 
@@ -1069,7 +1086,7 @@ input[type="text"]:focus { border-color: var(--blood); outline: none; }
 }
 .item:hover { background: var(--slab); }
 .item.on { background: var(--slab); box-shadow: inset 0 3px 0 var(--blood); }
-.item .nm { font: 400 26px/.9 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
+.item .nm { font: 600 26px/.9 var(--scream); letter-spacing: .04em; text-transform: uppercase; }
 .item.on .nm { color: var(--blood); }
 .item .blurb { font-size: 13px; color: var(--ash); }
 .item.crown::after {

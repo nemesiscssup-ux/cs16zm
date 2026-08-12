@@ -33,7 +33,7 @@ define('ZM_APP', __DIR__);
  *
  * Поднимайте число ПРИ КАЖДОЙ правке моделей, стиля или просмотрщика.
  */
-define('ZM_ASSET_V', '18');
+define('ZM_ASSET_V', '19');
 
 ini_set('log_errors', '1');
 ini_set('error_log', ZM_PRIVATE . '/logs/php-error.log');
