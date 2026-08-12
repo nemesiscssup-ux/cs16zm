@@ -45,6 +45,21 @@ if (!$check['ok']) {
     done('NO', 'pay_rejected', array('ip' => $ip, 'why' => $check['error'], 'post' => $_POST), 403);
 }
 
+/*
+ * ⚠️ ПОДПИСЬ СОШЛАСЬ — ЭТО ЕЩЁ НЕ ДЕНЬГИ. Уведомление настоящее, но касса
+ * могла сообщить им и об отказе, и о заморозке средств, а не о платеже. У
+ * FreeKassa такого не бывает, у Т-Банка бывает всегда — см. предупреждение в
+ * payment_verify_callback(). Отвечаем YES, потому что уведомление принято и
+ * повторять его незачем: просто выдавать по нему нечего.
+ */
+if (empty($check['paid'])) {
+    done(payment_ack(), 'pay_not_paid', array(
+        'order' => isset($check['order_id']) ? $check['order_id'] : null,
+        'ip'    => $ip,
+        'post'  => $_POST,
+    ));
+}
+
 $order = q_row('SELECT * FROM zm_orders WHERE id = ?', array($check['order_id']));
 if (!$order) {
     done('NO', 'pay_no_order', array('order' => $check['order_id'], 'ip' => $ip), 404);

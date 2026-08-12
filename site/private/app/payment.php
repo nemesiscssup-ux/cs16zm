@@ -77,16 +77,32 @@ function payment_redirect_url($order)
  * Разобрать и проверить уведомление кассы.
  *
  * Возвращает массив:
- *   ok        — уведомлению можно верить
+ *   ok        — уведомлению можно ВЕРИТЬ (подпись сошлась, адрес наш)
+ *   paid      — деньги ДЕЙСТВИТЕЛЬНО получены
  *   order_id  — номер нашего заказа
  *   amount    — сумма, которую называет касса
  *   ext_id    — номер операции у кассы
  *   error     — почему не верим
+ *
+ * ⚠️ `ok` И `paid` — РАЗНЫЕ ВЕЩИ, И РАЗДЕЛЕНЫ ОНИ НЕ ДЛЯ КРАСОТЫ. У FreeKassa
+ * они совпадают: она шлёт уведомление только по успешной оплате, и верная
+ * подпись означает пришедшие деньги. У других касс — нет.
+ *
+ * ⚠️⚠️ КТО БУДЕТ ПОДКЛЮЧАТЬ Т-БАНК, ПРОЧТИТЕ ЭТО ДВАЖДЫ. Он шлёт уведомление
+ * на КАЖДУЮ смену состояния платежа: NEW, AUTHORIZED, CONFIRMED, REJECTED,
+ * REFUNDED. Подпись у всех них верная — она и должна быть верной, это его
+ * же уведомления. Деньги получены ТОЛЬКО при CONFIRMED (а при AUTHORIZED они
+ * лишь заморожены на карте). Приравняете верную подпись к оплате — сайт начнёт
+ * выдавать привилегии по уведомлению об ОТКАЗЕ в платеже.
+ *
+ * Поэтому новая касса обязана возвращать `paid` отдельно, а не считать, что
+ * `ok` его заменяет. apply_order() дополнительно не выдаёт ничего, пока у
+ * заказа не проставлен paid_at, — но это последний рубеж, а не первый.
  */
 function payment_verify_callback($post, $ip)
 {
     if (payment_provider() !== 'freekassa') {
-        return array('ok' => false, 'error' => 'касса не настроена — уведомления не ждём');
+        return array('ok' => false, 'paid' => false, 'error' => 'касса не настроена — уведомления не ждём');
     }
 
     /*
@@ -96,10 +112,10 @@ function payment_verify_callback($post, $ip)
      */
     $allow = cfg('payment.freekassa.allow_ip', array());
     if (!is_array($allow) || !$allow) {
-        return array('ok' => false, 'error' => 'не задан список адресов кассы');
+        return array('ok' => false, 'paid' => false, 'error' => 'не задан список адресов кассы');
     }
     if (!in_array($ip, $allow, true)) {
-        return array('ok' => false, 'error' => 'уведомление пришло с чужого адреса: ' . $ip);
+        return array('ok' => false, 'paid' => false, 'error' => 'уведомление пришло с чужого адреса: ' . $ip);
     }
 
     $merchant = (string)cfg('payment.freekassa.merchant_id');
@@ -112,7 +128,7 @@ function payment_verify_callback($post, $ip)
     $mid      = isset($post['MERCHANT_ID']) ? (string)$post['MERCHANT_ID'] : '';
 
     if ($mid !== $merchant) {
-        return array('ok' => false, 'error' => 'уведомление о чужом магазине');
+        return array('ok' => false, 'paid' => false, 'error' => 'уведомление о чужом магазине');
     }
 
     $want = md5(implode(':', array($merchant, $amount, $secret2, $orderId)));
@@ -120,11 +136,17 @@ function payment_verify_callback($post, $ip)
     // hash_equals, а не «===»: обычное сравнение обрывается на первом
     // различии, и по времени ответа подпись подбирается посимвольно.
     if (!hash_equals($want, $got)) {
-        return array('ok' => false, 'error' => 'подпись не сходится');
+        return array('ok' => false, 'paid' => false, 'error' => 'подпись не сходится');
     }
 
+    /*
+     * paid = true, потому что FreeKassa шлёт уведомление ТОЛЬКО по успешной
+     * оплате: у неё нет отдельного «платёж отклонён». Для кассы, у которой
+     * такое есть, здесь обязана стоять проверка её поля состояния.
+     */
     return array(
         'ok'       => true,
+        'paid'     => true,
         'order_id' => (int)$orderId,
         'amount'   => (float)$amount,
         'ext_id'   => $extId,
