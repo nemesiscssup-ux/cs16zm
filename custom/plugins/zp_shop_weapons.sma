@@ -1,7 +1,7 @@
 /*
  * [ZP] Магазин оружия с баффами.
  *
- * Шестнадцать стволов продаются за кредиты через штатное меню спец-вещей.
+ * Девятнадцать стволов продаются за кредиты через штатное меню спец-вещей.
  * Сами стволы — отдельные плагины zp43_weapon_*, перенесённые из проверенной
  * сборки: они делают всё, чего не умеет простая подмена модели, — свою
  * перезарядку с правильными номерами анимаций, свою скорострельность, урон,
@@ -42,36 +42,55 @@ enum _:WPN { NAME[96], CSW, COST, DMG_PCT, SPD_PCT, ARMOR }
 // на страницу (см. include/zm_menu.inc).
 new g_longest
 
+// ⚠️ СТРОКИ ИДУТ ПО ТИПАМ, И ЭТО ПОРЯДОК ПУНКТОВ В МЕНЮ. Мод показывает
+// спец-вещи в том порядке, в каком их зарегистрировали, а регистрируем мы
+// сверху вниз. Пистолеты, дробовики, автоматы, пулемёты, снайперские, особое —
+// так список читается, а не перебирается.
 new const g_weapons[][WPN] = {
     { "[П] FN P45 (+20%, скор.+10%)",     CSW_USP,     10, 120, 110,  0 },
-    { "[П] Skull-1 (+25%)",                   CSW_DEAGLE,  14, 125, 100,  0 },
-    { "[Д] M1887 (+30%)",                     CSW_M3,      16, 130, 100,  0 },
-    { "[Д] SPAS-12 (+30%, бр.+25)",        CSW_M3,      18, 130, 100, 25 },
-    { "[Д] USAS-12 (+25%)",                   CSW_XM1014,  20, 125, 100,  0 },
-    { "[Д] Skull-11 (+35%)",                  CSW_XM1014,  24, 135, 100,  0 },
-    { "[А] AK-47 Long (+30%)",                 CSW_AK47,    18, 130, 100,  0 },
-    { "[А] HK416 (+25%, бр.+50)",           CSW_M4A1,    20, 125, 100, 50 },
-    { "[А] SFGun (+30%, скор.+8%)",        CSW_AK47,    22, 130, 108,  0 },
-    { "[А] ВСК-94 (+25%, скор.+15%)",      CSW_SG550,   22, 125, 115,  0 },
-    { "[Пм] MG36 (+35%, скор.-5%)",         CSW_M249,    28, 135,  95,  0 },
-    { "[Пм] Mk48 (+40%, скор.-8%)",         CSW_M249,    30, 140,  92,  0 },
-    { "[С] SL8 (+30%)",                    CSW_G3SG1,   26, 130, 100,  0 },
-    { "[С] WA2000 (+40%)",                 CSW_G3SG1,   28, 140, 100,  0 },
-    { "[С] TRG-42 (+60%, скор.-10%)",  CSW_AWP,     30, 160,  90,  0 },
-    { "[С] AS50 (x2, скор.-12%)",      CSW_AWP,     34, 200,  88,  0 },
+    { "[П] Skull-1 (+25%)",               CSW_DEAGLE,  14, 125, 100,  0 },
+    { "[П] Balrog-1 (+30%, рожок 10)",    CSW_DEAGLE,  30, 130, 100,  0 },
+    { "[Д] M1887 (+30%)",                 CSW_M3,      16, 130, 100,  0 },
+    { "[Д] SPAS-12 (+30%, бр.+25)",       CSW_M3,      18, 130, 100, 25 },
+    { "[Д] USAS-12 (+25%)",               CSW_XM1014,  20, 125, 100,  0 },
+    { "[Д] Skull-11 (+35%)",              CSW_XM1014,  24, 135, 100,  0 },
+    { "[А] AK-47 Long (+30%)",            CSW_AK47,    18, 130, 100,  0 },
+    { "[А] HK416 (+25%, бр.+50)",         CSW_M4A1,    20, 125, 100, 50 },
+    { "[А] SFGun (+30%, скор.+8%)",       CSW_AK47,    22, 130, 108,  0 },
+    { "[Пм] MG36 (+35%, скор.-5%)",       CSW_M249,    28, 135,  95,  0 },
+    { "[Пм] Mk48 (+40%, скор.-8%)",       CSW_M249,    30, 140,  92,  0 },
+    // ⚠️ ВСК-94 БЫЛА ПОМЕЧЕНА [А]. Это снайперская: она подменяет SG550, и в
+    // автоматах игрок её не искал.
+    { "[С] ВСК-94 (+25%, скор.+15%)",     CSW_SG550,   22, 125, 115,  0 },
+    { "[С] SL8 (+30%)",                   CSW_G3SG1,   26, 130, 100,  0 },
+    { "[С] WA2000 (+40%)",                CSW_G3SG1,   28, 140, 100,  0 },
+    { "[С] TRG-42 (+60%, скор.-10%)",     CSW_AWP,     30, 160,  90,  0 },
+    // Было «(x2)» — единственный множитель среди процентов. Это те же +100%.
+    { "[С] AS50 (+100%, скор.-12%)",      CSW_AWP,     34, 200,  88,  0 },
+    // ── особое: пули нет вовсе ──
+    // ⚠️ Приставка [О] — под раздел «Особое». У остальных она тоже первая
+    // буква раздела ([П] пистолеты, [Д] дробовики, [С] снайперские), и
+    // прежняя [В] не соответствовала никакому: раздела на «В» нет. Менять её
+    // было нечего опасаться — в меню эти два ствола не показывались вовсе.
+    // Наценки магазина у гранатомёта нет намеренно: он и так бьёт по площади на
+    // 400 в эпицентре, и множить это ещё раз незачем.
+    { "[О] Арбалет (+25%, стрелы)",       CSW_SG550,   32, 125, 100,  0 },
+    { "[О] Гранатомёт M32 (по площади)",  CSW_M3,      40, 100, 100,  0 },
 }
 
 // Порядок ОБЯЗАН совпадать с таблицей выше.
 new const g_natives[][] = {
-    "zp_give_user_fnp45", "zp_give_user_skull1",
+    "zp_give_user_fnp45", "zp_give_user_skull1", "zp_give_user_balrog1",
     "zp_give_user_m1887", "zp_give_user_spas12", "zp_give_user_usas12camo", "zp_give_user_skull11",
-    "zp_give_user_ak47long", "zp_give_user_hk416", "zp_give_user_sfgun", "zp_give_user_vsk94",
+    "zp_give_user_ak47long", "zp_give_user_hk416", "zp_give_user_sfgun",
     "zp_give_user_mg36", "zp_give_user_mk48",
-    "zp_give_user_sl8", "zp_give_user_wa2000", "zp_give_user_trg42", "zp_give_user_as50",
+    "zp_give_user_vsk94", "zp_give_user_sl8", "zp_give_user_wa2000", "zp_give_user_trg42", "zp_give_user_as50",
+    "zp_give_user_crossbow", "zp_give_user_m32",
 }
 
 native zp_give_user_fnp45(id)
 native zp_give_user_skull1(id)
+native zp_give_user_balrog1(id)
 native zp_give_user_m1887(id)
 native zp_give_user_spas12(id)
 native zp_give_user_usas12camo(id)
@@ -79,13 +98,15 @@ native zp_give_user_skull11(id)
 native zp_give_user_ak47long(id)
 native zp_give_user_hk416(id)
 native zp_give_user_sfgun(id)
-native zp_give_user_vsk94(id)
 native zp_give_user_mg36(id)
 native zp_give_user_mk48(id)
+native zp_give_user_vsk94(id)
 native zp_give_user_sl8(id)
 native zp_give_user_wa2000(id)
 native zp_give_user_trg42(id)
 native zp_give_user_as50(id)
+native zp_give_user_crossbow(id)
+native zp_give_user_m32(id)
 
 // Тот же трюк, что в самом ZP: он вешает пересчёт скорости не на настоящий
 // Ham_CS_Player_ResetMaxSpeed, а на Ham_Item_PreFrame. Цепляемся туда же,
@@ -138,14 +159,31 @@ public plugin_init()
     register_clcmd("say /shop", "cmd_shop")
 }
 
-// Разделы меню. Числа — номера в таблице g_weapons.
-new const g_cat_names[][] = { "Пистолеты", "Дробовики", "Автоматы", "Пулемёты", "Снайперские" }
+/*
+ * Разделы меню. Числа — НОМЕРА СТРОК В g_weapons, считая с нуля.
+ *
+ * ⚠️⚠️ ЭТА ТАБЛИЦА ПРИВЯЗАНА К ПОРЯДКУ g_weapons НОМЕРАМИ, И ОДНА ВСТАВКА
+ * ЛОМАЕТ ЕЁ ЦЕЛИКОМ. Так уже случилось: Balrog-1 вписали вторым пистолетом, и
+ * всё, что ниже, съехало на единицу. В меню получилось вот что — пистолет
+ * Balrog-1 лежал в «Дробовиках», дробовик Skull-11 в «Автоматах», а AS50,
+ * Арбалет и Гранатомёт M32 не показывались ВОВСЕ: под них просто не было
+ * строки. Три ствола, которые добавляли специально, в игре были недоступны, и
+ * заметить это можно было только зайдя в магазин.
+ *
+ * Правило простое: ДОБАВИЛ СТРОКУ В g_weapons — ПЕРЕСЧИТАЙ ЭТУ ТАБЛИЦУ. И
+ * g_natives заодно, он привязан к тому же порядку.
+ *
+ * Ширина строки берётся по самой длинной (снайперских теперь пять), недостающее
+ * добивается -1: menu их пропускает.
+ */
+new const g_cat_names[][] = { "Пистолеты", "Дробовики", "Автоматы", "Пулемёты", "Снайперские", "Особое" }
 new const g_cat_items[][] = {
-    { 0, 1, -1, -1 },
-    { 2, 3, 4, 5 },
-    { 6, 7, 8, 9 },
-    { 10, 11, -1, -1 },
-    { 12, 13, 14, 15 },
+    { 0,  1,  2, -1, -1 },      // FN P45, Skull-1, Balrog-1
+    { 3,  4,  5,  6, -1 },      // M1887, SPAS-12, USAS-12, Skull-11
+    { 7,  8,  9, -1, -1 },      // AK-47 Long, HK416, SFGun
+    { 10, 11, -1, -1, -1 },     // MG36, Mk48
+    { 12, 13, 14, 15, 16 },     // ВСК-94, SL8, WA2000, TRG-42, AS50
+    { 17, 18, -1, -1, -1 },     // Арбалет, Гранатомёт M32
 }
 
 public cmd_shop(id)
@@ -328,7 +366,13 @@ public zp_extra_item_selected(id, itemid)
         get_user_name(id, name, charsmax(name))
         zlog("МАГАЗИН: %s купил «%s»", name, g_weapons[i][NAME])
 
-        client_print_color(id, print_team_default, "^x04[Вспышка эпидемии]^x01 Куплено: ^x04%s", g_weapons[i][NAME])
+        // ⚠️ ПРИ БЕСПЛАТНОМ ВОЗВРАТЕ МОЛЧИМ. Мод возвращает купленное в начале
+        // раунда тем же путём, что и настоящая покупка, только без списания
+        // кредитов, — и выживший каждый раунд читал «Куплено: …», хотя ничего не
+        // покупал и ничего не платил. Пометку поднимает сам мод на время
+        // возврата (правка «возврат покупок» в tools/customize.mjs).
+        if (!get_cvar_num("zm_hot_regiving"))
+            client_print_color(id, print_team_default, "^x04[Вспышка эпидемии]^x01 Куплено: ^x04%s", g_weapons[i][NAME])
         return PLUGIN_CONTINUE;
     }
 
@@ -336,27 +380,34 @@ public zp_extra_item_selected(id, itemid)
 }
 
 // Каждый ствол выдаётся своим нативом. Через switch, а не по имени: так
-// компилятор проверяет, что все шестнадцать на месте.
+// компилятор проверяет, что все девятнадцать на месте.
+//
+// ⚠️ НОМЕРА ЗДЕСЬ — ЭТО СТРОКИ g_weapons И g_natives, ТРИ СПИСКА ИДУТ ВМЕСТЕ.
+// Переставишь строку в таблице и забудешь здесь — игрок купит арбалет и получит
+// пулемёт, а магазин при этом ни на что не пожалуется.
 give_weapon(id, i)
 {
     switch (i)
     {
         case 0:  zp_give_user_fnp45(id)
         case 1:  zp_give_user_skull1(id)
-        case 2:  zp_give_user_m1887(id)
-        case 3:  zp_give_user_spas12(id)
-        case 4:  zp_give_user_usas12camo(id)
-        case 5:  zp_give_user_skull11(id)
-        case 6:  zp_give_user_ak47long(id)
-        case 7:  zp_give_user_hk416(id)
-        case 8:  zp_give_user_sfgun(id)
-        case 9:  zp_give_user_vsk94(id)
+        case 2:  zp_give_user_balrog1(id)
+        case 3:  zp_give_user_m1887(id)
+        case 4:  zp_give_user_spas12(id)
+        case 5:  zp_give_user_usas12camo(id)
+        case 6:  zp_give_user_skull11(id)
+        case 7:  zp_give_user_ak47long(id)
+        case 8:  zp_give_user_hk416(id)
+        case 9:  zp_give_user_sfgun(id)
         case 10: zp_give_user_mg36(id)
         case 11: zp_give_user_mk48(id)
-        case 12: zp_give_user_sl8(id)
-        case 13: zp_give_user_wa2000(id)
-        case 14: zp_give_user_trg42(id)
-        case 15: zp_give_user_as50(id)
+        case 12: zp_give_user_vsk94(id)
+        case 13: zp_give_user_sl8(id)
+        case 14: zp_give_user_wa2000(id)
+        case 15: zp_give_user_trg42(id)
+        case 16: zp_give_user_as50(id)
+        case 17: zp_give_user_crossbow(id)
+        case 18: zp_give_user_m32(id)
     }
 }
 
