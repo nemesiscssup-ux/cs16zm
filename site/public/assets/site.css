@@ -143,18 +143,38 @@ body::before {
  * Теперь граница 1000, а к середине картинка сходит на нет маской: под текст
  * она не полезет даже там, где места сбоку мало.
  */
-body::after {
-  background:
-    var(--side-left)  left  center / auto 100% no-repeat,
-    var(--side-right) right center / auto 100% no-repeat;
-  opacity: .5;
-  filter: grayscale(.35) contrast(1.05) brightness(.85);
-  -webkit-mask-image: linear-gradient(to right, #000 0, transparent 300px,
-                                      transparent calc(100% - 300px), #000 100%);
-  mask-image: linear-gradient(to right, #000 0, transparent 300px,
-                              transparent calc(100% - 300px), #000 100%);
+.side {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 360px;
+  z-index: 0;
+  pointer-events: none;
 }
-@media (max-width: 1000px) { body::after { display: none; } }
+.side-l { left: 0; }
+.side-r { right: 0; }
+
+/*
+ * Затухание к середине сделано ОБЫЧНЫМ градиентом поверх картинки, а не
+ * маской. Маска здесь уже стояла, и вид пропал целиком — проверить её мне
+ * нечем, браузера на этой машине нет. Градиент делает то же самое средствами,
+ * которые работают везде и лет пятнадцать: первый слой в background рисуется
+ * поверх второго, дальний край у него сплошной цвет ночи, и полоса растворяется
+ * в фоне страницы.
+ */
+.side-l {
+  background:
+    linear-gradient(to right, rgba(10, 12, 14, .2), var(--night) 92%),
+    var(--side-left) center / cover no-repeat;
+}
+.side-r {
+  background:
+    linear-gradient(to left, rgba(10, 12, 14, .2), var(--night) 92%),
+    var(--side-right) center / cover no-repeat;
+}
+
+/* Уже 1000 пикселей полосы полезли бы под текст — там их нет вовсе. */
+@media (max-width: 1000px) { .side { display: none; } }
 
 /* Три слоя по высоте, и порядок между ними значим:
      0 — зерно, виньетка и вид карты по краям (body::before, body::after),
