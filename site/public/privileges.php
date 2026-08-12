@@ -177,7 +177,7 @@ page_head('Привилегии', 'privileges', '<script src="assets/viewer.js?v
 <div class="tier-cards" id="shelf">
   <?php foreach ($tiers as $i => $t):
     $skin = catalog_tier_skin($t['id']); ?>
-    <article class="tier-card<?= $i === count($tiers) - 1 ? ' top' : '' ?>"
+    <article class="tier-card<?= $i === count($tiers) - 1 ? ' crown' : '' ?>"
              role="button" tabindex="0"
              data-tier="<?= h($t['id']) ?>"
              aria-label="<?= h($t['name']) ?> — подробнее"

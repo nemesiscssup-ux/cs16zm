@@ -56,7 +56,7 @@ page_head('Кредиты', 'shop', '<script src="assets/viewer.js?v=' . h(ZM_AS
 <div class="shelf" id="shelf">
   <?php foreach ($packs as $i => $p):
     $total = $p['packs'] + $p['bonus']; ?>
-    <label class="item<?= $i === $best ? ' top' : '' ?>" data-pack="<?= h($p['id']) ?>">
+    <label class="item<?= $i === $best ? ' crown' : '' ?>" data-pack="<?= h($p['id']) ?>">
       <input type="radio" name="pack" value="<?= h($p['id']) ?>" hidden<?= $i === 0 ? ' checked' : '' ?>>
       <div class="nm"><?= (int)$total ?> кредитов</div>
       <?php if ($p['bonus']): ?>
